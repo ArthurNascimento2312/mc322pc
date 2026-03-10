@@ -1,10 +1,9 @@
 public class App {
     public static void main(String[] args) throws Exception {
 
-        Heroi jogador = new Heroi("Boss", 50, 10);
-      //Inimigo ifgw = new Inimigo("Mano braun", 50, 10);
-
-        Carta fireball = new Carta("Bola de Fogo", 2, 10);
+      Heroi player1 = new Heroi("Shrek", 100, 10);
+      Inimigo enemy1 = new Inimigo("Dragão", 80, 10);
+      CartaDano card1 = new CartaDano("Bola de Fogo", 2, 10);
         
 
     }

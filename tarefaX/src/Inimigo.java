@@ -1,7 +1,9 @@
 public class Inimigo {
-    String nome;
-    int vida;
-    int escudo;
+    private String nome;
+    private int vida;
+    private int escudo;
+    private int dano;
+
 
     public Inimigo(String nome, int vida, int escudo) {
         this.nome = nome;
@@ -9,21 +11,38 @@ public class Inimigo {
         this.escudo = escudo;
     }
 
-    public void ReceberDano(int dano) {
-        if (this.vida > dano) {
-            this.vida = this.vida - dano;
-        }
-        this.vida = 0;
+    public int acessoDano() {
+        return this.dano;
+    }
+
+
+    public void ReceberDano(Heroi personagem, String nome_carta) {
+        
+        // encontra nome i .. acesosocartadano
+        CartaDano carta = personagem.encontraCarta(nome_carta);
+        int valorDano = carta.acessoCartaDano_dano();
+
+        if (this.escudo >=  valorDano) {
+            this.escudo -= valorDano;
+        } else {
+
+        int dano_restante = valorDano - this.escudo;
+        this.escudo = 0;
+        this.vida -= dano_restante;}
     }
     
+
     public boolean estaVivo() {
         if (this.vida > 0)
             return true;
         return false;
     }
 
-    public void atacar(Heroi personaegem) {
-        personaegem.RecebeDano()
+    public void atacar(Heroi personagem) {
+        personagem.RecebeDano(this);
         
     }
 }
+
+
+
