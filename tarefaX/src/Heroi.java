@@ -1,7 +1,7 @@
 public class Heroi{
     private String nome;
     private int vida;
-    private int escudo;
+    private Cartaescudo escudo;
 
     public Heroi(String nome, int vida, int escudo){
         this.nome = nome;
@@ -10,7 +10,7 @@ public class Heroi{
     }
 
 
-    public int Recebe_dano(int dano_sofrido){
+    public int RecebeDano(int dano_sofrido){
         if (this.escudo >=  dano_sofrido) {
             this.escudo -= dano_sofrido;
         } else {
@@ -24,9 +24,8 @@ public class Heroi{
     }
     
 
-    public int Ganha_escudo(int carta_escudo){
+    public void GanhaEscudo(Cartaescudo carta_escudo){
         this.escudo = carta_escudo;
-        return this.vida
     }
 
     public int Estar_vivo(){

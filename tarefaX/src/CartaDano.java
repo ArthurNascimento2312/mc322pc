@@ -1,10 +1,10 @@
-public class Carta{
+public class CartaDano{
 
     private String nome;
     private int custo;
-    private int dano;
+    private int dano;   
 
-    public Carta(String nome, int custo){
+    public CartaDano(String nome, int custo, int dano){
         this.nome = nome;
         this.custo = custo;
         this.dano = dano;
