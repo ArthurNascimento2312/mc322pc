@@ -2,41 +2,46 @@ import java.util.Scanner;
 
 public class App {
   public static void main(String[] args) {
-      Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
 
-      Heroi player1 = new Heroi("Shrek", 100, 40, 5);
-      Inimigo enemy1 = new Inimigo("Dragão", 80, 10, 40);
-      CartaDano card1 = new CartaDano("Bola de Fogo", 2, 15);
-      CartaDano card2 = new CartaDano("Corte de Espada", 1, 10);  
-      CartaEscudo shield = new CartaEscudo("Proteção", 3, 40);
+    Heroi player1 = new Heroi("Shrek", 100, 40, 5, 10); //criei o atributo capacidade que é a quantidade de cartas
+    Inimigo enemy1 = new Inimigo("Dragão", 80, 10, 40);                     // que o Heoroi pode ter.
+    CartaDano card1 = new CartaDano("Bola de Fogo", 2, 15);
+    CartaDano card2 = new CartaDano("Corte de Espada", 1, 10);
+    CartaEscudo shield = new CartaEscudo("Proteção", 3, 40);
 
-      player1.adiciona_card(card1, 0);
-      player1.adiciona_card(card2, 1);
-      
-   
+    player1.adiciona_card(card1); //mudei esse método para não precisar passar o indice do vetor
+    player1.adiciona_card(card2); //mudei esse método para não precisar passar o indice do vetor
+    System.out.println("\n-----------------------------------------------------------\n"); // teste para ver se fica melhor a visualização (?)
 
-    
-    while (player1.Estar_vivo() == 1 && enemy1.estaVivo()) {
+
+    int vida_inicial_p1 = player1.acessoVida(); // a vida tem que estar aqui para não mudar a cada turno.
+    int vida_inicial_e1 = enemy1.acessoVida(); // a vida tem que estar aqui para não mudar a cada turno.
+
+    while (player1.estaVivo() && enemy1.estaVivo()) {
       int energia = player1.acessoEnergia(); // energia inicial do personagem heroi.
       int opcao = 0;
-      int vida_inicial_p1 = player1.acessoVida();
-      int vida_inicial_e1 = enemy1.acessoVida();
       player1.resetarEscudo();
-      while (energia > 0 && opcao != 3) {
-        //bloco com as opções 
-        System.out.println(player1.acessoNome() + " " + player1.acessoVida() + "/" + vida_inicial_p1 + " de vida  | " + player1.acessoEscudo() + " de escudo" );
-        System.out.println("vs");
-        System.out.println(enemy1.acessoNome()+ " " + enemy1.acessoVida() + "/" + vida_inicial_e1 + " de vida  | " + enemy1.acessoEscudo() + " de escudo " );
 
-        System.out.println("Energia: " + player1.acessoEnergia() + " de energia disponível");
+      /*tirei a condição de energia > 0 para forçar o usuario selecionar 3 para passar o turno */
+      while (opcao != 3 && enemy1.estaVivo()) { // eu posso matar o inimigo antes de passar de turno (adicionei um condicional a mais)
+        // bloco com as opções
+        System.out.println(player1.acessoNome() + " " + player1.acessoVida() + "/" + vida_inicial_p1 + " de vida  | "
+            + player1.acessoEscudo() + " de escudo");
+        System.out.println("vs");
+        System.out.println(enemy1.acessoNome() + " " + enemy1.acessoVida() + "/" + vida_inicial_e1 + " de vida  | "
+            + enemy1.acessoEscudo() + " de escudo ");
+
+        // System.out.println("Energia: " + player1.acessoEnergia() + " de energia disponível"); // troquei o método acesso a energia pela variável
+        System.out.println("Energia: " + energia + " de energia disponível"); // linha corrigida
         System.out.println("1 - Usar Carta de Dano");
         System.out.println("2 - Usar Carta de Escudo");
         System.out.println("3 - Encerrar Turno");
         System.out.println("Escolha:");
-        
+
         opcao = sc.nextInt();
 
-        if (opcao == 1){
+        if (opcao == 1) {
           System.out.println("Suas Cartas:");
           player1.imprimeCartasDano();
 
@@ -46,7 +51,7 @@ public class App {
           CartaDano carta_escolhida = vetor[i];
           int custo = carta_escolhida.acessoCartaDano_custo();
 
-          if (energia >= custo){
+          if (energia >= custo) {
             enemy1.ReceberDano(player1, carta_escolhida.acessoCartaDano_nome());
             energia -= custo;
             System.out.println("Você usou " + carta_escolhida.acessoCartaDano_nome() + "!");
@@ -55,35 +60,41 @@ public class App {
           }
         }
 
-        else if (opcao == 2){
+        else if (opcao == 2) {
           int custo = shield.acessoCusto();
-          if (energia >=  custo ){
+          if (energia >= custo) {
             player1.ganhaEscudo(shield);
             energia -= custo;
             System.out.println("Você ganhou escudo!");
           } else {
             System.out.println("VOCÊ  NÃO TEM MAIS ENERGIA!");
           }
-        
-        } 
 
-        else{
-          break; // ja tem a condição no while.
         }
 
-
-
-        
+        else {
+          break; // ja tem a condição no while (?)
+        }
+        System.out.println("\n-----------------------------------------------------------\n"); // teste para ver se melhora a visualização (?)
       }
 
-      
+      /* ataque do inimigo */
+      if (enemy1.estaVivo()) { // o inimigo só vai atacar se estiver vivo (caso a gente mate ele antes de passar de turno)
+        System.out.println("Turno do Inimigo:");
+        enemy1.atacar(player1);
+        System.out.println(enemy1.acessoNome() + " executou o ataque");
+        System.out.println("\n-----------------------------------------------------------\n"); // teste para ver se melhora a visualização (?)
+      }
+
     }
 
-
-
-
+    /* vamos verificar quem ganhou o jogo */
+    if (player1.estaVivo()) {
+      System.out.println("Parabéns, você ganhou !!");
+    } else {
+      System.out.println("Você foi derrotado !" + "\uD83D\uDE35"); // testei se fica legal a carinha aqui no derrotado
+    }
   }
-
 
 }
 
@@ -91,9 +102,14 @@ public class App {
 
 /*
  * fazer o turno inimigo
-fazer read me
-ajustar energia
+ * fazer read me
+ * ajustar energia
  * 
  * 
  * 
  */
+
+
+/* testes:
+Quando fiquei usei o escudo ele passou de turno automaticamente
+depois digitei apenas 1 para ficar dando dano e a vida do inimigo ficou negativa */

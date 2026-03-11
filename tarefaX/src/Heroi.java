@@ -1,25 +1,28 @@
 
-
-public class Heroi{
+public class Heroi {
     private String nome;
     private int vida;
     private int escudo;
     private int energia;
     private CartaDano[] dano;
+    private int tamanhoVetor;
+    private int capacidade;
 
-    public Heroi(String nome, int vida, int escudo, int energia){
+    public Heroi(String nome, int vida, int escudo, int energia, int capacidade) {
         this.nome = nome;
         this.vida = vida;
         this.escudo = escudo;
         this.energia = energia;
-        this.dano = new CartaDano[10];
+        this.dano = new CartaDano[capacidade];
+        this.capacidade = capacidade;
+        this.tamanhoVetor = 0;
     }
-    
+
     public int acessoEscudo() {
         return this.escudo;
     }
 
-    public  int encontraNome(String nome_carta) {
+    public int encontraNome(String nome_carta) {
         int i = 0;
 
         while (i < this.dano.length) {
@@ -27,8 +30,8 @@ public class Heroi{
                 return i;
             i++;
         }
-        return -1; 
-        }
+        return -1;
+    }
 
     public CartaDano encontraCarta(String nomeCarta) {
         int i = encontraNome(nomeCarta);
@@ -36,47 +39,53 @@ public class Heroi{
         return carta;
     }
 
+    public void RecebeDano(Inimigo personagem) {
 
-    public void RecebeDano(Inimigo personagem){
-
-        if (this.escudo >=  personagem.acessoDano()) {
+        if (this.escudo >= personagem.acessoDano()) {
             this.escudo -= personagem.acessoDano();
         } else {
 
-        int dano_restante = personagem.acessoDano() - this.escudo;
-        this.escudo = 0;
-        this.vida -= dano_restante;}
-    
-    }
-    
+            int dano_restante = personagem.acessoDano() - this.escudo;
+            this.escudo = 0;
+            this.vida -= dano_restante;
+        }
 
-    public void ganhaEscudo(CartaEscudo carta_escudo){
+    }
+
+    public void ganhaEscudo(CartaEscudo carta_escudo) {
         this.escudo = carta_escudo.acessoEscudoGanho();
     }
 
-
-    public int Estar_vivo(){
-        if (this.vida <=0){
-            return 0; 
+    public boolean estaVivo() {
+        if (this.vida <= 0) {
+            return false;
         } else {
-            return 1;
+            return true;
         }
     }
 
+    public void adiciona_card(CartaDano carta) {
+        if (this.tamanhoVetor < this.capacidade) {
+            this.dano[this.tamanhoVetor] = carta;
+            this.tamanhoVetor = this.tamanhoVetor + 1;
+            System.out.println(carta.acessoCartaDano_nome() + " foi inserido ao seu deck");
+            }
+        else {
+            System.out.println("O seu deck está cheio ! Impossível adicionar mais cartas");
+        } 
 
-    public void adiciona_card(CartaDano carta, int i) {
-        this.dano[i] = carta;
+        
 }
 
     public int acessoEnergia() {
         return this.energia;
     }
 
-    public void resetarEscudo(){
-        this.escudo = 0; 
+    public void resetarEscudo() {
+        this.escudo = 0;
     }
 
-    public String acessoNome()  {
+    public String acessoNome() {
         return this.nome;
     }
 
@@ -85,7 +94,7 @@ public class Heroi{
     }
 
     public void imprimeCartasDano() {
-        for (int i = 0; i < 2 /*this.dano.length*/; i++) {
+        for (int i = 0; i < 2 /* this.dano.length */; i++) {
             System.out.println(i + "-" + this.dano[i].acessoCartaDano_nome());
         }
     }
@@ -94,8 +103,3 @@ public class Heroi{
         return this.dano;
     }
 }
-
-
-
-
-
