@@ -1,34 +1,99 @@
-
+import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
+      Scanner sc = new Scanner(System.in);
 
-      Heroi player1 = new Heroi("Shrek", 100, 10);
-      Inimigo enemy1 = new Inimigo("Dragão", 80, 10);
-      CartaDano card1 = new CartaDano("Bola de Fogo", 2, 10);
-      CartaDano card2 = new CartaDano("Corte de Espada", 1, 15);  
-
+      Heroi player1 = new Heroi("Shrek", 100, 40, 5);
+      Inimigo enemy1 = new Inimigo("Dragão", 80, 10, 40);
+      CartaDano card1 = new CartaDano("Bola de Fogo", 2, 15);
+      CartaDano card2 = new CartaDano("Corte de Espada", 1, 10);  
+      CartaEscudo shield = new CartaEscudo("Proteção", 3, 40);
 
       player1.adiciona_card(card1, 0);
       player1.adiciona_card(card2, 1);
       
-     // player1.setDano(inventario);
+   
 
-     
     
     while (player1.Estar_vivo() == 1 && enemy1.estaVivo()) {
-      int energiaTurno = 3;
-      boolean turnoHeroi = true;
+      int energia = player1.acessoEnergia(); // energia inicial do personagem heroi.
+      int opcao = 0;
+      int vida_inicial_p1 = player1.acessoVida();
+      int vida_inicial_e1 = enemy1.acessoVida();
+      player1.resetarEscudo();
+      while (energia > 0 && opcao != 3) {
+        //bloco com as opções 
+        System.out.println(player1.acessoNome() + " " + player1.acessoVida() + "/" + vida_inicial_p1 + " de vida  | " + player1.acessoEscudo() + " de escudo" );
+        System.out.println("vs");
+        System.out.println(enemy1.acessoNome()+ " " + enemy1.acessoVida() + "/" + vida_inicial_e1 + " de vida  | " + enemy1.acessoEscudo() + " de escudo " );
 
+        System.out.println("Energia: " + player1.acessoEnergia() + " de energia disponível");
+        System.out.println("1 - Usar Carta de Dano");
+        System.out.println("2 - Usar Carta de Escudo");
+        System.out.println("3 - Encerrar Turno");
+        System.out.println("Escolha:");
+        
+        opcao = sc.nextInt();
+
+        if (opcao == 1){
+          System.out.println("Suas Cartas:");
+          player1.imprimeCartasDano();
+
+          System.out.println("Escolha a carta:");
+          int i = sc.nextInt();
+          CartaDano[] vetor = player1.acessoVetorCartaDano();
+          CartaDano carta_escolhida = vetor[i];
+          int custo = carta_escolhida.acessoCartaDano_custo();
+
+          if (energia >= custo){
+            enemy1.ReceberDano(player1, carta_escolhida.acessoCartaDano_nome());
+            energia -= custo;
+            System.out.println("Você usou " + carta_escolhida.acessoCartaDano_nome() + "!");
+          } else {
+            System.out.println("VOCÊ  NÃO TEM MAIS ENERGIA!");
+          }
+        }
+
+        else if (opcao == 2){
+          int custo = shield.acessoCusto();
+          if (energia >=  custo ){
+            player1.ganhaEscudo(shield);
+            energia -= custo;
+            System.out.println("Você ganhou escudo!");
+          } else {
+            System.out.println("VOCÊ  NÃO TEM MAIS ENERGIA!");
+          }
+        
+        } 
+
+        else{
+          break; // ja tem a condição no while.
+        }
+
+
+
+        
+      }
+
+      
     }
-  } 
-
-} 
-         
 
 
 
 
+  }
 
 
+}
 
+// escolha seu heroi
+
+/*
+ * fazer o turno inimigo
+fazer read me
+ajustar energia
+ * 
+ * 
+ * 
+ */

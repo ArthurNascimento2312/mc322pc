@@ -30,4 +30,7 @@ public class CartaDano {
         return this.dano_carta;
     }
 
+    public int acessoCartaDano_custo() {
+        return this.custo;
+    }
 }

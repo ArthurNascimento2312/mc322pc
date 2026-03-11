@@ -5,14 +5,19 @@ public class Inimigo {
     private int dano;
 
 
-    public Inimigo(String nome, int vida, int escudo) {
+    public Inimigo(String nome, int vida, int escudo, int dano) {
         this.nome = nome;
         this.vida = vida;
         this.escudo = escudo;
+        this.dano = dano;
     }
 
     public int acessoDano() {
         return this.dano;
+    }
+
+    public int acessoEscudo() {
+        return this.escudo;
     }
 
 
@@ -42,6 +47,15 @@ public class Inimigo {
         personagem.RecebeDano(this);
         
     }
+    
+    public String acessoNome() {
+        return this.nome;
+    }
+
+    public int acessoVida() {
+        return this.vida;
+    }
+    
 }
 
 
