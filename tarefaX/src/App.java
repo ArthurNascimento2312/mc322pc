@@ -24,7 +24,7 @@ public class App {
       int opcao = 0;
       player1.resetarEscudo();
 
-      
+      /*tirei a condição de energia > 0 para forçar o usuario selecionar  3 para passar o turno */
       while (opcao != 3 && enemy1.estaVivo()) { // eu posso matar o inimigo antes de passar de turno (adicionei um condicional a mais)
         // bloco com as opções
         System.out.println(player1.acessoNome() + " " + player1.acessoVida() + "/" + vida_inicial_p1 + " de vida  | "
