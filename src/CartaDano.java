@@ -3,34 +3,32 @@ public class CartaDano {
 
     private String nome;
     private int custo;
-    private int dano_carta;
+    private int danoCarta;
 
     public CartaDano(String nome, int custo, int dano) {
         this.nome = nome;
         this.custo = custo;
-        this.dano_carta = dano;
+        this.danoCarta = dano;
     }
 
-    public int valida_dano() {
-        return this.dano_carta;
+    public int validaDano() {
+        return this.danoCarta;
     }
 
-    public int Causa_dano(int vida_inimigo) {
-        vida_inimigo -= this.dano_carta;
+    public int causaDano(int vida_inimigo) {
+        vida_inimigo -= this.danoCarta;
         return vida_inimigo;
     }
     
-
-    /* */
-    public String acessoCartaDano_nome() {
+    public String acessoCartaDanoNome() {
         return this.nome;
     }
 
-    public int acessoCartaDano_dano() {
-        return this.dano_carta;
+    public int acessoCartaDanoDano() {
+        return this.danoCarta;
     }
 
-    public int acessoCartaDano_custo() {
+    public int acessoCartaDanoCusto() {
         return this.custo;
     }
 }

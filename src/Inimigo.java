@@ -17,7 +17,7 @@ public class Inimigo {
         
         // encontra nome i .. acesosocartadano
         CartaDano carta = personagem.encontraCarta(nome_carta);
-        int valorDano = carta.acessoCartaDano_dano();
+        int valorDano = carta.acessoCartaDanoDano();
 
         if (this.escudo >=  valorDano) {
             this.escudo -= valorDano;
@@ -37,7 +37,7 @@ public class Inimigo {
 
     
     public void atacar(Heroi personagem) {
-        personagem.RecebeDano(this);
+        personagem.recebeDano(this);
         
     }
 

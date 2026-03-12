@@ -19,11 +19,11 @@ public class Heroi {
     }
 
 
-    public int encontraNome(String nome_carta) {
+    public int encontraNome(String nomeCarta) {
         int i = 0;
 
         while (i < this.dano.length) {
-            if (this.dano[i].acessoCartaDano_nome().equals(nome_carta))
+            if (this.dano[i].acessoCartaDanoNome().equals(nomeCarta))
                 return i;
             i++;
         }
@@ -36,22 +36,22 @@ public class Heroi {
         return carta;
     }
 
-    public void RecebeDano(Inimigo personagem) {
+    public void recebeDano(Inimigo personagem) {
 
         if (this.escudo >= personagem.acessoDano()) {
             this.escudo -= personagem.acessoDano();
         } else {
 
-            int dano_restante = personagem.acessoDano() - this.escudo;
+            int danoRestante = personagem.acessoDano() - this.escudo;
             this.escudo = 0;
-            this.vida -= dano_restante;
+            this.vida -= danoRestante;
         }
 
     }
 
     
-    public void ganhaEscudo(CartaEscudo carta_escudo) {
-        this.escudo = carta_escudo.acessoEscudoGanho();
+    public void ganhaEscudo(CartaEscudo cartaEscudo) {
+        this.escudo = cartaEscudo.acessoEscudoGanho();
     }
 
 
@@ -67,7 +67,7 @@ public class Heroi {
         if (this.tamanhoVetor < this.capacidade) {
             this.dano[this.tamanhoVetor] = carta;
             this.tamanhoVetor = this.tamanhoVetor + 1;
-            System.out.println(carta.acessoCartaDano_nome() + " foi inserido ao seu deck");
+            System.out.println(carta.acessoCartaDanoNome() + " foi inserido ao seu deck");
             }
         else {
             System.out.println("O seu deck está cheio ! Impossível adicionar mais cartas");
@@ -99,7 +99,7 @@ public class Heroi {
 
     public void imprimeCartasDano() {
         for (int i = 0; i < 2 /* this.dano.length */; i++) {
-            System.out.println(i + "-" + this.dano[i].acessoCartaDano_nome());
+            System.out.println(i + "-" + this.dano[i].acessoCartaDanoNome());
         }
     }
 
