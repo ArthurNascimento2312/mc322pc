@@ -40,7 +40,7 @@ public class App {
     System.out.println("Use suas cartas para destruir o " + VERMELHO + NEGRITO + "Dragão!" + RESET + "\n");
 
 
-    enemy1.adiciona_card(card3);
+    enemy1.adicionaCard(card3);
     deck.adicionaBaralho(card1); 
     deck.adicionaBaralho(card2);
     deck.adicionaBaralho(card3); 

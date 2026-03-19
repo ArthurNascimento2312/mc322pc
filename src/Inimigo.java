@@ -13,7 +13,7 @@ public class Inimigo extends  Entidade {
         return this.carta;
     }
 
-    public void adiciona_card(CartaDano carta) {
+    public void adicionaCard(CartaDano carta) {
        this.carta = carta;
     }
 
