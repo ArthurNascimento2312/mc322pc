@@ -67,7 +67,7 @@ Para rodar o jogo, certifique-se de ter o Java instalado e um terminal com supor
 
 ```java
 
-javac App.java
+javac *.java
 java App
 ```
 
