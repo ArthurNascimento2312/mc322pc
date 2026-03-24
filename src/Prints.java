@@ -85,11 +85,13 @@ public class Prints {
     }
 
 
-    public void fim_de_jogo(Jogador player){
+    public void fim_de_jogo(Jogador player, Musica dj){
         if (!player.temHeroisVivos()) {
-             System.out.println(Prints.NEGRITO + Prints.VERMELHO + "\n💀 BRUTAL!!! SUA EQUIPE FOI DERROTADA!" + Prints.RESET);
+            dj.tocarMusica("../sons/I_need_sleep.wav");
+            System.out.println(Prints.NEGRITO + Prints.VERMELHO + "\n💀 BRUTAL!!! SUA EQUIPE FOI DERROTADA!" + Prints.RESET);
         } else {
-             System.out.println(Prints.NEGRITO + Prints.VERDE + "\n🎉  PARABÉNS!!!   SUA EQUIPE VENCEU!" + Prints.RESET);
+            dj.tocarMusica("../sons/im_believer.wav");
+            System.out.println(Prints.NEGRITO + Prints.VERDE + "\n🎉  PARABÉNS!!!   SUA EQUIPE VENCEU!" + Prints.RESET);
         }
       }
     
@@ -105,5 +107,11 @@ public class Prints {
       }
 
 
+
+      public void jogarNovamente(){
+        System.out.println("\n"  + Prints.NEGRITO + "=======================================" + Prints.RESET);
+            System.out.println(  Prints.NEGRITO + "   Deseja jogar novamente? (1 - Sim / 2 - Não): " + Prints.RESET);
+            System.out.println( Prints.NEGRITO + "=======================================" + Prints.RESET);
+      }
       
 }

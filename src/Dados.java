@@ -5,10 +5,10 @@ public class Dados {
 
     public static ArrayList<Heroi> carregarHerois() {
         ArrayList<Heroi> herois = new ArrayList<>();
-        herois.add(new Heroi("Shrek", 100, 20, 5, 100, 10, true)); 
-        herois.add(new Heroi("Burro", 80, 10, 8, 80, 50, true)); 
-        herois.add(new Heroi("Gato de Botas", 60, 15, 5, 60, 70, true)); 
-        herois.add(new Heroi("Fiona", 90, 25, 4, 90, 40, true));
+        herois.add(new Heroi("Shrek", 100, 20, 6, 100, 20, true)); 
+        herois.add(new Heroi("Burro", 80, 10, 7, 80, 50, true)); 
+        herois.add(new Heroi("Gato de Botas", 70, 15, 5, 60, 80, true)); 
+        herois.add(new Heroi("Fiona", 90, 25, 5, 90, 40, true));
         return herois;
     }
 
@@ -38,7 +38,7 @@ public class Dados {
         deck.adicionaBaralho(new CartaEscudo("Waffles Quentinhos", "Custa 2 de energia e recebe 18 de escudo", 2, 18, 1));
         deck.adicionaBaralho(new CartaEscudo("Pele Verde e Grossa", "Custa 3 de energia e recebe 25 de escudo", 3, 25, 1));
         deck.adicionaBaralho(new CartaEscudo("Panela de Lama", "Custa 2 de energia e recebe 20 de escudo", 2, 20, 1));
-        deck.adicionaBaralho(new CartaEscudo("Muralha do Castelo do Dragão", "Custa 5 de energia e recebe 45 de escudo", 5, 45, 1));
+        deck.adicionaBaralho(new CartaEscudo("Muralha do Castelo do Dragão", "Custa 5 de energia e recebe 60 de escudo", 5, 45, 1));
 
         return deck;
     }
@@ -48,7 +48,7 @@ public class Dados {
         ArrayList<Inimigo> inimigos = new ArrayList<>();
 
         
-        Inimigo dragao = new Inimigo("Dragão", 110, 40, 110, 10, true); 
+        Inimigo dragao = new Inimigo("Dragão", 100, 40, 100, 10, true); 
         ArrayList<Carta> deckDragao = new ArrayList<>();
         deckDragao.add(new CartaDano("Baforada de Fogo", "Causa 45 de dano", 0, 45, 0));
         deckDragao.add(new CartaDano("Mordida Feroz", "Causa 15 de dano", 0, 15, 0));
@@ -57,11 +57,11 @@ public class Dados {
         inimigos.add(dragao);
 
         
-        Inimigo farquaad = new Inimigo("Lord Farquaad", 60, 20, 60, 30, true);
+        Inimigo farquaad = new Inimigo("Lord Farquaad", 60, 30, 60, 30, true);
         ArrayList<Carta> deckFarquaad = new ArrayList<>();
         deckFarquaad.add(new CartaDano("Ordem de Execução", "Causa 20 de dano", 0, 20, 0));
         deckFarquaad.add(new CartaDano("Golpe Baixo", "Causa 30 de dano", 0, 30, 0));
-        deckFarquaad.add(new CartaEscudo("Esconder atrás dos guardas", "Ganha 20 de escudo", 0, 20, 1));
+        deckFarquaad.add(new CartaEscudo("Esconder atrás dos guardas", "Ganha 30 de escudo", 0, 30, 1));
         farquaad.transforma_Deck(deckFarquaad);
         inimigos.add(farquaad);
 
@@ -69,7 +69,7 @@ public class Dados {
         Inimigo fada = new Inimigo("Fada Madrinha", 90, 20, 90, 60, true);
         ArrayList<Carta> deckFada = new ArrayList<>();
         deckFada.add(new CartaDano("Raio Mágico", "Causa 30 de dano", 0, 30, 0));
-        deckFada.add(new CartaDano("Poção Explosiva", "Causa 20 de dano", 0, 20, 0));
+        deckFada.add(new CartaDano("Poção Explosiva", "Causa 10 de dano", 0, 10, 0));
         deckFada.add(new CartaEscudo("Bolha de Sabão", "Ganha 25 de escudo", 0, 25, 1));
         fada.transforma_Deck(deckFada);
         inimigos.add(fada);

@@ -9,12 +9,14 @@ import java.util.Scanner;
  */
 
 public class GameManager {
-
+    Musica dj = new Musica();
 
 //Prepara a partida, escolhendo a dificuldade e equipe
     public void prepararPartida(Scanner sc, Prints tela) {
 
+
         tela.comeco();
+        dj.tocarMusica("../sons/Funkytown.wav");
         Jogador jogador = new Jogador();
         Oponente oponente = new Oponente();
 
@@ -41,7 +43,7 @@ public class GameManager {
         }
 
         System.out.println("\n" + Prints.AMARELO + Prints.NEGRITO + "Preparando...  A BATALHA VAI COMEÇAR!" + Prints.RESET + "\n\n");
-        //colocar musica?
+        dj.tocarMusica("../sons/Need_a_hero.wav");
         iniciarBatalha(jogador, oponente, sc, tela, deckGeral);
     }
 
@@ -114,7 +116,7 @@ public class GameManager {
         
  
 
-        tela.fim_de_jogo(jogador);
+        tela.fim_de_jogo(jogador, dj);
         
     }
 }
