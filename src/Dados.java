@@ -7,7 +7,7 @@ public class Dados {
         ArrayList<Heroi> herois = new ArrayList<>();
         herois.add(new Heroi("Shrek", 100, 20, 6, 100, 20, true)); 
         herois.add(new Heroi("Burro", 80, 10, 7, 80, 50, true)); 
-        herois.add(new Heroi("Gato de Botas", 70, 15, 5, 60, 80, true)); 
+        herois.add(new Heroi("Gato de Botas", 70, 15, 5, 70, 80, true)); 
         herois.add(new Heroi("Fiona", 90, 25, 5, 90, 40, true));
         return herois;
     }
@@ -29,6 +29,8 @@ public class Dados {
         deck.adicionaBaralho(new CartaDano("Arroto de Pântano", "Custa 3 de energia e causa 28 de dano", 3, 28, 0));
         deck.adicionaBaralho(new CartaDano("Ataque de Cócegas", "Custa 2 de energia e causa 15 de dano", 2, 15, 0));
         deck.adicionaBaralho(new CartaDano("Fúria de Ogro", "Custa 4 de energia e causa 38 de dano", 4, 38, 0));
+        deck.adicionaBaralho(new CartaDano("Faz o urro", "Custa 3 de energia e causa 35 de dano", 3, 35, 0));
+        deck.adicionaBaralho(new CartaDano("A gente já chegou?", "Custa 1 de energia e causa 20 de dano", 1, 20, 0));   //essa aqui pode ser efeito      
         deck.adicionaBaralho(new CartaDano("Invocação do Dragão Aliado", "Custa 5 de energia e causa 50 de dano", 5, 50, 0));       
         
         deck.adicionaBaralho(new CartaEscudo("Proteção","Custa 3 de energia e recebe 20 de escudo", 3, 20, 1));
@@ -73,6 +75,24 @@ public class Dados {
         deckFada.add(new CartaEscudo("Bolha de Sabão", "Ganha 25 de escudo", 0, 25, 1));
         fada.transforma_Deck(deckFada);
         inimigos.add(fada);
+
+
+        Inimigo encantado = new Inimigo("Príncipe Encantado", 80, 40, 80, 55, true);
+        ArrayList<Carta> deckEncantado = new ArrayList<>();
+        deckEncantado.add(new CartaDano("Sorriso colgate", "Causa 10 de dano", 0, 10, 0));
+        deckEncantado.add(new CartaDano("O Herói destinado", "Causa 40 de dano", 0, 40, 0));
+        deckEncantado.add(new CartaEscudo("Cabelos brilhantes", "Ganha 30 de escudo", 0, 30, 1));
+        encantado.transforma_Deck(deckEncantado);
+        inimigos.add(encantado);
+
+
+        Inimigo rumpel = new Inimigo("Rumpelstiltskin", 60, 40, 60, 25, true);
+        ArrayList<Carta> deckRumpel = new ArrayList<>();
+        deckRumpel.add(new CartaDano("Pena em chamas", "Causa 10 de dano", 0, 10, 0));
+        deckRumpel.add(new CartaDano("Assina aqui-->", "Causa 50 de dano", 0, 50, 0));
+        deckRumpel.add(new CartaEscudo("Chama o pato", "Ganha 40 de escudo", 0, 40, 1));
+        rumpel.transforma_Deck(deckRumpel);
+        inimigos.add(rumpel);
 
         return inimigos;
     }
