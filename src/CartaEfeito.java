@@ -12,18 +12,19 @@ public class CartaEfeito extends Carta{
     }
 
     @Override
-    public String acessoNome() {
+    public String getNome() {
     return this.nome;
     }
 
     @Override
-    public  int acessoCusto() {
+    public  int getCusto() {
         return this.custo;
     }
 
     @Override
     public void  usar(Entidade personagem, Baralho baralho) {
         personagem.aplicarEfeito(this.tipo, this.acumulos);
+        this.personagem = null;
         baralho.adicionaPilhaDescarte(this);
     }
 

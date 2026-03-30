@@ -69,12 +69,13 @@ public class Baralho {
 
     public void compraCarta(Heroi personagem, int i) {
         Carta carta = this.pilhaCompra.remove(i);
-        personagem.adiciona_card(carta);
+        carta.setPersonagem(personagem);
+        personagem.adicionaCard(carta);
     }
 
     public void imprimePilhaCompra() {
         for(int i = 0; i < this.pilhaCompra.size(); i++) {
-            System.out.println(NEGRITO + i + RESET + "-" + AZUL + this.pilhaCompra.get(i).acessoNome() + RESET + " -  " + this.pilhaCompra.get(i).acessoDescricao());
+            System.out.println(NEGRITO + i + RESET + "-" + AZUL + this.pilhaCompra.get(i).getNome() + RESET + " -  " + this.pilhaCompra.get(i).acessoDescricao());
         }
     }
 
@@ -92,6 +93,10 @@ public class Baralho {
         
         this.baralho.addAll(this.pilhaCompra);
         this.pilhaCompra.clear();
+    }
+
+    public ArrayList<Carta> getBaralho() {
+        return this.baralho;
     }
     
 }

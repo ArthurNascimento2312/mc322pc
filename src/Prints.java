@@ -40,11 +40,11 @@ public class Prints {
     public void imprimeInimigosVivos(ArrayList<Inimigo> inimigos) {
         for (Inimigo enemy : inimigos) {
             if (enemy.estaVivo()) {
-                System.out.println(VERMELHO + NEGRITO + enemy.acessoNome() + RESET + " " 
-                    + VERDE + "[VIVO] " + enemy.acesso_vida() + "/" + enemy.getVidaInicial() + RESET + " de vida" + "  | "
-                    + AZUL + "🛡️  " + enemy.acessoEscudo()  + RESET + " de escudo");
+                System.out.println(VERMELHO + NEGRITO + enemy.getNome() + RESET + " " 
+                    + VERDE + "[VIVO] " + enemy.getVida() + "/" + enemy.getVidaInicial() + RESET + " de vida" + "  | "
+                    + AZUL + "🛡️  " + enemy.getEscudo()  + RESET + " de escudo");
             } else {
-                System.out.println(VERMELHO + NEGRITO + enemy.acessoNome() + RESET + " " 
+                System.out.println(VERMELHO + NEGRITO + enemy.getNome() + RESET + " " 
                     + VERMELHO + "[MORTO] 💀" + RESET);
             }
         }
@@ -57,12 +57,12 @@ public class Prints {
             String destaque = (h == heroiAtual) ? AMARELO + " ⬅️ [SEU TURNO]" + RESET : "";
             
             if (h.estaVivo()) {
-                System.out.println(CIANO + NEGRITO + h.acessoNome() + destaque + RESET + " " 
-                    + VERDE + "[VIVO] " + h.acesso_vida() + "/" + h.getVidaInicial() + RESET + " de vida  | "
-                    + AZUL + "🛡️  " + h.acessoEscudo() +  RESET + " de escudo");
+                System.out.println(CIANO + NEGRITO + h.getNome() + destaque + RESET + " " 
+                    + VERDE + "[VIVO] " + h.getVida() + "/" + h.getVidaInicial() + RESET + " de vida  | "
+                    + AZUL + "🛡️  " + h.getEscudo() +  RESET + " de escudo");
             } else {
             
-                System.out.println(CIANO + NEGRITO + h.acessoNome() + RESET + " " 
+                System.out.println(CIANO + NEGRITO + h.getNome() + RESET + " " 
                     + VERMELHO + "[MORTO] 💀" + RESET);
             }
         }

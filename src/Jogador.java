@@ -32,11 +32,11 @@ public class Jogador {
    public void escolherHerois(Scanner sc) {
         System.out.println("Heróis Disponíveis:");
         for (int i = 0; i < todosHerois.size(); i++) {
-            System.out.println("[" + i + "] " + CIANO + todosHerois.get(i).acessoNome() + RESET 
+            System.out.println("[" + i + "] " + CIANO + todosHerois.get(i).getNome() + RESET 
             + " - Vida: " + todosHerois.get(i).getVidaInicial() 
-            + " - Energia: " + todosHerois.get(i).acessoEnergia() 
-            + " - Escudo: "  + todosHerois.get(i).acessoEscudo() 
-            + " - Velocidade: " + todosHerois.get(i).acessoVelocidade()  );
+            + " - Energia: " + todosHerois.get(i).getEnergia() 
+            + " - Escudo: "  + todosHerois.get(i).getEscudo() 
+            + " - Velocidade: " + todosHerois.get(i).getVelocidade()  );
         }
 
         System.out.print("\nQuantos heróis farão parte da sua equipe? (Máximo " + todosHerois.size() + "): ");
@@ -60,7 +60,7 @@ public class Jogador {
                         System.out.println(VERMELHO + "Esse herói já está na sua equipe! Escolha outro." + RESET);
                     } else {
                         this.heroisEscolhidos.add(selecionado);
-                        System.out.println(VERDE + selecionado.acessoNome() + " entrou para a equipe!" + RESET);
+                        System.out.println(VERDE + selecionado.getNome() + " entrou para a equipe!" + RESET);
                         escolhaValida = true;
 
                     }

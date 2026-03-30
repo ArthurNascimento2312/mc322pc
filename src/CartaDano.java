@@ -8,27 +8,33 @@ public class CartaDano extends Carta{
         this.custo = custo;
         this.danoCarta = dano;
         this.opcaoCarta = opcaoCarta;
-
     }
 
 @Override
     public void usar(Entidade vilao, Baralho baralho) {
         vilao.recebeDano(this.acessoCartaDanoDano());
         baralho.adicionaPilhaDescarte(this);
+        this.personagem = null;
     }
  
 @Override
-    public String acessoNome() {
+    public String getNome() {
         return this.nome;
     }
 
 
     public int acessoCartaDanoDano() {
-        return this.danoCarta;
+        if (this.personagem.getHasEfeitoFraqueza()) {
+            this.personagem.setHasEfeitoFraqueza(false);
+            return (int) (this.danoCarta * 0.75);
+            
+        } else {
+            return this.danoCarta;
+        }
     }
 
 @Override
-    public int acessoCusto() {
+    public int getCusto() {
         return this.custo;
     }
 
@@ -41,6 +47,5 @@ public class CartaDano extends Carta{
     public int getOpcaoCarta(){
         return this.opcaoCarta;
     }
-
 
 }

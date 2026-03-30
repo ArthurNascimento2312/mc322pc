@@ -102,7 +102,7 @@ public class GameManager implements Publisher {
                 Entidade atual = ordemTurno.get(j);
                 Entidade proximo = ordemTurno.get(j + 1);
 
-                if (atual.acessoVelocidade() < proximo.acessoVelocidade()) {
+                if (atual.getVelocidade() < proximo.getVelocidade()) {
                     ordemTurno.set(j, proximo);
                     ordemTurno.set(j + 1, atual);
                 }
@@ -125,11 +125,11 @@ public class GameManager implements Publisher {
             for (Entidade entidadeAtual : ordemTurno) {
                 
                 // Só joga se estiver vivo e não tiver atacado nesta rodada
-                if (entidadeAtual.estaVivo() && !entidadeAtual.acessoturno()) {
+                if (entidadeAtual.estaVivo() && !entidadeAtual.getTurno()) {
                     
                     if (entidadeAtual instanceof Heroi) {
                         Heroi heroiAtual = (Heroi) entidadeAtual;
-                        System.out.println(Prints.CIANO + "\n>>> Turno de " + heroiAtual.acessoNome() + " <<<" + Prints.RESET);
+                        System.out.println(Prints.CIANO + "\n>>> Turno de " + heroiAtual.getNome() + " <<<" + Prints.RESET);
                         
                         // O herói recebe o deckGeral e a lista de inimigos disponíveis
                         turnoHeroi.jogar(heroiAtual, jogador.getHeroisEscolhidos(),  oponente.getInimigosEscolhidos(), tela, deckGeral, sc);

@@ -23,11 +23,6 @@ public class EfeitoVeneno extends Efeito {
     @Override
     public void acaoEfeito() {
         this.getDono().recebeDanoEfeito(acumulos);
-        System.out.println(this.getDono().acessoNome() + " sofreu o efeito de veneno: " + this.nome+ " com um dano sofrido de " + this.acumulos);
-    }
-
-    @Override
-    public Estados tipoDeEstado() {
-        return Estados.INICIO_DE_TURNO;
+        System.out.println(this.getDono().getNome() + " sofreu o efeito de veneno: " + this.nome+ " com um dano sofrido de " + this.acumulos);
     }
 }

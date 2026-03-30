@@ -6,6 +6,7 @@ public abstract class Entidade {
     protected int escudo;
     protected int vidaInicial;
     protected int velocidade;
+    protected boolean hasEfeitoFraqueza = false;
     protected boolean turno;
     protected HashMap<TiposEfeitos, Efeito> mapEfeitos;
     protected GameManager gm;
@@ -18,19 +19,19 @@ public abstract class Entidade {
 
     public abstract boolean estaVivo();
 
-    public abstract int acessoEscudo();
+    public abstract int getEscudo();
 
     public abstract void ganhaEscudo(CartaEscudo cartaEscudo);
 
-    public abstract String acessoNome();
+    public abstract String getNome();
 
-    public abstract int acesso_vida();
+    public abstract int getVida();
 
     public abstract int getVidaInicial();
 
-    public abstract int acessoVelocidade();
+    public abstract int getVelocidade();
 
-    public abstract boolean acessoturno();
+    public abstract boolean getTurno();
 
     public abstract void verificaseAtacou(boolean status);
 
@@ -38,5 +39,10 @@ public abstract class Entidade {
 
     /*retira o efeito da lista de efeitos daquela entidade*/
     public abstract void terminaEfeito(TiposEfeitos tipo);
+
+    public abstract void setHasEfeitoFraqueza(boolean valor);
+
+    public abstract boolean getHasEfeitoFraqueza();
+
 
 }

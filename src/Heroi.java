@@ -39,7 +39,7 @@ public class Heroi extends Entidade {
         int i = 0;
 
         while (i < this.maoJogador.size()) {
-            if (this.maoJogador.get(i).acessoNome().equals(nomeCarta))
+            if (this.maoJogador.get(i).getNome().equals(nomeCarta))
                 return i;
             i++;
         }
@@ -65,7 +65,6 @@ public class Heroi extends Entidade {
             this.escudo = 0;
             this.vida -= danoRestante;
         }
-
     }
 
     @Override
@@ -92,16 +91,16 @@ public class Heroi extends Entidade {
     }
 
     // Adiciona uma carta recém-comprada da loja pra mão do herói.
-    public void adiciona_card(Carta carta) {
+    public void adicionaCard(Carta carta) {
         this.maoJogador.add(carta);
     }
 
     @Override
-    public int acessoEscudo() {
+    public int getEscudo() {
         return this.escudo;
     }
 
-    public int acessoEnergia() {
+    public int getEnergia() {
         return this.energia;
     }
 
@@ -110,18 +109,18 @@ public class Heroi extends Entidade {
     }
 
     @Override
-    public String acessoNome() {
+    public String getNome() {
         return this.nome;
     }
 
     @Override
-    public int acesso_vida() {
+    public int getVida() {
         return this.vida;
     }
 
     public void imprimeCartas() {
         for (int i = 0; i < this.maoJogador.size(); i++) {
-            System.out.println(NEGRITO + i + RESET + "-" + AZUL + this.maoJogador.get(i).acessoNome() + RESET + " -  "
+            System.out.println(NEGRITO + i + RESET + "-" + AZUL + this.maoJogador.get(i).getNome() + RESET + " -  "
                     + this.maoJogador.get(i).acessoDescricao());
         }
     }
@@ -158,13 +157,13 @@ public class Heroi extends Entidade {
     }
 
     @Override
-    public int acessoVelocidade() {
+    public int getVelocidade() {
         return this.velocidade;
     }
 
     // Pra ver se já jogou ou não naquela rodada
     @Override
-    public boolean acessoturno() {
+    public boolean getTurno() {
         return this.turno;
     }
 
@@ -182,7 +181,19 @@ public class Heroi extends Entidade {
             Efeito novoEfeito = Efeito.criaEfeito(tipo, acumulos, this.gm);
             novoEfeito.setDono(this);
             this.mapEfeitos.put(tipo, novoEfeito);
-            this.gm.inscrever(novoEfeito, novoEfeito.tipoDeEstado());
+
+            /*preciso inscrever cada efeito do modo correto */
+            if (tipo == TiposEfeitos.VENENO) {
+                this.gm.inscrever(novoEfeito, Estados.INICIO_DE_TURNO);
+
+            } else if (tipo == TiposEfeitos.FRAQUEZA) {
+                this.gm.inscrever(novoEfeito, Estados.ATAQUE);
+                this.gm.inscrever(novoEfeito, Estados.FIM_DE_TURNO);
+
+            } else if (tipo == TiposEfeitos.FORCA) {
+                // implementação do tipo força
+            }
+
         } else {
             valor.aumentaAcumulos(acumulos);
         }
@@ -191,5 +202,13 @@ public class Heroi extends Entidade {
     @Override
     public void terminaEfeito(TiposEfeitos tipo) {
         this.mapEfeitos.put(tipo, null);
+    }
+
+    public void setHasEfeitoFraqueza(boolean valor) {
+        this.hasEfeitoFraqueza = valor;
+    }
+
+    public boolean getHasEfeitoFraqueza() {
+        return this.hasEfeitoFraqueza;
     }
 }

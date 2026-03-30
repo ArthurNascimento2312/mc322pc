@@ -72,8 +72,12 @@ public class Inimigo extends Entidade {
     public void atacar(Heroi personagem) {
         if (this.deckInimigo.size() > 0) {
             this.ultimaCartaUsada = this.deckInimigo.remove(0);
+            this.ultimaCartaUsada.setPersonagem(this);
 
             if (this.ultimaCartaUsada.getOpcaoCarta() == 0) {
+                /*tenho que publicar que o inimigo vai atacar */
+                gm.notificar(this, Estados.ATAQUE);
+
                 CartaDano cartaDano = (CartaDano) this.ultimaCartaUsada;
                 personagem.recebeDano(cartaDano.acessoCartaDanoDano());
 
@@ -92,7 +96,7 @@ public class Inimigo extends Entidade {
     }
 
     // Pega o valor da última carta usada, se for do tipo dano.
-    public int acessoDano() {
+    public int getDano() {
         if (this.ultimaCartaUsada != null && this.ultimaCartaUsada.getOpcaoCarta() == 0) {
             CartaDano cartadano = (CartaDano) this.ultimaCartaUsada;
             return cartadano.acessoCartaDanoDano();
@@ -101,11 +105,11 @@ public class Inimigo extends Entidade {
         return 0;
     }
 
-    public String acessoNome_Carta() {
-        return this.ultimaCartaUsada.acessoNome();
+    public String getNomeCarta() {
+        return this.ultimaCartaUsada.getNome();
     }
 
-    public int acessoTipoCarta() {
+    public int getTipoCarta() {
         return this.ultimaCartaUsada.getOpcaoCarta();
     }
 
@@ -115,17 +119,17 @@ public class Inimigo extends Entidade {
     }
 
     @Override
-    public int acessoEscudo() {
+    public int getEscudo() {
         return this.escudo;
     }
 
     @Override
-    public String acessoNome() {
+    public String getNome() {
         return this.nome;
     }
 
     @Override
-    public int acesso_vida() {
+    public int getVida() {
         return this.vida;
     }
 
@@ -141,12 +145,12 @@ public class Inimigo extends Entidade {
     }
 
     @Override
-    public int acessoVelocidade() {
+    public int getVelocidade() {
         return this.velocidade;
     }
 
     @Override
-    public boolean acessoturno() {
+    public boolean getTurno() {
         return this.turno;
     }
 
@@ -165,7 +169,19 @@ public class Inimigo extends Entidade {
             Efeito novoEfeito = Efeito.criaEfeito(tipo, acumulos, this.gm);
             novoEfeito.setDono(this);
             this.mapEfeitos.put(tipo, novoEfeito);
-            this.gm.inscrever(novoEfeito, novoEfeito.tipoDeEstado());
+
+            /*preciso inscrever cada efeito do modo correto */
+            if (tipo == TiposEfeitos.VENENO) {
+                this.gm.inscrever(novoEfeito, Estados.INICIO_DE_TURNO);
+
+            } else if (tipo == TiposEfeitos.FRAQUEZA) {
+                this.gm.inscrever(novoEfeito, Estados.ATAQUE);
+                this.gm.inscrever(novoEfeito, Estados.FIM_DE_TURNO);
+
+            } else if (tipo == TiposEfeitos.FORCA) {
+                // implementação do tipo força
+            }
+
         } else {
             valor.aumentaAcumulos(acumulos);
         }
@@ -174,5 +190,13 @@ public class Inimigo extends Entidade {
     @Override
     public void terminaEfeito(TiposEfeitos tipo) {
         this.mapEfeitos.put(tipo, null);
+    }
+
+    public void setHasEfeitoFraqueza(boolean valor) {
+        this.hasEfeitoFraqueza = valor;
+    }
+
+    public boolean getHasEfeitoFraqueza() {
+        return this.hasEfeitoFraqueza;
     }
 }

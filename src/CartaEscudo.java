@@ -17,11 +17,12 @@ public class CartaEscudo extends  Carta{
 @Override  
     public void usar(Entidade personagem, Baralho baralho) {
         personagem.ganhaEscudo(this);
+        this.personagem = null;
         baralho.adicionaPilhaDescarte(this);
     }
 
 @Override
-    public String acessoNome() {
+    public String getNome() {
         return this.nome;
     }
 
@@ -31,7 +32,7 @@ public class CartaEscudo extends  Carta{
     }
 
 @Override
-    public int acessoCusto() {
+    public int getCusto() {
         return  this.custo;
     }
 

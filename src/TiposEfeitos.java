@@ -3,5 +3,6 @@
  */
 enum TiposEfeitos {
     VENENO,
-    FORCA
+    FORCA,
+    FRAQUEZA
 }

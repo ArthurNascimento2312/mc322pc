@@ -28,7 +28,7 @@ public class TurnoVilao {
         /*notificar a entidade que é inicio do turno*/
         gm.notificar(enemy, Estados.INICIO_DE_TURNO);
 
-        System.out.println(VERMELHO + "O " + enemy.acessoNome() + " está atacando..." + RESET);
+        System.out.println(VERMELHO + "O " + enemy.getNome() + " está atacando..." + RESET);
         
         ArrayList<Heroi> heroisVivos = new ArrayList<>();
         for (Heroi h : herois) {
@@ -46,17 +46,19 @@ public class TurnoVilao {
 
             enemy.atacar(alvo);
 
-            if (enemy.acessoTipoCarta() == 0) {
+            if (enemy.getTipoCarta() == 0) {
 
-                System.out.println(enemy.acessoNome() + " usou '" + enemy.acessoNome_Carta() + "' e causou " + VERMELHO + enemy.acessoDano() + RESET + " de dano no " + alvo.acessoNome() + "!");
+                System.out.println(enemy.getNome() + " usou '" + enemy.getNomeCarta() + "' e causou " + VERMELHO + enemy.getDano() + RESET + " de dano no " + alvo.getNome() + "!");
             
-            } else if (enemy.acessoTipoCarta() == 1) {
-                System.out.println(enemy.acessoNome() + " usou '" + enemy.acessoNome_Carta() + "' e ganhou " + AZUL + enemy.acessoEscudo() + RESET + " de escudo!");
+            } else if (enemy.getTipoCarta() == 1) {
+                System.out.println(enemy.getNome() + " usou '" + enemy.getNomeCarta() + "' e ganhou " + AZUL + enemy.getEscudo() + RESET + " de escudo!");
             
-            } else if (enemy.acessoTipoCarta() == 2) {
-                System.out.println(enemy.acessoNome() + " usou '" + enemy.acessoNome_Carta() + "' e ganhou " + AZUL + "ativou o efeito");
+            } else if (enemy.getTipoCarta() == 2) {
+                System.out.println(enemy.getNome() + " usou '" + enemy.getNomeCarta() + AZUL + "ativou o efeito");
             }
         }
+        /*tenho que publicar que o turno do inimigo terminou */
+        gm.notificar(enemy, Estados.FIM_DE_TURNO);
 
         System.out.println(VERMELHO + NEGRITO + "======================================================\n" + RESET);
     }
