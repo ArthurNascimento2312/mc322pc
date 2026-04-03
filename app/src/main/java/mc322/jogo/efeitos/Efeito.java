@@ -62,7 +62,7 @@ public abstract class Efeito implements Subscriber {
             return new EfeitoVeneno(acumulos, gm);
 
         } else if (tipo == TiposEfeitos.FORCA) {
-            return null; // próxima implementação
+            return new EfeitoForca(acumulos, gm);
 
         } else if (tipo == TiposEfeitos.FRAQUEZA) {
             return new EfeitoFraqueza(acumulos, gm);

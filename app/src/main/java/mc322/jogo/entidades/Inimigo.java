@@ -11,7 +11,10 @@ import mc322.jogo.efeitos.Efeito;
 import mc322.jogo.efeitos.TiposEfeitos;
 import mc322.jogo.gerenciador.GameManager;
 import mc322.jogo.observer.Estados;
+import mc322.jogo.gerenciador.Prints;
+import mc322.jogo.cartas.CartaDanoArea;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Classe responsável por representar os adversários do jogo.
@@ -80,7 +83,7 @@ public class Inimigo extends Entidade {
     }
 
     // Pega a última carta, analisa e usa. Depois volta pro deck
-    public void atacar(Heroi personagem) {
+    public void atacar(Heroi alvoSorteado, ArrayList<Heroi> todosHerois) {
         if (this.deckInimigo.size() > 0) {
             this.ultimaCartaUsada = this.deckInimigo.remove(0);
             this.ultimaCartaUsada.setPersonagem(this);
@@ -89,8 +92,16 @@ public class Inimigo extends Entidade {
                 /*tenho que publicar que o inimigo vai atacar */
                 gm.notificar(this, Estados.ATAQUE);
 
+
+                if (this.ultimaCartaUsada instanceof CartaDanoArea) {
+                    CartaDanoArea cartaArea = (CartaDanoArea) this.ultimaCartaUsada;
+                    for (Heroi h : todosHerois) {
+                        h.recebeDano(cartaArea.acessoCartaDanoDano());}
+                } else{
                 CartaDano cartaDano = (CartaDano) this.ultimaCartaUsada;
-                personagem.recebeDano(cartaDano.acessoCartaDanoDano());
+                alvoSorteado.recebeDano(cartaDano.acessoCartaDanoDano());
+                }
+
 
             } else if (this.ultimaCartaUsada.getOpcaoCarta() == 1) {
                 CartaEscudo cartaescudo = (CartaEscudo) this.ultimaCartaUsada;
@@ -98,7 +109,7 @@ public class Inimigo extends Entidade {
 
             } else if (this.ultimaCartaUsada.getOpcaoCarta() == 2) {
                 CartaEfeito cartaEfeito = (CartaEfeito) this.ultimaCartaUsada;
-                personagem.aplicarEfeito(cartaEfeito.getTipoEfeito(), cartaEfeito.getAcumulo());
+                alvoSorteado.aplicarEfeito(cartaEfeito.getTipoEfeito(), cartaEfeito.getAcumulo());
             }
 
             this.deckInimigo.add(this.ultimaCartaUsada);
@@ -197,6 +208,7 @@ public class Inimigo extends Entidade {
             valor.aumentaAcumulos(acumulos);
         }
     }
+    
 
     @Override
     public void terminaEfeito(TiposEfeitos tipo) {
@@ -210,4 +222,30 @@ public class Inimigo extends Entidade {
     public boolean getHasEfeitoFraqueza() {
         return this.hasEfeitoFraqueza;
     }
+    public void setHasEfeitoForca(boolean valor) {
+        this.hasEfeitoForca = valor;
+    }
+
+    public boolean getHasEfeitoForca() {
+        return this.hasEfeitoForca;
+    }
+
+    
+    public String statusEfeitos() {
+        String status = "";
+        for (TiposEfeitos tipo : TiposEfeitos.values()) {
+            Efeito efeito = this.mapEfeitos.get(tipo);
+            if (efeito != null && efeito.getAcumulos() > 0) {
+                status += Prints.AMARELO + "[" + tipo.name() + ": " + efeito.getAcumulos() + "] " + Prints.RESET;
+            }
+        }
+        return status;
+    }
+
+    public Carta getUltimaCarta() {
+        return this.ultimaCartaUsada;
+    }
+
+
+
 }

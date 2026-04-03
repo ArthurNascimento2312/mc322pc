@@ -9,6 +9,8 @@ import mc322.jogo.efeitos.Efeito;
 import mc322.jogo.efeitos.TiposEfeitos;
 import mc322.jogo.gerenciador.GameManager;
 import mc322.jogo.observer.Estados;
+import mc322.jogo.gerenciador.Prints;
+import mc322.jogo.cartas.CartaDanoArea;
 
 /**
  * Classe responsável por representar os Heróis controlados pelo jogador.
@@ -201,7 +203,8 @@ public class Heroi extends Entidade {
                 this.gm.inscrever(novoEfeito, Estados.FIM_DE_TURNO);
 
             } else if (tipo == TiposEfeitos.FORCA) {
-                // implementação do tipo força
+                this.gm.inscrever(novoEfeito, Estados.ATAQUE);
+                this.gm.inscrever(novoEfeito, Estados.FIM_DE_TURNO);
             }
 
         } else {
@@ -221,4 +224,25 @@ public class Heroi extends Entidade {
     public boolean getHasEfeitoFraqueza() {
         return this.hasEfeitoFraqueza;
     }
+
+    public void setHasEfeitoForca(boolean valor) {
+        this.hasEfeitoForca = valor;
+    }
+
+    public boolean getHasEfeitoForca() {
+        return this.hasEfeitoForca;
+    }
+
+
+    public String statusEfeitos() {
+        String status = "";
+        for (TiposEfeitos tipo : TiposEfeitos.values()) {
+            Efeito efeito = this.mapEfeitos.get(tipo);
+            if (efeito != null && efeito.getAcumulos() > 0) {
+                status += Prints.AMARELO + "[" + tipo.name() + ": " + efeito.getAcumulos() + "] " + Prints.RESET;
+            }
+        }
+        return status;
+    }
+
 }
