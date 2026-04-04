@@ -1,19 +1,22 @@
 package mc322.jogo;
 
-import mc322.jogo.entidades.Heroi;
-import mc322.jogo.entidades.Inimigo;
+import java.util.ArrayList;
+
 import mc322.jogo.cartas.Baralho;
 import mc322.jogo.cartas.Carta;
 import mc322.jogo.cartas.CartaDano;
+import mc322.jogo.cartas.CartaDanoArea;
 import mc322.jogo.cartas.CartaEfeito;
 import mc322.jogo.cartas.CartaEscudo;
 import mc322.jogo.efeitos.TiposEfeitos;
+import mc322.jogo.entidades.Heroi;
+import mc322.jogo.entidades.Inimigo;
 import mc322.jogo.gerenciador.GameManager;
-import mc322.jogo.cartas.CartaDanoArea;
-import java.util.ArrayList;
 
 public class Dados {
     private static GameManager gm;
+
+    
 
     public static ArrayList<Heroi> carregarHerois() {
         ArrayList<Heroi> herois = new ArrayList<>();
@@ -68,9 +71,84 @@ public class Dados {
         return deck;
     }
 
-    public static ArrayList<Inimigo> carregarInimigos() {
-        ArrayList<Inimigo> inimigos = new ArrayList<>();
 
+
+
+//----------------------INIMIGOS GENERICOS --------------------------------------------
+
+    public static Inimigo criarAldeao(GameManager gm) {
+        Inimigo aldeao = new Inimigo("Aldeão Furioso", 40, 0, 40, 15, true, gm);
+        ArrayList<Carta> deckAldeao = new ArrayList<>();
+        deckAldeao.add(new CartaDano("Tochada", "[Dano: 12] - Uma tocha quente no seu rosto.", 0, 12, 0));
+        deckAldeao.add(new CartaDano("Golpe com graveto", "[Dano: 15] - Uma espetada pontiaguda.", 0, 15, 0));
+        deckAldeao.add(new CartaEscudo("Recuar com Medo", "[Escudo: 10] - Cobre o rosto com as mãos e recua.", 0, 10, 1));
+        aldeao.transformaDeck(deckAldeao);
+        return aldeao;
+    }
+
+
+    public static Inimigo criarSoldadoFarquad(GameManager gm) {
+        Inimigo soldadoLord = new Inimigo("Soldados do Lord", 60, 0, 60, 25, true, gm);
+        ArrayList<Carta> decksoldado = new ArrayList<>();
+        decksoldado.add(new CartaDano("Lave bem o seu .. pé", "[Dano: 20] - Na cabeça o shampoo.", 0, 20, 0));
+        decksoldado.add(new CartaDano("Chute alto", "[Dano: 15] - Um chute alto.", 0, 15, 0));
+        decksoldado.add(new CartaEscudo("Atrás do Lord", "[Escudo: 10] - Recua para atrás do lord.", 0, 10, 1));
+        soldadoLord.transformaDeck(decksoldado);
+        return soldadoLord;
+    }
+
+
+    public static Inimigo criarLobo(GameManager gm) {
+        Inimigo lobo = new Inimigo("Lobo", 50, 10, 50, 95, true, gm);
+        ArrayList<Carta> decklobo = new ArrayList<>();
+        decklobo.add(new CartaDano("Mordida", "[Dano: 20] - Raawwh.", 0, 20, 0));
+        decklobo.add(new CartaDano("Líder da alcateia", "[Dano: 35] - Mostra quem é o alfa.", 0, 35, 0));
+        decklobo.add(new CartaEscudo("Lua cheia", "[Escudo: 10] - O lobo se cura em lua cheia.", 0, 10, 1));
+        lobo.transformaDeck(decklobo);
+        return lobo;
+    }
+
+
+    public static Inimigo criarCapanga(GameManager gm) {
+        Inimigo capanga = new Inimigo("Capanga do Encantado", 80, 20, 80, 65, true, gm);
+        ArrayList<Carta> deckcapanga = new ArrayList<>();
+        deckcapanga.add(new CartaDano("Jab de esquerda", "[Dano: 20] - Ele é canhoto.", 0, 20, 0));
+        deckcapanga.add(new CartaDano("Golpe de espada", "[Dano: 25] - Está afiada.", 0, 25, 0));
+        deckcapanga.add(new CartaEscudo("Cabeleira meio esvoaçante", "[Escudo: 20] - Não é igual a original.", 0, 20, 1));
+        capanga.transformaDeck(deckcapanga);
+        return capanga;
+    }
+
+
+    public static Inimigo criarBruxa(GameManager gm) {
+        Inimigo bruxa = new Inimigo("Bruxa", 90, 20, 90, 85, true, gm);
+        ArrayList<Carta> deckBruxa = new ArrayList<>();
+        deckBruxa.add(new CartaDano("Risada fantasmagórica", "[Dano: 20] - Não é engraçado.", 0, 20, 0));
+        deckBruxa.add(new CartaDano("Bombas de abóbora", "[Dano: 40] - Kabum.", 0, 40, 0));
+        deckBruxa.add(new CartaEscudo("Fuga com a vassoura", "[Escudo: 30] - Fugiu e se recuperou.", 0, 30, 1));
+        bruxa.transformaDeck(deckBruxa);
+        return bruxa;
+    }
+
+
+
+// -------------------------------CHEFOES--------------------------------------------------
+
+    public static Inimigo criarFarquaad(GameManager gm) {
+        Inimigo farquaad = new Inimigo("Lord Farquaad", 60, 30, 60, 30, true, gm);
+        ArrayList<Carta> deckFarquaad = new ArrayList<>();
+        deckFarquaad.add(new CartaDano("Ordem de Execução", "[Dano: 20] - Os guardas atacam sem piedade.", 0, 20, 0));
+        deckFarquaad.add(new CartaDano("Golpe Baixo", "[Dano: 30] - Um ataque covarde, mas efetivo.", 0, 30, 0));
+        deckFarquaad.add(new CartaEscudo("Muralha de Guardas", "[Escudo: 30] - Usa seus soldados como barreira.", 0, 30, 1));
+        deckFarquaad.add(new CartaEfeito("Gargalhada Suprema", "[Turnos: 3] - O Lord ri de você impiedosamente, ferindo seu orgulho.", 0, 2, TiposEfeitos.VENENO,  3));
+        deckFarquaad.add(new CartaEfeito("Ameaça de Prisão", "[Fraqueza: 25% | Turnos: 4] - O medo das masmorras tira sua vontade de lutar.", 0, 2, TiposEfeitos.FRAQUEZA,  4));
+        deckFarquaad.add(new CartaEfeito("Choro do Biscoito", "[Fraqueza: 25% | Turnos: 4] - Tortura o homem de gengibre, te deixando mal.", 0, 2, TiposEfeitos.FRAQUEZA,  4));
+        farquaad.transformaDeck(deckFarquaad);
+        return farquaad;
+    }
+
+    
+    public static Inimigo criarDragao(GameManager gm) {
         Inimigo dragao = new Inimigo("Dragão", 100, 40, 100, 10, true, gm);
         ArrayList<Carta> deckDragao = new ArrayList<>();
         deckDragao.add(new CartaDano("Baforada de Fogo", "[Dano: 45] - Um sopro ardente e mortal.", 0, 45, 0));
@@ -81,19 +159,22 @@ public class Dados {
         deckDragao.add(new CartaEfeito("Cauda Esmagadora", "[Fraqueza: 25% | Turnos: 3] - Um golpe que te deixa desnorteado e fraco.", 0, 2, TiposEfeitos.FRAQUEZA,  3));
         deckDragao.add(new CartaDanoArea("Sopro de Fogo em Área", "[Dano Área: 20] - O Dragão cospe fogo na arena inteira!", 0, 20, 0));
         dragao.transformaDeck(deckDragao);
-        inimigos.add(dragao);
+        return dragao;
+    }
 
-        Inimigo farquaad = new Inimigo("Lord Farquaad", 60, 30, 60, 30, true, gm);
-        ArrayList<Carta> deckFarquaad = new ArrayList<>();
-        deckFarquaad.add(new CartaDano("Ordem de Execução", "[Dano: 20] - Os guardas atacam sem piedade.", 0, 20, 0));
-        deckFarquaad.add(new CartaDano("Golpe Baixo", "[Dano: 30] - Um ataque covarde, mas efetivo.", 0, 30, 0));
-        deckFarquaad.add(new CartaEscudo("Muralha de Guardas", "[Escudo: 30] - Usa seus soldados como barreira.", 0, 30, 1));
-        deckFarquaad.add(new CartaEfeito("Gargalhada Suprema", "[Turnos: 3] - O Lord ri de você impiedosamente, ferindo seu orgulho.", 0, 2, TiposEfeitos.VENENO,  3));
-        deckFarquaad.add(new CartaEfeito("Ameaça de Prisão", "[Fraqueza: 25% | Turnos: 4] - O medo das masmorras tira sua vontade de lutar.", 0, 2, TiposEfeitos.FRAQUEZA,  4));
-        deckFarquaad.add(new CartaEfeito("Choro do Biscoito", "[Fraqueza: 25% | Turnos: 4] - Tortura o homem de gengibre, te deixando mal.", 0, 2, TiposEfeitos.FRAQUEZA,  4));
-        farquaad.transformaDeck(deckFarquaad);
-        inimigos.add(farquaad);
 
+    public static Inimigo criarEncantado(GameManager gm) {
+        Inimigo encantado = new Inimigo("Príncipe Encantado", 80, 40, 80, 55, true, gm);
+        ArrayList<Carta> deckEncantado = new ArrayList<>();
+        deckEncantado.add(new CartaDano("O Herói destinado", "[Dano: 25] - Um golpe com pose heroica.", 0, 25, 0));
+        deckEncantado.add(new CartaEscudo("Cabelos brilhantes", "[Escudo: 20] - O reflexo protege contra ataques.", 0, 20, 1));
+        deckEncantado.add(new CartaEfeito("Pose no Espelho", "[Buff Força | Turnos: 3] - O Príncipe se admira e ganha Força!", 0, 2, TiposEfeitos.FORCA,  3));
+        encantado.transformaDeck(deckEncantado);
+        return encantado;
+    }
+
+
+    public static Inimigo criarFada(GameManager gm) {
         Inimigo fada = new Inimigo("Fada Madrinha", 90, 20, 90, 60, true, gm);
         ArrayList<Carta> deckFada = new ArrayList<>();
         deckFada.add(new CartaDano("Raio Mágico", "[Dano: 30] - Um feitiço direto da varinha.", 0, 30, 0));
@@ -103,27 +184,35 @@ public class Dados {
         deckFada.add(new CartaEfeito("Poeira Cegante", "[Turnos: 3] - Fada joga brilho nos seus olhos.", 0, 2, TiposEfeitos.FRAQUEZA,  3));
         deckFada.add(new CartaDanoArea("Chuva de Poções", "[Dano Área: 15] - A Fada joga poções em todos os heróis!", 0, 15, 0));
         fada.transformaDeck(deckFada);
-        inimigos.add(fada);
+        return fada;
+    }
 
-        Inimigo encantado = new Inimigo("Príncipe Encantado", 80, 40, 80, 55, true, gm);
-        ArrayList<Carta> deckEncantado = new ArrayList<>();
-        deckEncantado.add(new CartaDano("O Herói destinado", "[Dano: 25] - Um golpe com pose heroica.", 0, 25, 0));
-        deckEncantado.add(new CartaEscudo("Cabelos brilhantes", "[Escudo: 20] - O reflexo protege contra ataques.", 0, 20, 1));
-        deckEncantado.add(new CartaEfeito("Pose no Espelho", "[Buff Força | Turnos: 3] - O Príncipe se admira e ganha Força!", 0, 2, TiposEfeitos.FORCA,  3));
-        encantado.transformaDeck(deckEncantado);
-        inimigos.add(encantado);
 
-        Inimigo rumpel = new Inimigo("Rumpelstiltskin", 60, 40, 60, 25, true, gm);
+    public static Inimigo criarRumpelFraco(GameManager gm) {
+        Inimigo rumpel = new Inimigo("Rumpelstiltskin", 60, 0, 60, 25, true, gm);
         ArrayList<Carta> deckRumpel = new ArrayList<>();
         deckRumpel.add(new CartaDano("Pena em chamas", "[Dano: 15] - Escreve no ar um ataque mágico.", 0, 15, 0));
-        deckRumpel.add(new CartaEfeito("Contrato Mágico", "[Fraqueza: 25% | Turnos: 4] - Te obriga a assinar um contrato abusivo.", 0, 2, TiposEfeitos.FRAQUEZA,  4));
         deckRumpel.add(new CartaEfeito("Tinta Tóxica", "[Turnos: 3] - Joga tinta de contrato na sua cara!", 0, 2, TiposEfeitos.VENENO,  3));
         deckRumpel.add(new CartaEscudo("Esconder na Carruagem", "[Escudo: 30] - Foge para um local seguro.", 0, 30, 1));
         rumpel.transformaDeck(deckRumpel);
-        inimigos.add(rumpel);
-
-        return inimigos;
+        return rumpel;
     }
+
+
+    public static Inimigo criarRumpel(GameManager gm) {
+        Inimigo rumpel = new Inimigo("Rumpelstiltskin", 100, 70, 100, 55, true, gm);
+        ArrayList<Carta> deckRumpel = new ArrayList<>();
+        deckRumpel.add(new CartaDano("Pena em chamas", "[Dano: 55] - Escreve no ar um ataque mágico.", 0, 55, 0));
+        deckRumpel.add(new CartaEfeito("Contrato Mágico", "[Fraqueza: 25% | Turnos: 5] - Te obriga a assinar um contrato abusivo.", 0, 2, TiposEfeitos.FRAQUEZA,  5));
+        deckRumpel.add(new CartaEfeito("Tinta Tóxica", "[Turnos: 3] - Joga tinta de contrato na sua cara!", 0, 2, TiposEfeitos.VENENO,  3));
+        deckRumpel.add(new CartaEscudo("Esconder na Carruagem", "[Escudo: 40] - Foge para um local seguro.", 0, 40, 1));
+        //botar mais carta
+
+        rumpel.transformaDeck(deckRumpel);
+        return rumpel;
+    }
+
+
 
     public static void setGm(GameManager gm) {
         Dados.gm = gm;
