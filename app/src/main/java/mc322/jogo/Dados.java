@@ -3,15 +3,23 @@ package mc322.jogo;
 import mc322.jogo.entidades.Heroi;
 import mc322.jogo.entidades.Inimigo;
 import mc322.jogo.cartas.Baralho;
-import mc322.jogo.cartas.Carta;
 import mc322.jogo.cartas.CartaDano;
 import mc322.jogo.cartas.CartaEfeito;
 import mc322.jogo.cartas.CartaEscudo;
 import mc322.jogo.efeitos.EfeitoFraqueza;
 import mc322.jogo.efeitos.EfeitoVeneno;
 import mc322.jogo.gerenciador.GameManager;
+import mc322.jogo.gerenciador.SistemaAcoes.AcaoAtacar;
+import mc322.jogo.gerenciador.SistemaAcoes.AcaoEfeito;
+import mc322.jogo.gerenciador.SistemaAcoes.AcaoEscudo;
+import mc322.jogo.gerenciador.SistemaAcoes.AcaoInimigo;
+
 import java.util.ArrayList;
 
+/**
+ * Classe que tem como única função armazenar os dados de Inimigos, Herois,
+ * Cartas, Ações.
+ */
 public class Dados {
         private static GameManager gm;
 
@@ -61,9 +69,11 @@ public class Dados {
                 deck.adicionaBaralho(new CartaEscudo("Botas de Couro", "Custa 1 de energia e recebe 10 de escudo", 1,
                                 10));
                 deck.adicionaBaralho(
-                                new CartaEscudo("Camadas de Cebola", "Custa 1 de energia e recebe 12 de escudo", 1, 12));
+                                new CartaEscudo("Camadas de Cebola", "Custa 1 de energia e recebe 12 de escudo", 1,
+                                                12));
                 deck.adicionaBaralho(
-                                new CartaEscudo("Waffles Quentinhos", "Custa 2 de energia e recebe 18 de escudo", 2, 18));
+                                new CartaEscudo("Waffles Quentinhos", "Custa 2 de energia e recebe 18 de escudo", 2,
+                                                18));
                 deck.adicionaBaralho(
                                 new CartaEscudo("Pele Verde e Grossa", "Custa 3 de energia e recebe 25 de escudo", 3,
                                                 25));
@@ -75,7 +85,7 @@ public class Dados {
 
                 /* todas as cartas de efeito */
                 deck.adicionaBaralho(new CartaEfeito("Hálito Matinal de Ogro",
-                                "Aplica 5 de Veneno. É pior que cebola podre",3, (new EfeitoVeneno(2, gm))));
+                                "Aplica 5 de Veneno. É pior que cebola podre", 3, (new EfeitoVeneno(2, gm))));
                 deck.adicionaBaralho(new CartaEfeito("Ensopado de Olho de Peixe",
                                 "Aplica 12 de Veneno. Custa 3 de energia.", 3, (new EfeitoVeneno(12, gm))));
 
@@ -94,47 +104,35 @@ public class Dados {
         public static ArrayList<Inimigo> carregarInimigos() {
                 ArrayList<Inimigo> inimigos = new ArrayList<>();
 
-                Inimigo dragao = new Inimigo("Dragão", 100, 40, 100, 10, true, gm);
-                ArrayList<Carta> deckDragao = new ArrayList<>();
-                deckDragao.add(new CartaDano("Baforada de Fogo", "Causa 45 de dano", 0, 45));
-                deckDragao.add(new CartaDano("Mordida Feroz", "Causa 15 de dano", 0, 15));
-                deckDragao.add(new CartaEfeito("Gargalhada suprema",
-                                "O Lord Gargalha durante uma série de turnos e causa dano", 3,(new EfeitoVeneno(8, gm)))); // teste
-                deckDragao.add(new CartaEscudo("Escamas Duras", "Ganha 15 de escudo", 0, 15));
-                deckDragao.add(new CartaEfeito("Choro do Biscoito",
-                                "Custa 3 de energia. Aplica 25% de Fraqueza. 'Não os meus botões de goma!' Corta o coração do inimigo.",
-                                3, (new EfeitoFraqueza(5, gm, 25))));
-                dragao.transformaDeck(deckDragao);
+                ArrayList<AcaoInimigo> acoesDragao = new ArrayList<>();
+                acoesDragao.add(new AcaoAtacar("Baforada de Fogo", 45));
+                acoesDragao.add(new AcaoAtacar("Mordida Feroz", 15));
+                acoesDragao.add(new AcaoEfeito("Gargalhada suprema", (new EfeitoVeneno(8, gm)))); // teste
+                acoesDragao.add(new AcaoEscudo("Escamas Duras", 15));
+                acoesDragao.add(new AcaoEfeito("Choro do Biscoito", (new EfeitoFraqueza(5, gm, 25))));
+                Inimigo dragao = new Inimigo("Dragão", 100, 40, 100, 10, true, gm, acoesDragao);
+
                 inimigos.add(dragao);
 
-                Inimigo farquaad = new Inimigo("Lord Farquaad", 60, 30, 60, 30, true, gm);
-                ArrayList<Carta> deckFarquaad = new ArrayList<>();
-                deckFarquaad.add(new CartaDano("Ordem de Execução", "Causa 20 de dano", 0, 20));
-                deckFarquaad.add(new CartaDano("Golpe Baixo", "Causa 30 de dano", 0, 30));
-                deckFarquaad.add(new CartaEscudo("Esconder atrás dos guardas", "Ganha 30 de escudo", 0, 30));
-                deckFarquaad.add(new CartaEfeito("Gargalhada suprema",
-                                "O Lord Gargalha durante uma série de turnos e causa dano", 3,(new EfeitoVeneno(9, gm))));
-                deckFarquaad.add(new CartaEfeito("Choro do Biscoito",
-                                "Custa 3 de energia. Aplica 50% de Fraqueza. 'Não os meus botões de goma!' Corta o coração do inimigo.",
-                                3, (new EfeitoFraqueza(6, gm, 50))));
+                ArrayList<AcaoInimigo> acoesFarquaad = new ArrayList<>();
+                acoesFarquaad.add(new AcaoAtacar("Ordem de Execução", 20));
+                acoesFarquaad.add(new AcaoAtacar("Golpe Baixo", 30));
+                acoesFarquaad.add(new AcaoEscudo("Esconder atrás dos guardas", 30));
+                acoesFarquaad.add(new AcaoEfeito("Gargalhada suprema", (new EfeitoVeneno(9, gm))));
+                acoesFarquaad.add(new AcaoEfeito("Choro do Biscoito", (new EfeitoFraqueza(6, gm, 50))));
+                Inimigo farquaad = new Inimigo("Lord Farquaad", 60, 30, 60, 30, true, gm, acoesFarquaad);
 
-                farquaad.transformaDeck(deckFarquaad);
                 inimigos.add(farquaad);
 
-                Inimigo fada = new Inimigo("Fada Madrinha", 90, 20, 90, 60, true, gm);
-                ArrayList<Carta> deckFada = new ArrayList<>();
-                deckFada.add(new CartaDano("Raio Mágico", "Causa 30 de dano", 0, 30));
-                deckFada.add(new CartaDano("Poção Explosiva", "Causa 10 de dano", 0, 10));
-                deckFada.add(new CartaEscudo("Bolha de Sabão", "Ganha 25 de escudo", 0, 25));
-                deckFada.add(new CartaEfeito("Feitiço da fada",
-                                "A fada usa o seu feitiço durante uma série de turnos e causa dano", 3,(new EfeitoVeneno(12, gm))));
-                deckFada.add(new CartaEfeito("Choro do Biscoito",
-                                "Custa 3 de energia. Aplica 25% de Fraqueza. 'Não os meus botões de goma!' Corta o coração do inimigo.",
-                                3, (new EfeitoFraqueza(5, gm, 25))));
-                deckFada.add(new CartaEfeito("Banho de Lama",
-                                "Custa 2 de energia. Aplica 25% de Fraqueza. Deixa as armas do inimigo escorregadias.",
-                                2, (new EfeitoFraqueza(5, gm, 25))));
-                fada.transformaDeck(deckFada);
+                ArrayList<AcaoInimigo> acoesFada = new ArrayList<>();
+                acoesFada.add(new AcaoAtacar("Raio Mágico", 30));
+                acoesFada.add(new AcaoAtacar("Poção Explosiva", 10));
+                acoesFada.add(new AcaoEscudo("Bolha de Sabão", 25));
+                acoesFada.add(new AcaoEfeito("Feitiço da fada", (new EfeitoVeneno(12, gm))));
+                acoesFada.add(new AcaoEfeito("Choro do Biscoito", (new EfeitoFraqueza(5, gm, 25))));
+                acoesFada.add(new AcaoEfeito("Banho de Lama", (new EfeitoFraqueza(5, gm, 25))));
+                Inimigo fada = new Inimigo("Fada Madrinha", 90, 20, 90, 60, true, gm, acoesFada);
+
                 inimigos.add(fada);
 
                 return inimigos;

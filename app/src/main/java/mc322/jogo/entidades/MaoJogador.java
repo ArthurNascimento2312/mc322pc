@@ -8,7 +8,8 @@ import mc322.jogo.cartas.Carta;
 
 /**
  * Classe responsável por gerenciar as cartas na mão do jogador
- * durante um turno.
+ * durante um turno. Entre seus deveres é de mostrar as cartas na mão do jogador
+ * jogar as cartas não usadas para a pilha de descarte e de comprar cartas.
  */
 public class MaoJogador {
     private ArrayList<Carta> mao;

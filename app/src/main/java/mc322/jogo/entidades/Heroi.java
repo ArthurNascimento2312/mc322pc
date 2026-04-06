@@ -155,7 +155,7 @@ public class Heroi extends Entidade {
         return -1; // não existe ainda esse efeito agindo no Heroi
     }
 
-    @Override
+    @Override 
     public void aplicarEfeito(Efeito efeito) {
         int valor = this.buscaEfeito(efeito.getTipo());
 

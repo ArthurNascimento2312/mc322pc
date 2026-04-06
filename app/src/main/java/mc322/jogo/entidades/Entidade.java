@@ -6,12 +6,15 @@ import mc322.jogo.efeitos.TiposEfeitos;
 
 import java.util.ArrayList;
 
+/**
+ * Classe abstrata com o contrato mínimo que uma Entidade (Herois e inimigos)
+ * devem ter.
+ */
 public abstract class Entidade {
     protected String nome;
     protected int vida;
     protected int escudo;
     protected int vidaInicial;
-    protected boolean hasEfeitoFraqueza = false;
     protected boolean turno;
     protected GameManager gm;
     protected int velocidade;

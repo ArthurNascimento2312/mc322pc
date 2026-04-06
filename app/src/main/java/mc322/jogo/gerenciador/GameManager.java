@@ -90,9 +90,6 @@ public class GameManager implements Publisher {
         jogador.escolherHerois(sc);
 
         Baralho deckGeral = Dados.carregarBaralhoGeral();
-        for (Inimigo inimigoSorteado : oponente.getInimigosEscolhidos()) {
-            inimigoSorteado.embaralhaBaralho();
-        }
 
         System.out.println("\n" + Cores.AMARELO + Cores.NEGRITO + "Preparando...  A BATALHA VAI COMEÇAR!"
                 + Cores.RESET + "\n\n");

@@ -75,7 +75,6 @@ public class Baralho {
 
     public void compraCarta(Heroi personagem, int i) {
         Carta carta = this.pilhaCompra.remove(i);
-        carta.setPersonagem(personagem);
         personagem.recebeCarta(carta);;
     }
 

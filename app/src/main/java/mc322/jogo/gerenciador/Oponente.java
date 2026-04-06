@@ -9,7 +9,6 @@ import java.util.Collections;
  * Funciona como o "Técnico" do time inimigo, armazenando o catálogo
  * completo de monstros e sorteando a equipe que entrará na batalha atual.
  */
-
 public class Oponente {
     private ArrayList<Inimigo> todosInimigos = new ArrayList<>();
     private ArrayList<Inimigo> inimigosEscolhidos = new ArrayList<>();

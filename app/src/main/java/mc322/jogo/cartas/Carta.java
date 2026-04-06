@@ -8,7 +8,6 @@ public abstract class Carta {
     protected String descricao;
     protected int custo;
     protected TiposCartas tipo; //coloquei isso aqui para quebrar o encapsulamento
-    protected Entidade personagem = null; // agregação em que tenho uma referência para quem possui a carta no momento
 
     public abstract String getNome();
 
@@ -21,9 +20,5 @@ public abstract class Carta {
     public abstract TiposCartas getTipoCarta();
 
     public abstract RequisitoJogo cartaRequisito();
-
-    public void setPersonagem(Entidade personagem) {
-        this.personagem = personagem;
-    }
 
 }

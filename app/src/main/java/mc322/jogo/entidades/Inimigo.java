@@ -2,17 +2,12 @@ package mc322.jogo.entidades;
 
 import java.util.ArrayList;
 
-import mc322.jogo.cartas.Carta;
-import mc322.jogo.cartas.CartaDano;
-import mc322.jogo.cartas.CartaEfeito;
-import mc322.jogo.cartas.CartaEscudo;
-import mc322.jogo.cartas.TiposCartas;
 import mc322.jogo.efeitos.Efeito;
 import mc322.jogo.efeitos.EfeitoFraqueza;
 import mc322.jogo.efeitos.TiposEfeitos;
 import mc322.jogo.gerenciador.GameManager;
+import mc322.jogo.gerenciador.SistemaAcoes.AcaoInimigo;
 import mc322.jogo.observer.Estados;
-import java.util.Collections;
 
 /**
  * Classe responsável por representar os adversários do jogo.
@@ -22,27 +17,31 @@ import java.util.Collections;
 
 public class Inimigo extends Entidade {
 
-    private ArrayList<Carta> deckInimigo;
-    private Carta ultimaCartaUsada;
+    private ArrayList<AcaoInimigo> sistemaAcoes; //atributo com as ações que esse inimigo tem logo quando o bixinho nasce.
 
-    public Inimigo(String nome, int vida, int escudo, int vidaInicial, int velocidade, boolean turno, GameManager gm) {
+    public Inimigo(String nome, int vida, int escudo, int vidaInicial, int velocidade, boolean turno, GameManager gm, ArrayList<AcaoInimigo> sistemaAcoes) {
         this.nome = nome;
         this.vida = vida;
         this.escudo = escudo;
         this.vidaInicial = vidaInicial;
         this.velocidade = velocidade;
         this.turno = turno;
-        this.deckInimigo = new ArrayList<>(); // isso aqui deveria ser na verdade um sistema de ações !!
+        this.sistemaAcoes = sistemaAcoes;
+
         this.gm = gm;
         this.listaEfeitos = new ArrayList<>();
     }
 
-    public void adicionaCard(Carta carta) {
-        this.deckInimigo.add(carta);
+    public void adicionaAcao(AcaoInimigo acao) {
+        this.sistemaAcoes.add(acao);
     }
 
-    public void embaralhaBaralho() {
-        Collections.shuffle(this.deckInimigo);
+    public int getTamanhoSistemaAcoes() {
+        return this.sistemaAcoes.size();
+    }
+
+    public ArrayList<AcaoInimigo> getSistemaAcoes() {
+        return this.sistemaAcoes;
     }
 
     @Override
@@ -74,61 +73,61 @@ public class Inimigo extends Entidade {
     }
 
     // Pega a última carta, analisa e usa. Depois volta pro deck
+    // public void ataque(Entidade alvo, int valorDano) {
+    //     if (this.deckInimigo.size() > 0) {
+    //         this.ultimaCartaUsada = this.deckInimigo.remove(0);
+    //         this.ultimaCartaUsada.setPersonagem(this); 
+
+    //         if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.DANO) {
+    //             CartaDano cartaDano = (CartaDano) this.ultimaCartaUsada;
+
+    //             /* tenho que publicar que o inimigo vai atacar */
+    //             gm.notificar(this, Estados.ATAQUE);
+    //             for (Efeito efeito : this.listaEfeitos) {
+
+    //                 if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
+    //                     valorDano = cartaDano.acessoCartaDanoDano();
+    //                     double fator = (100.0 - ((EfeitoFraqueza) efeito).getValorFraqueza()) / 100;
+    //                     valorDano = (int) (valorDano * fator); // aqui fiz o truncamento para baixo.
+    //                     System.out.println(valorDano);
+    //                 }
+
+    //                 if (efeito.getTipo() == TiposEfeitos.FORCA) {
+    //                     // vamos ter a implementação do efeito força aqui somando no dano !!
+    //                 }
+    //             }
+
+    //             alvo.recebeDano(valorDano);
+
+    //         } else if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.ESCUDO) {
+    //             CartaEscudo cartaescudo = (CartaEscudo) this.ultimaCartaUsada;
+    //             this.ganhaEscudo(cartaescudo.getEscudoGanho());
+
+    //         } else if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.EFEITO) {
+    //             CartaEfeito cartaEfeito = (CartaEfeito) this.ultimaCartaUsada;
+    //             alvo.aplicarEfeito(cartaEfeito.getEfeito());
+    //         }
+
+    //         this.deckInimigo.add(this.ultimaCartaUsada);
+    //     }
+    // }
+
     public void ataque(Entidade alvo, int valorDano) {
-        if (this.deckInimigo.size() > 0) {
-            this.ultimaCartaUsada = this.deckInimigo.remove(0);
-            this.ultimaCartaUsada.setPersonagem(this);
-
-            if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.DANO) {
-                CartaDano cartaDano = (CartaDano) this.ultimaCartaUsada;
-
-                /* tenho que publicar que o inimigo vai atacar */
-                gm.notificar(this, Estados.ATAQUE);
-                for (Efeito efeito : this.listaEfeitos) {
-
-                    if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
-                        valorDano = cartaDano.acessoCartaDanoDano();
-                        double fator = (100.0 - ((EfeitoFraqueza) efeito).getValorFraqueza()) / 100;
-                        valorDano = (int) (valorDano * fator); // aqui fiz o truncamento para baixo.
-                        System.out.println(valorDano);
-                    }
-
-                    if (efeito.getTipo() == TiposEfeitos.FORCA) {
-                        // vamos ter a implementação do efeito força aqui somando no dano !!
-                    }
-                }
-
-                alvo.recebeDano(valorDano);
-
-            } else if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.ESCUDO) {
-                CartaEscudo cartaescudo = (CartaEscudo) this.ultimaCartaUsada;
-                this.ganhaEscudo(cartaescudo.getEscudoGanho());
-
-            } else if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.EFEITO) {
-                CartaEfeito cartaEfeito = (CartaEfeito) this.ultimaCartaUsada;
-                alvo.aplicarEfeito(cartaEfeito.getEfeito());
+        /*vamos ver quais são os efeitos na lista de efeitos que alterar o valor do dano */
+        for (Efeito efeito: this.listaEfeitos) {
+            if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
+                double fator = (100.0 - ((EfeitoFraqueza) efeito).getValorFraqueza()) / 100;
+                valorDano = (int)(valorDano * fator); // aqui fiz o truncamento para baixo.
+                System.out.println(valorDano);
             }
 
-            this.deckInimigo.add(this.ultimaCartaUsada);
+            if (efeito.getTipo() == TiposEfeitos.FORCA) {
+                // vamos ter a implementação do efeito força aqui somando no dano !!
+            }
         }
-    }
-
-    // Pega o valor da última carta usada, se for do tipo dano.
-    public int getDano() {
-        if (this.ultimaCartaUsada != null && this.ultimaCartaUsada.getTipoCarta() == TiposCartas.DANO) {
-            CartaDano cartadano = (CartaDano) this.ultimaCartaUsada;
-            return cartadano.acessoCartaDanoDano();
-        }
-
-        return 0;
-    }
-
-    public String getNomeCarta() {
-        return this.ultimaCartaUsada.getNome();
-    }
-
-    public TiposCartas getTipoCarta() {
-        return this.ultimaCartaUsada.getTipoCarta();
+        /*publico que o inimigo vai atacar */
+        gm.notificar(this, Estados.ATAQUE);
+        alvo.recebeDano(valorDano);
     }
 
     @Override
@@ -159,12 +158,6 @@ public class Inimigo extends Entidade {
     @Override
     public int getVidaInicial() {
         return this.vidaInicial;
-    }
-
-    // Subsitui o deck atual do inimigo por uma lista de cartas definidas, que estão
-    // em Dados.
-    public void transformaDeck(ArrayList<Carta> cartas) {
-        this.deckInimigo = cartas;
     }
 
     @Override
@@ -234,13 +227,5 @@ public class Inimigo extends Entidade {
     public void terminaEfeito(TiposEfeitos tipo) {
         int indice = this.buscaEfeito(tipo);
         this.listaEfeitos.remove(indice);
-    }
-
-    public void setHasEfeitoFraqueza(boolean valor) {
-        this.hasEfeitoFraqueza = valor;
-    }
-
-    public boolean getHasEfeitoFraqueza() {
-        return this.hasEfeitoFraqueza;
     }
 }

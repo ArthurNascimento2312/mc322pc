@@ -23,7 +23,7 @@ public abstract class Efeito implements Subscriber {
      * inicial
      */
     public String getString() {
-        return "Efeito - " + this.nome + "com - " + this.acumulos + "de acúmulo";
+        return "Efeito - " + this.nome + " com - " + this.acumulos + " de acúmulo";
     }
 
     public int getAcumulos() {

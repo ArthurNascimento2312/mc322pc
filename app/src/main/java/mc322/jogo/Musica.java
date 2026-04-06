@@ -5,6 +5,10 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+/**
+ * Classe que manipula as três músicas do jogo e gerencia os momentos que elas
+ * devem ser tocadas a depender do que está acontecendo no gerenciador geral "Game Manager"
+ */
 public class Musica {
 
     private Clip clipBackground; 

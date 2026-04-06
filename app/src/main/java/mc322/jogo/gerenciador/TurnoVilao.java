@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import mc322.jogo.Cores;
-import mc322.jogo.cartas.TiposCartas;
 import mc322.jogo.entidades.Heroi;
 import mc322.jogo.entidades.Inimigo;
+import mc322.jogo.gerenciador.SistemaAcoes.AcaoInimigo;
 import mc322.jogo.observer.Estados;
 
 /**
@@ -33,7 +33,7 @@ public class TurnoVilao {
         System.out.println(Cores.VERMELHO + "O " + enemy.getNome() + " está atacando..." + Cores.RESET);
 
         ArrayList<Heroi> heroisVivos = new ArrayList<>();
-        for (Heroi h : herois) {
+        for (Heroi h : herois) { //poderia deixar isso aqui como responsabilidade da classe jogador [CORRECAO]
             if (h.estaVivo()) {
                 heroisVivos.add(h);
             }
@@ -41,24 +41,17 @@ public class TurnoVilao {
 
         if (!heroisVivos.isEmpty()) {
 
-            // sorteia um heroi pra bater
+            /*sorteia um heroi pra bater */
             Random gerador = new Random();
             Heroi alvo = heroisVivos.get(gerador.nextInt(heroisVivos.size()));
 
-            enemy.ataque(alvo, 0); // TESTE
+            /*sorteia uma ação para ser executada */
+            AcaoInimigo acao = enemy.getSistemaAcoes().get(gerador.nextInt(enemy.getTamanhoSistemaAcoes()));
 
-            if (enemy.getTipoCarta() == TiposCartas.DANO) {
+            String resposta = acao.executar(enemy, alvo);
+            System.out.println(resposta);
 
-                System.out.println(enemy.getNome() + " usou '" + enemy.getNomeCarta() + "' e causou " + Cores.VERMELHO
-                        + enemy.getDano() + Cores.RESET + " de dano no " + alvo.getNome() + "!");
 
-            } else if (enemy.getTipoCarta() == TiposCartas.ESCUDO) {
-                System.out.println(enemy.getNome() + " usou '" + enemy.getNomeCarta() + "' e ganhou " + Cores.AZUL
-                        + enemy.getEscudo() + Cores.RESET + " de escudo!");
-
-            } else if (enemy.getTipoCarta() == TiposCartas.EFEITO) {
-                System.out.println(enemy.getNome() + " usou '" + enemy.getNomeCarta() + Cores.AZUL + " ativou o efeito");
-            }
         }
         /* tenho que publicar que o turno do inimigo terminou */
         gm.notificar(enemy, Estados.FIM_DE_TURNO);

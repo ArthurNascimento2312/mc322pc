@@ -7,6 +7,10 @@ import mc322.jogo.Musica;
 import mc322.jogo.entidades.Heroi;
 import mc322.jogo.entidades.Inimigo;
 
+/**
+ * Classe responsável por gerenciar as principais impressões durante o jogo.
+ * Essa classe não manipula nenhuma entidade.
+ */
 public class Prints {
 
 ;
