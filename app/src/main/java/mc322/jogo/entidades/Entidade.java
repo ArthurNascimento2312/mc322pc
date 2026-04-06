@@ -3,7 +3,8 @@ package mc322.jogo.entidades;
 import mc322.jogo.gerenciador.GameManager;
 import mc322.jogo.efeitos.Efeito;
 import mc322.jogo.efeitos.TiposEfeitos;
-import java.util.HashMap;
+
+import java.util.ArrayList;
 
 public abstract class Entidade {
     protected String nome;
@@ -12,9 +13,11 @@ public abstract class Entidade {
     protected int vidaInicial;
     protected boolean hasEfeitoFraqueza = false;
     protected boolean turno;
-    protected HashMap<TiposEfeitos, Efeito> mapEfeitos;
     protected GameManager gm;
     protected int velocidade;
+    /*atributos para gerenciar os efeitos que estão agindo na entidade */
+    protected ArrayList<Efeito> listaEfeitos;
+
 
     /* método para gerar o dano partindo de uma carta de dano */
     public abstract void recebeDano(int dano);
@@ -42,13 +45,11 @@ public abstract class Entidade {
 
     public abstract void verificaseAtacou(boolean status);
 
-    public abstract void aplicarEfeito(TiposEfeitos tipo, int acumulos);
+    public abstract void aplicarEfeito(Efeito efeito);
 
     /* retira o efeito da lista de efeitos daquela entidade */
     public abstract void terminaEfeito(TiposEfeitos tipo);
 
-    public abstract void setHasEfeitoFraqueza(boolean valor);
-
-    public abstract boolean getHasEfeitoFraqueza();
+    public abstract void ataque(Entidade alvo, int valorDano); //preciso colocar isso em inimigo
 
 }

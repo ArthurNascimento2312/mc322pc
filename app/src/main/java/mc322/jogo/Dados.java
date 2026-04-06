@@ -7,7 +7,8 @@ import mc322.jogo.cartas.Carta;
 import mc322.jogo.cartas.CartaDano;
 import mc322.jogo.cartas.CartaEfeito;
 import mc322.jogo.cartas.CartaEscudo;
-import mc322.jogo.efeitos.TiposEfeitos;
+import mc322.jogo.efeitos.EfeitoFraqueza;
+import mc322.jogo.efeitos.EfeitoVeneno;
 import mc322.jogo.gerenciador.GameManager;
 import java.util.ArrayList;
 
@@ -28,69 +29,65 @@ public class Dados {
                 Baralho deck = new Baralho();
 
                 /* todas as castas de dano */
-                deck.adicionaBaralho(new CartaDano("Bola de Fogo", "Custa 2 de energia e causa 15 de dano", 2, 15, 0));
+                deck.adicionaBaralho(new CartaDano("Bola de Fogo", "Custa 2 de energia e causa 15 de dano", 2, 15));
                 deck.adicionaBaralho(
-                                new CartaDano("Corte de Espada", "Custa 1 de energia e causa 10 de dano", 1, 10, 0));
-                deck.adicionaBaralho(new CartaDano("Soco do ogro", "Custa 3 de energia e causa 30 de dano", 3, 30, 0));
+                                new CartaDano("Corte de Espada", "Custa 1 de energia e causa 10 de dano", 1, 10));
+                deck.adicionaBaralho(new CartaDano("Soco do ogro", "Custa 3 de energia e causa 30 de dano", 3, 30));
                 deck.adicionaBaralho(
-                                new CartaDano("Pântano tenebroso", "Custa 5 de energia e causa 40 de dano", 5, 40, 0));
-                deck.adicionaBaralho(new CartaDano("Olhar Fofinho", "Custa 1 de energia e causa 8 de dano", 1, 8, 0));
+                                new CartaDano("Pântano tenebroso", "Custa 5 de energia e causa 40 de dano", 5, 40));
+                deck.adicionaBaralho(new CartaDano("Olhar Fofinho", "Custa 1 de energia e causa 8 de dano", 1, 8));
                 deck.adicionaBaralho(
-                                new CartaDano("Cebola Explosiva", "Custa 1 de energia e causa 12 de dano", 1, 12, 0));
+                                new CartaDano("Cebola Explosiva", "Custa 1 de energia e causa 12 de dano", 1, 12));
                 deck.adicionaBaralho(
-                                new CartaDano("Canto da Princesa", "Custa 1 de energia e causa 10 de dano", 1, 10, 0));
+                                new CartaDano("Canto da Princesa", "Custa 1 de energia e causa 10 de dano", 1, 10));
                 deck.adicionaBaralho(
-                                new CartaDano("Coice do Burro", "Custa 2 de energia e causa 18 de dano", 2, 18, 0));
+                                new CartaDano("Coice do Burro", "Custa 2 de energia e causa 18 de dano", 2, 18));
                 deck.adicionaBaralho(
-                                new CartaDano("Voadora da Fiona", "Custa 2 de energia e causa 22 de dano", 2, 22, 0));
+                                new CartaDano("Voadora da Fiona", "Custa 2 de energia e causa 22 de dano", 2, 22));
                 deck.adicionaBaralho(
-                                new CartaDano("Arroto de Pântano", "Custa 3 de energia e causa 28 de dano", 3, 28, 0));
+                                new CartaDano("Arroto de Pântano", "Custa 3 de energia e causa 28 de dano", 3, 28));
                 deck.adicionaBaralho(
-                                new CartaDano("Ataque de Cócegas", "Custa 2 de energia e causa 15 de dano", 2, 15, 0));
-                deck.adicionaBaralho(new CartaDano("Fúria de Ogro", "Custa 4 de energia e causa 38 de dano", 4, 38, 0));
+                                new CartaDano("Ataque de Cócegas", "Custa 2 de energia e causa 15 de dano", 2, 15));
+                deck.adicionaBaralho(new CartaDano("Fúria de Ogro", "Custa 4 de energia e causa 38 de dano", 4, 38));
                 deck.adicionaBaralho(
                                 new CartaDano("Invocação do Dragão Aliado", "Custa 5 de energia e causa 50 de dano", 5,
-                                                50, 0));
+                                                50));
 
                 /* todas as cartas de escudo */
-                deck.adicionaBaralho(new CartaEscudo("Proteção", "Custa 3 de energia e recebe 20 de escudo", 3, 20, 1));
+                deck.adicionaBaralho(new CartaEscudo("Proteção", "Custa 3 de energia e recebe 20 de escudo", 3, 20));
                 deck.adicionaBaralho(
                                 new CartaEscudo("Beijo de amor verdadeiro", "Custa 4 de energia e recebe 50 de escudo",
-                                                4, 50, 1));
+                                                4, 50));
                 deck.adicionaBaralho(new CartaEscudo("Botas de Couro", "Custa 1 de energia e recebe 10 de escudo", 1,
-                                10, 1));
+                                10));
                 deck.adicionaBaralho(
-                                new CartaEscudo("Camadas de Cebola", "Custa 1 de energia e recebe 12 de escudo", 1, 12,
-                                                1));
+                                new CartaEscudo("Camadas de Cebola", "Custa 1 de energia e recebe 12 de escudo", 1, 12));
                 deck.adicionaBaralho(
-                                new CartaEscudo("Waffles Quentinhos", "Custa 2 de energia e recebe 18 de escudo", 2, 18,
-                                                1));
+                                new CartaEscudo("Waffles Quentinhos", "Custa 2 de energia e recebe 18 de escudo", 2, 18));
                 deck.adicionaBaralho(
                                 new CartaEscudo("Pele Verde e Grossa", "Custa 3 de energia e recebe 25 de escudo", 3,
-                                                25, 1));
+                                                25));
                 deck.adicionaBaralho(new CartaEscudo("Panela de Lama", "Custa 2 de energia e recebe 20 de escudo", 2,
-                                20, 1));
+                                20));
                 deck.adicionaBaralho(
                                 new CartaEscudo("Muralha do Castelo do Dragão",
-                                                "Custa 5 de energia e recebe 60 de escudo", 5, 45, 1));
+                                                "Custa 5 de energia e recebe 45 de escudo", 5, 45));
 
                 /* todas as cartas de efeito */
                 deck.adicionaBaralho(new CartaEfeito("Hálito Matinal de Ogro",
-                                "Aplica 5 de Veneno. É pior que cebola podre.",
-                                3, 2, TiposEfeitos.VENENO, 10));
+                                "Aplica 5 de Veneno. É pior que cebola podre",3, (new EfeitoVeneno(2, gm))));
                 deck.adicionaBaralho(new CartaEfeito("Ensopado de Olho de Peixe",
-                                "Aplica 12 de Veneno. Custa 3 de energia.", 3,
-                                2, TiposEfeitos.VENENO, 12));
+                                "Aplica 12 de Veneno. Custa 3 de energia.", 3, (new EfeitoVeneno(12, gm))));
 
                 deck.adicionaBaralho(new CartaEfeito("Arroto de Cebola",
                                 "Custa 4 de energia e Aplica 25% de Fraqueza. Um cheiro de desmotivar qualquer cavaleiro.",
-                                4, 2, TiposEfeitos.FRAQUEZA, 5));
+                                4, (new EfeitoFraqueza(5, gm, 25))));
                 deck.adicionaBaralho(new CartaEfeito("Choro do Biscoito",
                                 "Custa 3 de energia. Aplica 25% de Fraqueza. 'Não os meus botões de goma!' Corta o coração do inimigo.",
-                                3, 2, TiposEfeitos.FRAQUEZA, 4));
+                                3, (new EfeitoFraqueza(5, gm, 25))));
                 deck.adicionaBaralho(new CartaEfeito("Banho de Lama",
-                                "Custa 2 de energia. Aplica 25% de Fraqueza. Deixa as armas do inimigo escorregadias.",
-                                2, 2, TiposEfeitos.FRAQUEZA, 3));
+                                "Custa 2 de energia. Aplica 50% de Fraqueza. Deixa as armas do inimigo escorregadias.",
+                                2, (new EfeitoFraqueza(5, gm, 50))));
                 return deck;
         }
 
@@ -99,53 +96,44 @@ public class Dados {
 
                 Inimigo dragao = new Inimigo("Dragão", 100, 40, 100, 10, true, gm);
                 ArrayList<Carta> deckDragao = new ArrayList<>();
-                deckDragao.add(new CartaDano("Baforada de Fogo", "Causa 45 de dano", 0, 45, 0));
-                deckDragao.add(new CartaDano("Mordida Feroz", "Causa 15 de dano", 0, 15, 0));
+                deckDragao.add(new CartaDano("Baforada de Fogo", "Causa 45 de dano", 0, 45));
+                deckDragao.add(new CartaDano("Mordida Feroz", "Causa 15 de dano", 0, 15));
                 deckDragao.add(new CartaEfeito("Gargalhada suprema",
-                                "O Lord Gargalha durante uma série de turnos e causa dano", 3, 2, TiposEfeitos.VENENO,
-                                10)); // teste
-                deckDragao.add(new CartaEscudo("Escamas Duras", "Ganha 15 de escudo", 0, 15, 1));
+                                "O Lord Gargalha durante uma série de turnos e causa dano", 3,(new EfeitoVeneno(8, gm)))); // teste
+                deckDragao.add(new CartaEscudo("Escamas Duras", "Ganha 15 de escudo", 0, 15));
                 deckDragao.add(new CartaEfeito("Choro do Biscoito",
                                 "Custa 3 de energia. Aplica 25% de Fraqueza. 'Não os meus botões de goma!' Corta o coração do inimigo.",
-                                3, 2, TiposEfeitos.FRAQUEZA, 4));
-                deckDragao.add(new CartaEfeito("Banho de Lama",
-                                "Custa 2 de energia. Aplica 25% de Fraqueza. Deixa as armas do inimigo escorregadias.",
-                                2, 2, TiposEfeitos.FRAQUEZA, 3));
+                                3, (new EfeitoFraqueza(5, gm, 25))));
                 dragao.transformaDeck(deckDragao);
                 inimigos.add(dragao);
 
                 Inimigo farquaad = new Inimigo("Lord Farquaad", 60, 30, 60, 30, true, gm);
                 ArrayList<Carta> deckFarquaad = new ArrayList<>();
-                deckFarquaad.add(new CartaDano("Ordem de Execução", "Causa 20 de dano", 0, 20, 0));
-                deckFarquaad.add(new CartaDano("Golpe Baixo", "Causa 30 de dano", 0, 30, 0));
-                deckFarquaad.add(new CartaEscudo("Esconder atrás dos guardas", "Ganha 30 de escudo", 0, 30, 1));
+                deckFarquaad.add(new CartaDano("Ordem de Execução", "Causa 20 de dano", 0, 20));
+                deckFarquaad.add(new CartaDano("Golpe Baixo", "Causa 30 de dano", 0, 30));
+                deckFarquaad.add(new CartaEscudo("Esconder atrás dos guardas", "Ganha 30 de escudo", 0, 30));
                 deckFarquaad.add(new CartaEfeito("Gargalhada suprema",
-                                "O Lord Gargalha durante uma série de turnos e causa dano", 3, 2, TiposEfeitos.VENENO,
-                                10));
+                                "O Lord Gargalha durante uma série de turnos e causa dano", 3,(new EfeitoVeneno(9, gm))));
                 deckFarquaad.add(new CartaEfeito("Choro do Biscoito",
-                                "Custa 3 de energia. Aplica 25% de Fraqueza. 'Não os meus botões de goma!' Corta o coração do inimigo.",
-                                3, 2, TiposEfeitos.FRAQUEZA, 4));
-                deckFarquaad.add(new CartaEfeito("Choro do Biscoito",
-                                "Custa 3 de energia. Aplica 25% de Fraqueza. 'Não os meus botões de goma!' Corta o coração do inimigo.",
-                                3, 2, TiposEfeitos.FRAQUEZA, 4));
+                                "Custa 3 de energia. Aplica 50% de Fraqueza. 'Não os meus botões de goma!' Corta o coração do inimigo.",
+                                3, (new EfeitoFraqueza(6, gm, 50))));
+
                 farquaad.transformaDeck(deckFarquaad);
                 inimigos.add(farquaad);
 
                 Inimigo fada = new Inimigo("Fada Madrinha", 90, 20, 90, 60, true, gm);
                 ArrayList<Carta> deckFada = new ArrayList<>();
-                deckFada.add(new CartaDano("Raio Mágico", "Causa 30 de dano", 0, 30, 0));
-                deckFada.add(new CartaDano("Poção Explosiva", "Causa 10 de dano", 0, 10, 0));
-                deckFada.add(new CartaEscudo("Bolha de Sabão", "Ganha 25 de escudo", 0, 25, 1));
+                deckFada.add(new CartaDano("Raio Mágico", "Causa 30 de dano", 0, 30));
+                deckFada.add(new CartaDano("Poção Explosiva", "Causa 10 de dano", 0, 10));
+                deckFada.add(new CartaEscudo("Bolha de Sabão", "Ganha 25 de escudo", 0, 25));
                 deckFada.add(new CartaEfeito("Feitiço da fada",
-                                "A fada usa o seu feitiço durante uma série de turnos e causa dano", 3, 2,
-                                TiposEfeitos.VENENO,
-                                10));
+                                "A fada usa o seu feitiço durante uma série de turnos e causa dano", 3,(new EfeitoVeneno(12, gm))));
                 deckFada.add(new CartaEfeito("Choro do Biscoito",
                                 "Custa 3 de energia. Aplica 25% de Fraqueza. 'Não os meus botões de goma!' Corta o coração do inimigo.",
-                                3, 2, TiposEfeitos.FRAQUEZA, 4));
+                                3, (new EfeitoFraqueza(5, gm, 25))));
                 deckFada.add(new CartaEfeito("Banho de Lama",
                                 "Custa 2 de energia. Aplica 25% de Fraqueza. Deixa as armas do inimigo escorregadias.",
-                                2, 2, TiposEfeitos.FRAQUEZA, 3));
+                                2, (new EfeitoFraqueza(5, gm, 25))));
                 fada.transformaDeck(deckFada);
                 inimigos.add(fada);
 

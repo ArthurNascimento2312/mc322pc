@@ -1,24 +1,24 @@
 package mc322.jogo.cartas;
 
+import mc322.jogo.Cores;
 import mc322.jogo.RequisitoJogo;
 import mc322.jogo.entidades.Entidade;
 
 public class CartaDano extends Carta {
     private int danoCarta;
 
-    public CartaDano(String nome, String descricao, int custo, int dano, int opcaoCarta) {
+    public CartaDano(String nome, String descricao, int custo, int dano) {
         this.nome = nome;
         this.descricao = descricao;
         this.custo = custo;
         this.danoCarta = dano;
-        this.opcaoCarta = opcaoCarta;
+        this.tipo = TiposCartas.DANO;
     }
 
     @Override
-    public void usar(Entidade vilao, Baralho baralho) {
-        vilao.recebeDano(this.acessoCartaDanoDano());
-        baralho.adicionaPilhaDescarte(this);
-        this.personagem = null;
+    public String usar(Entidade dono, Entidade alvo) {
+        dono.ataque(alvo, this.acessoCartaDanoDano());
+        return Cores.VERMELHO + "\n⚔️ Você usou " + this.getNome() + " no " + alvo.getNome() + " e causou dano! " + Cores.RESET;
     }
 
     @Override
@@ -26,14 +26,8 @@ public class CartaDano extends Carta {
         return this.nome;
     }
 
-    public int acessoCartaDanoDano() { // preciso melhorar essa lógica !!
-        if (this.personagem.getHasEfeitoFraqueza()) {
-            this.personagem.setHasEfeitoFraqueza(false);
-            return (int) (this.danoCarta * 0.75);
-
-        } else {
-            return this.danoCarta;
-        }
+    public int acessoCartaDanoDano() {
+        return this.danoCarta;  
     }
 
     @Override
@@ -47,8 +41,8 @@ public class CartaDano extends Carta {
     }
 
     @Override
-    public int getOpcaoCarta() {
-        return this.opcaoCarta;
+    public TiposCartas getTipoCarta() {
+        return this.tipo;
     }
 
     @Override

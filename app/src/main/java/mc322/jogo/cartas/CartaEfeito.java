@@ -1,21 +1,24 @@
 package mc322.jogo.cartas;
 
+import mc322.jogo.Cores;
 import mc322.jogo.RequisitoJogo;
 import mc322.jogo.efeitos.Efeito;
 import mc322.jogo.efeitos.TiposEfeitos;
 import mc322.jogo.entidades.Entidade;
 
 public class CartaEfeito extends Carta {
-    protected TiposEfeitos tipo;
-    protected int acumulos;
+    protected Efeito efeito;
 
-    public CartaEfeito(String nome, String descricao, int custo, int opcaoCarta, Efeito efeito, int acumulos) {
+    public CartaEfeito(String nome, String descricao, int custo, Efeito efeito) {
         this.nome = nome;
         this.descricao = descricao;
         this.custo = custo;
-        this.opcaoCarta = opcaoCarta;
-            
-        this.acumulos = acumulos;
+        this.tipo = TiposCartas.EFEITO;
+        this.efeito = efeito;
+    }
+
+    public Efeito getEfeito() {
+        return this.efeito;
     }
 
     @Override
@@ -29,10 +32,9 @@ public class CartaEfeito extends Carta {
     }
 
     @Override
-    public void usar(Entidade personagem, Baralho baralho) {
-        personagem.aplicarEfeito(this.tipo, this.acumulos);
-        this.personagem = null;
-        baralho.adicionaPilhaDescarte(this);
+    public String usar(Entidade dono, Entidade alvo) {
+        alvo.aplicarEfeito(this.efeito);
+        return Cores.AZUL + "\n Você ativou " + this.getNome() + " e aplicou o " + this.getNome() + " : " + this.getDescricao() + Cores.RESET;
     }
 
     @Override
@@ -41,17 +43,10 @@ public class CartaEfeito extends Carta {
     }
 
     @Override
-    public int getOpcaoCarta() {
-        return this.opcaoCarta;
-    }
-
-    public TiposEfeitos getTipoEfeito() {
+    public TiposCartas getTipoCarta() {
         return this.tipo;
     }
 
-    public int getAcumulo() {
-        return this.acumulos;
-    }
 
     public void explicaEfeito(TiposEfeitos tipo) {
         if (tipo == TiposEfeitos.VENENO) {
@@ -64,10 +59,6 @@ public class CartaEfeito extends Carta {
         }
         System.out.println("APLICAR CARTAS DO MESMO TIPO DE EFEITO TEM COMO RESULTADO A SOMA DOS ACÚMULOS");
 
-    }
-
-    public TiposEfeitos getTipo() { //essa função já existe (depois exclui !!!)
-        return this.tipo;
     }
 
     @Override

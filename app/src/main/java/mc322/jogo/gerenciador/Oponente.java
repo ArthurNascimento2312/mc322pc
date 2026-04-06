@@ -32,6 +32,23 @@ public class Oponente {
         }
     }
 
+    /* método para imprimir os inimigos vivos que foram escolhidos naquele jogo */
+    public void imprimeInimigosVivos() {
+        for (int j = 0; j < this.inimigosEscolhidos.size(); j++) {
+            if (this.inimigosEscolhidos.get(j).estaVivo()) {
+                System.out.println(j + " - " + this.inimigosEscolhidos.get(j).getNome() + " (Vida: "
+                        + this.inimigosEscolhidos.get(j).getVida() + ")");
+            }
+        }
+    }
+
+    /*método para validar escolha do usuário*/
+    public boolean validaEscolhaInimigo(int alvoEscolhido) {
+        if (alvoEscolhido >= 0 && alvoEscolhido < this.inimigosEscolhidos.size() && this.inimigosEscolhidos.get(alvoEscolhido).estaVivo())
+            return true;
+        return false;
+    }
+
     public ArrayList<Inimigo> getInimigosEscolhidos() {
         return this.inimigosEscolhidos;
     }
@@ -44,6 +61,10 @@ public class Oponente {
             }
         }
         return false;
+    }
+
+    public Inimigo getInimigo(int indice) {
+        return this.getInimigosEscolhidos().get(indice);
     }
 
 }

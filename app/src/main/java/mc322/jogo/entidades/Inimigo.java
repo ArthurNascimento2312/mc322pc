@@ -1,13 +1,14 @@
 package mc322.jogo.entidades;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import mc322.jogo.cartas.Carta;
 import mc322.jogo.cartas.CartaDano;
 import mc322.jogo.cartas.CartaEfeito;
 import mc322.jogo.cartas.CartaEscudo;
+import mc322.jogo.cartas.TiposCartas;
 import mc322.jogo.efeitos.Efeito;
+import mc322.jogo.efeitos.EfeitoFraqueza;
 import mc322.jogo.efeitos.TiposEfeitos;
 import mc322.jogo.gerenciador.GameManager;
 import mc322.jogo.observer.Estados;
@@ -33,14 +34,7 @@ public class Inimigo extends Entidade {
         this.turno = turno;
         this.deckInimigo = new ArrayList<>(); // isso aqui deveria ser na verdade um sistema de ações !!
         this.gm = gm;
-        this.inicializaMap();
-    }
-
-    public void inicializaMap() { // poderia estar em entidade
-        this.mapEfeitos = new HashMap<>();
-
-        for (TiposEfeitos tipo : TiposEfeitos.values())
-            this.mapEfeitos.put(tipo, null);
+        this.listaEfeitos = new ArrayList<>();
     }
 
     public void adicionaCard(Carta carta) {
@@ -80,35 +74,48 @@ public class Inimigo extends Entidade {
     }
 
     // Pega a última carta, analisa e usa. Depois volta pro deck
-    public void atacar(Heroi personagem) {
+    public void ataque(Entidade alvo, int valorDano) {
         if (this.deckInimigo.size() > 0) {
             this.ultimaCartaUsada = this.deckInimigo.remove(0);
             this.ultimaCartaUsada.setPersonagem(this);
 
-            if (this.ultimaCartaUsada.getOpcaoCarta() == 0) {
-                /*tenho que publicar que o inimigo vai atacar */
-                gm.notificar(this, Estados.ATAQUE);
-
+            if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.DANO) {
                 CartaDano cartaDano = (CartaDano) this.ultimaCartaUsada;
-                personagem.recebeDano(cartaDano.acessoCartaDanoDano());
 
-            } else if (this.ultimaCartaUsada.getOpcaoCarta() == 1) {
+                /* tenho que publicar que o inimigo vai atacar */
+                gm.notificar(this, Estados.ATAQUE);
+                for (Efeito efeito : this.listaEfeitos) {
+
+                    if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
+                        valorDano = cartaDano.acessoCartaDanoDano();
+                        double fator = (100.0 - ((EfeitoFraqueza) efeito).getValorFraqueza()) / 100;
+                        valorDano = (int) (valorDano * fator); // aqui fiz o truncamento para baixo.
+                        System.out.println(valorDano);
+                    }
+
+                    if (efeito.getTipo() == TiposEfeitos.FORCA) {
+                        // vamos ter a implementação do efeito força aqui somando no dano !!
+                    }
+                }
+
+                alvo.recebeDano(valorDano);
+
+            } else if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.ESCUDO) {
                 CartaEscudo cartaescudo = (CartaEscudo) this.ultimaCartaUsada;
                 this.ganhaEscudo(cartaescudo.getEscudoGanho());
 
-            } else if (this.ultimaCartaUsada.getOpcaoCarta() == 2) {
+            } else if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.EFEITO) {
                 CartaEfeito cartaEfeito = (CartaEfeito) this.ultimaCartaUsada;
-                personagem.aplicarEfeito(cartaEfeito.getTipoEfeito(), cartaEfeito.getAcumulo());
+                alvo.aplicarEfeito(cartaEfeito.getEfeito());
             }
 
             this.deckInimigo.add(this.ultimaCartaUsada);
         }
-
     }
 
     // Pega o valor da última carta usada, se for do tipo dano.
     public int getDano() {
-        if (this.ultimaCartaUsada != null && this.ultimaCartaUsada.getOpcaoCarta() == 0) {
+        if (this.ultimaCartaUsada != null && this.ultimaCartaUsada.getTipoCarta() == TiposCartas.DANO) {
             CartaDano cartadano = (CartaDano) this.ultimaCartaUsada;
             return cartadano.acessoCartaDanoDano();
         }
@@ -120,8 +127,8 @@ public class Inimigo extends Entidade {
         return this.ultimaCartaUsada.getNome();
     }
 
-    public int getTipoCarta() {
-        return this.ultimaCartaUsada.getOpcaoCarta();
+    public TiposCartas getTipoCarta() {
+        return this.ultimaCartaUsada.getTipoCarta();
     }
 
     @Override
@@ -176,36 +183,57 @@ public class Inimigo extends Entidade {
         this.turno = status;
     }
 
-    @Override
-    public void aplicarEfeito(TiposEfeitos tipo, int acumulos) {
-        Efeito valor = this.mapEfeitos.get(tipo);
+    /* vale questionar se isso deve estar aqui ou não */
+    private int buscaEfeito(TiposEfeitos tipoAlvo) {
+        for (int i = 0; i < this.listaEfeitos.size(); i++) {
+            Efeito efeito = listaEfeitos.get(i);
+
+            if (efeito.getTipo() == tipoAlvo)
+                return i;
+        }
+        return -1; // não existe ainda esse efeito agindo no Heroi
+    }
+
+    public void aplicarEfeito(Efeito efeito) {
+        int valor = this.buscaEfeito(efeito.getTipo());
 
         /* significa que ainda não existe esse efeito nessa entidade */
-        if (valor == null) {
-            Efeito novoEfeito = Efeito.criaEfeito(tipo, acumulos, this.gm);
+        if (valor == -1) {
+            Efeito novoEfeito = Efeito.criaEfeito(efeito);
             novoEfeito.setDono(this);
-            this.mapEfeitos.put(tipo, novoEfeito);
+            this.listaEfeitos.add(novoEfeito);
 
-            /*preciso inscrever cada efeito do modo correto */
-            if (tipo == TiposEfeitos.VENENO) {
+            /* preciso inscrever cada efeito do modo correto */
+            if (novoEfeito.getTipo() == TiposEfeitos.VENENO) {
                 this.gm.inscrever(novoEfeito, Estados.INICIO_DE_TURNO);
 
-            } else if (tipo == TiposEfeitos.FRAQUEZA) {
+            } else if (novoEfeito.getTipo() == TiposEfeitos.FRAQUEZA) {
                 this.gm.inscrever(novoEfeito, Estados.ATAQUE);
                 this.gm.inscrever(novoEfeito, Estados.FIM_DE_TURNO);
 
-            } else if (tipo == TiposEfeitos.FORCA) {
+            } else if (novoEfeito.getTipo() == TiposEfeitos.FORCA) {
                 // implementação do tipo força
             }
 
         } else {
-            valor.aumentaAcumulos(acumulos);
+            /* decido como cada tipo de efeito vai se comportar */
+            if (efeito.getTipo() == TiposEfeitos.VENENO) {
+                this.listaEfeitos.get(valor).aumentaAcumulos(efeito.getAcumulosInicial());
+
+            } else if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
+                ((EfeitoFraqueza) this.listaEfeitos.get(valor))
+                        .alteraFraqueza(((EfeitoFraqueza) efeito).getValorFraqueza(), efeito.getAcumulosInicial());
+
+            } else if (efeito.getTipo() == TiposEfeitos.FORCA) {
+                // implementação do tipo força
+            }
         }
     }
 
     @Override
     public void terminaEfeito(TiposEfeitos tipo) {
-        this.mapEfeitos.put(tipo, null);
+        int indice = this.buscaEfeito(tipo);
+        this.listaEfeitos.remove(indice);
     }
 
     public void setHasEfeitoFraqueza(boolean valor) {

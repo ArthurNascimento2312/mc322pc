@@ -7,18 +7,18 @@ public abstract class Carta {
     protected String nome;
     protected String descricao;
     protected int custo;
-    protected int opcaoCarta; //coloquei isso aqui para quebrar o encapsulamento
+    protected TiposCartas tipo; //coloquei isso aqui para quebrar o encapsulamento
     protected Entidade personagem = null; // agregação em que tenho uma referência para quem possui a carta no momento
 
     public abstract String getNome();
 
     public abstract int getCusto();
 
-    public abstract void usar(Entidade dono, Entidade alvo);
+    public abstract String usar(Entidade dono, Entidade alvo);
 
     public abstract String getDescricao();
 
-    public abstract int getOpcaoCarta();
+    public abstract TiposCartas getTipoCarta();
 
     public abstract RequisitoJogo cartaRequisito();
 

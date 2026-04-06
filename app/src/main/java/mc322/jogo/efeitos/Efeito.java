@@ -10,6 +10,13 @@ public abstract class Efeito implements Subscriber {
     protected int acumulos;
     protected int acumulosInicial;
     protected GameManager gm;
+    protected TiposEfeitos tipo;
+
+    public Efeito(int acumulos, GameManager gm) {
+        this.acumulosInicial = acumulos;
+        this.acumulos = acumulos;
+        this.gm = gm;
+    }
 
     /*
      * método para informar sobre a carta de efeito e a quantidade de acumulos
@@ -48,24 +55,22 @@ public abstract class Efeito implements Subscriber {
         return this.gm;
     }
 
-    public Efeito(int acumulos, GameManager gm) {
-        this.acumulosInicial = acumulos;
-        this.acumulos = acumulos;
-        this.gm = gm;
+    public TiposEfeitos getTipo() {
+        return this.tipo;
     }
 
     public abstract void acaoEfeito();
 
     /* Nosso padrão para criar qualquer tipo de efeito */
-    public static Efeito criaEfeito(TiposEfeitos tipo, int acumulos, GameManager gm) {
-        if (tipo == TiposEfeitos.VENENO) {
-            return new EfeitoVeneno(acumulos, gm);
+    public static Efeito criaEfeito(Efeito efeito) {
+        if (efeito.getTipo() == TiposEfeitos.VENENO) {
+            return new EfeitoVeneno((EfeitoVeneno) efeito);
 
-        } else if (tipo == TiposEfeitos.FORCA) {
+        } else if (efeito.getTipo() == TiposEfeitos.FORCA) {
             return null; // próxima implementação
 
-        } else if (tipo == TiposEfeitos.FRAQUEZA) {
-            return new EfeitoFraqueza(acumulos, gm);
+        } else if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) { // garanto que ele é do tipo fraqueza
+            return new EfeitoFraqueza((EfeitoFraqueza) efeito);
         }
         return null;
     }

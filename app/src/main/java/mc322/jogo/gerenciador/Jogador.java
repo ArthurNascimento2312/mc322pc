@@ -1,8 +1,9 @@
 package mc322.jogo.gerenciador;
 
-
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import mc322.jogo.Cores;
 import mc322.jogo.entidades.Heroi;
 
 /**
@@ -16,14 +17,6 @@ public class Jogador {
     private ArrayList<Heroi> todosHerois = new ArrayList<>();
     private ArrayList<Heroi> heroisEscolhidos = new ArrayList<>();
 
-    public static final String RESET = "\u001B[0m";
-    public static final String NEGRITO = "\u001B[1m";
-    public static final String VERMELHO = "\u001B[31m";
-    public static final String VERDE = "\u001B[32m";
-    public static final String AMARELO = "\u001B[33m";
-    public static final String AZUL = "\u001B[34m";
-    public static final String CIANO = "\u001B[36m";
-
     // Adiciona os heróis à lista de todos os heróis
     public void adicionarHeroiTodos(Heroi heroi) {
         this.todosHerois.add(heroi);
@@ -33,9 +26,9 @@ public class Jogador {
     public void escolherHerois(Scanner sc) {
         System.out.println("Heróis Disponíveis:");
         for (int i = 0; i < todosHerois.size(); i++) {
-            System.out.println("[" + i + "] " + CIANO + todosHerois.get(i).getNome() + RESET
+            System.out.println("[" + i + "] " + Cores.CIANO + todosHerois.get(i).getNome() + Cores.RESET
                     + " - Vida: " + todosHerois.get(i).getVidaInicial()
-                    + " - Energia: " + todosHerois.get(i).getEnergia()
+                    + " - Energia: " + todosHerois.get(i).getEnergiaAtual()
                     + " - Escudo: " + todosHerois.get(i).getEscudo()
                     + " - Velocidade: " + todosHerois.get(i).getVelocidade());
         }
@@ -52,14 +45,16 @@ public class Jogador {
                 int escolha = sc.nextInt();
 
                 if (escolha < 0 || escolha >= todosHerois.size()) {
-                    System.out.println(VERMELHO + "Opção inválida! Escolha um número do catálogo." + RESET);
+                    System.out.println(Cores.VERMELHO + "Opção inválida! Escolha um número do catálogo." + Cores.RESET);
                 } else {
                     Heroi selecionado = todosHerois.get(escolha); // olha se o herói já está na equipe
                     if (this.heroisEscolhidos.contains(selecionado)) {
-                        System.out.println(VERMELHO + "Esse herói já está na sua equipe! Escolha outro." + RESET);
+                        System.out.println(
+                                Cores.VERMELHO + "Esse herói já está na sua equipe! Escolha outro." + Cores.RESET);
                     } else {
                         this.heroisEscolhidos.add(selecionado);
-                        System.out.println(VERDE + selecionado.getNome() + " entrou para a equipe!" + RESET);
+                        System.out
+                                .println(Cores.VERDE + selecionado.getNome() + " entrou para a equipe!" + Cores.RESET);
                         escolhaValida = true;
 
                     }

@@ -145,26 +145,31 @@ public class GameManager implements Publisher {
                                 Cores.CIANO + "\n>>> Turno de " + heroiAtual.getNome() + " <<<" + Cores.RESET);
 
                         // O herói recebe o deckGeral e a lista de inimigos disponíveis
-                        turnoHeroi.jogar(heroiAtual, jogador.getHeroisEscolhidos(), oponente.getInimigosEscolhidos(),
+                        turnoHeroi.jogar(heroiAtual, jogador.getHeroisEscolhidos(), oponente,
                                 tela, deckGeral, sc);
+
+                        /* após um turno do heroi, podemos ter a morte de todos os inimigos */
+                        if (!jogador.temHeroisVivos() || !oponente.temInimigosVivos())
+                            break;
+
                     } else if (entidadeAtual instanceof Inimigo) {
                         Inimigo inimigoAtual = (Inimigo) entidadeAtual;
                         // O inimigo ataca um herói aleatório da lista
                         turnoVilao.jogar(inimigoAtual, jogador.getHeroisEscolhidos());
+
+                        /* verificar se ainda temos herois e inimigos vivos */
+                        if (!jogador.temHeroisVivos() || !oponente.temInimigosVivos())
+                            break;
+
                     }
 
                     // Marca que já jogou neste turno
-                    entidadeAtual.verificaseAtacou(true);
-                }
-
-                // Vê se algum grupo já foi de base
-                if (!jogador.temHeroisVivos() || !oponente.temInimigosVivos()) {
-                    break;
+                    entidadeAtual.verificaseAtacou(true); // aqui que ele marca que foi atacada
                 }
             }
         }
-
         tela.fimDeJogo(jogador, dj);
 
     }
+
 }

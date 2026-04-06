@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import mc322.jogo.Cores;
+import mc322.jogo.cartas.TiposCartas;
 import mc322.jogo.entidades.Heroi;
 import mc322.jogo.entidades.Inimigo;
 import mc322.jogo.observer.Estados;
@@ -44,18 +45,18 @@ public class TurnoVilao {
             Random gerador = new Random();
             Heroi alvo = heroisVivos.get(gerador.nextInt(heroisVivos.size()));
 
-            enemy.atacar(alvo);
+            enemy.ataque(alvo, 0); // TESTE
 
-            if (enemy.getTipoCarta() == 0) {
+            if (enemy.getTipoCarta() == TiposCartas.DANO) {
 
                 System.out.println(enemy.getNome() + " usou '" + enemy.getNomeCarta() + "' e causou " + Cores.VERMELHO
                         + enemy.getDano() + Cores.RESET + " de dano no " + alvo.getNome() + "!");
 
-            } else if (enemy.getTipoCarta() == 1) {
+            } else if (enemy.getTipoCarta() == TiposCartas.ESCUDO) {
                 System.out.println(enemy.getNome() + " usou '" + enemy.getNomeCarta() + "' e ganhou " + Cores.AZUL
                         + enemy.getEscudo() + Cores.RESET + " de escudo!");
 
-            } else if (enemy.getTipoCarta() == 2) {
+            } else if (enemy.getTipoCarta() == TiposCartas.EFEITO) {
                 System.out.println(enemy.getNome() + " usou '" + enemy.getNomeCarta() + Cores.AZUL + " ativou o efeito");
             }
         }

@@ -13,6 +13,11 @@ public class EfeitoVeneno extends Efeito {
     public EfeitoVeneno(int acumulos, GameManager gm) {
         super(acumulos, gm);
         this.nome = "Efeito Veneno";
+        this.tipo = TiposEfeitos.VENENO;
+    }
+
+    public EfeitoVeneno(EfeitoVeneno efeito) {
+        this(efeito.getAcumulosInicial(), efeito.getGm());
     }
 
     public void serNotificado(Estados state) {

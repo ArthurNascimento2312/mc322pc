@@ -67,6 +67,10 @@ public class MaoJogador {
         return this.mao;
     }
 
+    public Carta devolveCarta(int indice) {
+        return this.mao.get(indice);
+    }
+
     public Baralho getBaralhoMaoJogador() {
         return this.baralhoMaoJogador;
     }

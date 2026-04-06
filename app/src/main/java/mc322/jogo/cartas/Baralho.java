@@ -22,6 +22,12 @@ public class Baralho {
         this.pilhaDescarte = new ArrayList<>();
     }
 
+    public Baralho(Baralho copiaBaralho)  {
+        this.baralho = new ArrayList<>(copiaBaralho.baralho); //temos que ver essa cópia é de fato uma cópia profunda (novos objetos em cada posição do vetor)
+        this.pilhaCompra = new ArrayList<>();
+        this.pilhaDescarte = new ArrayList<>();
+    }
+
     public void embaralhaBaralho() {
         Collections.shuffle(this.baralho);
     }
