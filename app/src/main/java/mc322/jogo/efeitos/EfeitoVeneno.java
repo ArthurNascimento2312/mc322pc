@@ -1,5 +1,6 @@
 package mc322.jogo.efeitos;
 
+import mc322.jogo.RequisitoJogo;
 import mc322.jogo.gerenciador.GameManager;
 import mc322.jogo.observer.Estados;
 
@@ -35,5 +36,10 @@ public class EfeitoVeneno extends Efeito {
         this.getDono().recebeDanoEfeito(acumulos);
         System.out.println(this.getDono().getNome() + " sofreu o efeito de veneno: " + this.nome
                 + " com um dano sofrido de " + this.acumulos);
+    }
+
+    @Override
+    public RequisitoJogo requisitoEfeito() {
+        return RequisitoJogo.INIMIGO;
     }
 }

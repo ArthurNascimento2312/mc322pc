@@ -3,6 +3,7 @@ package mc322.jogo.entidades;
 import java.util.ArrayList;
 
 import mc322.jogo.efeitos.Efeito;
+import mc322.jogo.efeitos.EfeitoForca;
 import mc322.jogo.efeitos.EfeitoFraqueza;
 import mc322.jogo.efeitos.TiposEfeitos;
 import mc322.jogo.gerenciador.GameManager;
@@ -72,57 +73,21 @@ public class Inimigo extends Entidade {
         return false;
     }
 
-    // Pega a última carta, analisa e usa. Depois volta pro deck
-    // public void ataque(Entidade alvo, int valorDano) {
-    //     if (this.deckInimigo.size() > 0) {
-    //         this.ultimaCartaUsada = this.deckInimigo.remove(0);
-    //         this.ultimaCartaUsada.setPersonagem(this); 
-
-    //         if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.DANO) {
-    //             CartaDano cartaDano = (CartaDano) this.ultimaCartaUsada;
-
-    //             /* tenho que publicar que o inimigo vai atacar */
-    //             gm.notificar(this, Estados.ATAQUE);
-    //             for (Efeito efeito : this.listaEfeitos) {
-
-    //                 if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
-    //                     valorDano = cartaDano.acessoCartaDanoDano();
-    //                     double fator = (100.0 - ((EfeitoFraqueza) efeito).getValorFraqueza()) / 100;
-    //                     valorDano = (int) (valorDano * fator); // aqui fiz o truncamento para baixo.
-    //                     System.out.println(valorDano);
-    //                 }
-
-    //                 if (efeito.getTipo() == TiposEfeitos.FORCA) {
-    //                     // vamos ter a implementação do efeito força aqui somando no dano !!
-    //                 }
-    //             }
-
-    //             alvo.recebeDano(valorDano);
-
-    //         } else if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.ESCUDO) {
-    //             CartaEscudo cartaescudo = (CartaEscudo) this.ultimaCartaUsada;
-    //             this.ganhaEscudo(cartaescudo.getEscudoGanho());
-
-    //         } else if (this.ultimaCartaUsada.getTipoCarta() == TiposCartas.EFEITO) {
-    //             CartaEfeito cartaEfeito = (CartaEfeito) this.ultimaCartaUsada;
-    //             alvo.aplicarEfeito(cartaEfeito.getEfeito());
-    //         }
-
-    //         this.deckInimigo.add(this.ultimaCartaUsada);
-    //     }
-    // }
-
     public void ataque(Entidade alvo, int valorDano) {
         /*vamos ver quais são os efeitos na lista de efeitos que alterar o valor do dano */
         for (Efeito efeito: this.listaEfeitos) {
             if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
                 double fator = (100.0 - ((EfeitoFraqueza) efeito).getValorFraqueza()) / 100;
                 valorDano = (int)(valorDano * fator); // aqui fiz o truncamento para baixo.
-                System.out.println(valorDano);
             }
 
             if (efeito.getTipo() == TiposEfeitos.FORCA) {
-                // vamos ter a implementação do efeito força aqui somando no dano !!
+                double fator = (100.0 + ((EfeitoForca) efeito).getValorForca()) / 100;
+                System.out.println("###############################################################################################");
+                valorDano = (int)(valorDano * fator); // aqui fiz o truncamento para baixo
+                System.out.println(valorDano);
+                System.out.println("###############################################################################################");
+
             }
         }
         /*publico que o inimigo vai atacar */
@@ -205,7 +170,8 @@ public class Inimigo extends Entidade {
                 this.gm.inscrever(novoEfeito, Estados.FIM_DE_TURNO);
 
             } else if (novoEfeito.getTipo() == TiposEfeitos.FORCA) {
-                // implementação do tipo força
+                this.gm.inscrever(novoEfeito, Estados.ATAQUE);
+                this.gm.inscrever(novoEfeito, Estados.FIM_DE_TURNO);
             }
 
         } else {
@@ -218,7 +184,7 @@ public class Inimigo extends Entidade {
                         .alteraFraqueza(((EfeitoFraqueza) efeito).getValorFraqueza(), efeito.getAcumulosInicial());
 
             } else if (efeito.getTipo() == TiposEfeitos.FORCA) {
-                // implementação do tipo força
+                ((EfeitoForca) this.listaEfeitos.get(valor)).alteraForca(((EfeitoForca)efeito).getValorForca(), efeito.getAcumulosInicial());
             }
         }
     }

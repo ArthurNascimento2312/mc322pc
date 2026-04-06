@@ -6,6 +6,7 @@ import mc322.jogo.cartas.Baralho;
 import mc322.jogo.cartas.CartaDano;
 import mc322.jogo.cartas.CartaEfeito;
 import mc322.jogo.cartas.CartaEscudo;
+import mc322.jogo.efeitos.EfeitoForca;
 import mc322.jogo.efeitos.EfeitoFraqueza;
 import mc322.jogo.efeitos.EfeitoVeneno;
 import mc322.jogo.gerenciador.GameManager;
@@ -98,6 +99,11 @@ public class Dados {
                 deck.adicionaBaralho(new CartaEfeito("Banho de Lama",
                                 "Custa 2 de energia. Aplica 50% de Fraqueza. Deixa as armas do inimigo escorregadias.",
                                 2, (new EfeitoFraqueza(5, gm, 50))));
+                deck.adicionaBaralho(new CartaEfeito("TESTE CARTA FORCA", "TESTE AUMENTA 25% FORCA", 3, (new EfeitoForca(5, gm, 25))));
+                deck.adicionaBaralho(new CartaEfeito("TESTE CARTA FORCA", "TESTE AUMENTA 25% FORCA", 3, (new EfeitoForca(5, gm, 25))));
+                deck.adicionaBaralho(new CartaEfeito("TESTE CARTA FORCA", "TESTE AUMENTA 25% FORCA", 3, (new EfeitoForca(5, gm, 25))));
+                deck.adicionaBaralho(new CartaEfeito("TESTE CARTA FORCA", "TESTE AUMENTA 25% FORCA", 3, (new EfeitoForca(5, gm, 25))));
+
                 return deck;
         }
 
@@ -110,6 +116,8 @@ public class Dados {
                 acoesDragao.add(new AcaoEfeito("Gargalhada suprema", (new EfeitoVeneno(8, gm)))); // teste
                 acoesDragao.add(new AcaoEscudo("Escamas Duras", 15));
                 acoesDragao.add(new AcaoEfeito("Choro do Biscoito", (new EfeitoFraqueza(5, gm, 25))));
+                acoesDragao.add(new AcaoEfeito("ACAO TESTE FORCA", (new EfeitoForca(5, gm, 25))));
+                acoesDragao.add(new AcaoEfeito("ACAO TESTE FORCA", (new EfeitoForca(5, gm, 25))));
                 Inimigo dragao = new Inimigo("Dragão", 100, 40, 100, 10, true, gm, acoesDragao);
 
                 inimigos.add(dragao);
@@ -120,6 +128,9 @@ public class Dados {
                 acoesFarquaad.add(new AcaoEscudo("Esconder atrás dos guardas", 30));
                 acoesFarquaad.add(new AcaoEfeito("Gargalhada suprema", (new EfeitoVeneno(9, gm))));
                 acoesFarquaad.add(new AcaoEfeito("Choro do Biscoito", (new EfeitoFraqueza(6, gm, 50))));
+                acoesFarquaad.add(new AcaoEfeito("ACAO TESTE FORCA", (new EfeitoForca(5, gm, 25))));
+                acoesFarquaad.add(new AcaoEfeito("ACAO TESTE FORCA", (new EfeitoForca(5, gm, 25))));
+
                 Inimigo farquaad = new Inimigo("Lord Farquaad", 60, 30, 60, 30, true, gm, acoesFarquaad);
 
                 inimigos.add(farquaad);
@@ -131,6 +142,9 @@ public class Dados {
                 acoesFada.add(new AcaoEfeito("Feitiço da fada", (new EfeitoVeneno(12, gm))));
                 acoesFada.add(new AcaoEfeito("Choro do Biscoito", (new EfeitoFraqueza(5, gm, 25))));
                 acoesFada.add(new AcaoEfeito("Banho de Lama", (new EfeitoFraqueza(5, gm, 25))));
+                acoesFada.add(new AcaoEfeito("ACAO TESTE FORCA", (new EfeitoForca(5, gm, 25))));
+                acoesFada.add(new AcaoEfeito("ACAO TESTE FORCA", (new EfeitoForca(5, gm, 25))));
+
                 Inimigo fada = new Inimigo("Fada Madrinha", 90, 20, 90, 60, true, gm, acoesFada);
 
                 inimigos.add(fada);

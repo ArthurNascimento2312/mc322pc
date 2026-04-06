@@ -1,5 +1,6 @@
 package mc322.jogo.efeitos;
 
+import mc322.jogo.RequisitoJogo;
 import mc322.jogo.gerenciador.GameManager;
 import mc322.jogo.observer.Estados;
 
@@ -31,7 +32,6 @@ public class EfeitoFraqueza extends Efeito {
                 this.getGm().desinscrever(this, Estados.FIM_DE_TURNO);
             }
         }
-
     }
 
     @Override // aqui tenho que pensar melhor como vou usar isso aqui (minha ideia era que não fosse necessário o heroi verificar se está sob ação do efeito)
@@ -52,5 +52,10 @@ public class EfeitoFraqueza extends Efeito {
         if (this.getValorFraqueza() < valorFraqueza)
             this.setValorFraqueza(valorFraqueza);
         this.aumentaAcumulos(acumulos);
+    }
+
+    @Override
+    public RequisitoJogo requisitoEfeito() {
+        return RequisitoJogo.INIMIGO;
     }
 }

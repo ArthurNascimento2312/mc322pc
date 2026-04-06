@@ -63,6 +63,6 @@ public class CartaEfeito extends Carta {
 
     @Override
     public RequisitoJogo cartaRequisito() {
-        return RequisitoJogo.INIMIGO;
+        return this.getEfeito().requisitoEfeito();
     }
 }

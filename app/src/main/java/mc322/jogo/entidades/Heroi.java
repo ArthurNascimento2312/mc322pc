@@ -8,6 +8,7 @@ import mc322.jogo.RequisitoJogo;
 import mc322.jogo.cartas.Baralho;
 import mc322.jogo.cartas.Carta;
 import mc322.jogo.efeitos.Efeito;
+import mc322.jogo.efeitos.EfeitoForca;
 import mc322.jogo.efeitos.EfeitoFraqueza;
 import mc322.jogo.efeitos.TiposEfeitos;
 import mc322.jogo.gerenciador.GameManager;
@@ -174,7 +175,8 @@ public class Heroi extends Entidade {
                 this.gm.inscrever(novoEfeito, Estados.FIM_DE_TURNO);
 
             } else if (novoEfeito.getTipo() == TiposEfeitos.FORCA) {
-                // implementação do tipo força
+                this.gm.inscrever(novoEfeito, Estados.ATAQUE);
+                this.gm.inscrever(novoEfeito, Estados.FIM_DE_TURNO);
             }
 
         } else {
@@ -186,7 +188,7 @@ public class Heroi extends Entidade {
                 ((EfeitoFraqueza) this.listaEfeitos.get(valor)).alteraFraqueza(((EfeitoFraqueza)efeito).getValorFraqueza(), efeito.getAcumulosInicial());
 
             } else if (efeito.getTipo() == TiposEfeitos.FORCA) {
-                // implementação do tipo força
+                ((EfeitoForca) this.listaEfeitos.get(valor)).alteraForca(((EfeitoForca)efeito).getValorForca(), efeito.getAcumulosInicial());
             }
         }
     }
@@ -209,11 +211,14 @@ public class Heroi extends Entidade {
             if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
                 double fator = (100.0 - ((EfeitoFraqueza) efeito).getValorFraqueza()) / 100;
                 valorDano = (int)(valorDano * fator); // aqui fiz o truncamento para baixo.
-                System.out.println(valorDano);
             }
 
             if (efeito.getTipo() == TiposEfeitos.FORCA) {
-                // vamos ter a implementação do efeito força aqui somando no dano !!
+                double fator = (100.0 + ((EfeitoForca) efeito).getValorForca()) / 100;
+                System.out.println("###############################################################################################");
+                valorDano = (int)(valorDano * fator); // aqui fiz o truncamento para baixo
+                System.out.println(valorDano);
+                System.out.println("###############################################################################################");
             }
         }
         /*publico que o heroi vai atacar */

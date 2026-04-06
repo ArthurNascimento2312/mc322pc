@@ -1,6 +1,7 @@
 package mc322.jogo.efeitos;
 
 import mc322.jogo.observer.Subscriber;
+import mc322.jogo.RequisitoJogo;
 import mc322.jogo.entidades.Entidade;
 import mc322.jogo.gerenciador.GameManager;
 
@@ -59,6 +60,8 @@ public abstract class Efeito implements Subscriber {
         return this.tipo;
     }
 
+    public abstract RequisitoJogo requisitoEfeito();
+
     public abstract void acaoEfeito();
 
     /* Nosso padrão para criar qualquer tipo de efeito */
@@ -67,7 +70,7 @@ public abstract class Efeito implements Subscriber {
             return new EfeitoVeneno((EfeitoVeneno) efeito);
 
         } else if (efeito.getTipo() == TiposEfeitos.FORCA) {
-            return null; // próxima implementação
+            return new EfeitoForca((EfeitoForca) efeito);
 
         } else if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) { // garanto que ele é do tipo fraqueza
             return new EfeitoFraqueza((EfeitoFraqueza) efeito);
