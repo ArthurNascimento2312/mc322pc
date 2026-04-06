@@ -44,7 +44,7 @@ import mc322.jogo.gerenciador.Prints;
 public class Campanha {
 
     
-    private static Oponente empacotarOponente(Inimigo ini) {
+    private static Oponente carregarOponente(Inimigo ini) {
         Oponente op = new Oponente();
         op.adicionarInimigoTodos(ini);
         op.gerarInimigos(1); 
@@ -56,7 +56,7 @@ public class Campanha {
     public static NoMapa criarMapa(GameManager gm) {
         
         
-        // 1 - 10  Inicio a flores
+        // 1 - 10  Inicio a flores---------------------------------------------------
         NoMapa n1_inicio = new NoMapa(new EventoMapa(
             "Inicio", 
             Prints.DIALOGO_N1,
@@ -66,23 +66,23 @@ public class Campanha {
 
         NoMapa n1_batalha = new NoMapa(new EventoMapa(
             "Batalha", 
-            "Aldeão: Renda-se, monstro! Em nome de Lord Farquaad!\n" +
-            "Shrek: Toma essa!\n", 
-            TipoEvento.BATALHA, empacotarOponente(Dados.criarAldeao(gm))
+            Prints.VERMELHO + Prints.NEGRITO + "Aldeão: " + Prints.RESET + "Renda-se, monstro! Em nome de Lord Farquaad!\n" +
+            Prints.AZUL + Prints.NEGRITO + "Shrek: " + Prints.RESET + "Toma essa!\n", 
+            TipoEvento.BATALHA, carregarOponente(Dados.criarAldeao(gm))
         ));
 
 
         NoMapa n10_rumpel = new NoMapa(new EventoMapa(
             "Rumpel", 
             Prints.DIALOGO_N10, 
-            TipoEvento.BOSS, empacotarOponente(Dados.criarRumpelFraco(gm))
+            TipoEvento.BOSS, carregarOponente(Dados.criarRumpelFraco(gm))
         ));
 
 
         NoMapa n10_flores = new NoMapa(new EventoMapa(
             "Flores",
-            "Narrador: Rumpel foge machucado, jurando vingança. Shrek avança pela floresta e chega a uma encruzilhada.\n" +
-            "Shrek: Flor azul com espinhos vermelhos... ou flor vermelha com espinhos azuis? Qual caminho eu pego?\n", 
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "Rumpel foge machucado, jurando vingança. Shrek avança pela floresta e chega a uma encruzilhada.\n" +
+            Prints.AZUL + Prints.NEGRITO + "Shrek: " + Prints.RESET + "Flor azul com espinhos vermelhos... ou flor vermelha com espinhos azuis? Qual caminho eu pego?\n", 
               TipoEvento.ESCOLHA_HISTORIA, null
         ));
 
@@ -91,23 +91,35 @@ public class Campanha {
         n10_rumpel.adicionarCaminho(n10_flores);
 
 
-        // --- CAMINHO ESQUERDO (BURRO) ---
+        // --- CAMINHO ESQUERDO (BURRO) -----------------------------------------------
         NoMapa n21_burro = new NoMapa(new EventoMapa(
             "Flor azul com espinhos vermelhos\n", 
             Prints.DIALOGO_N21,
             TipoEvento.BATALHA, 
-            empacotarOponente(Dados.criarAldeao(gm)) 
+            carregarOponente(Dados.criarAldeao(gm)) 
         ));
         
         NoMapa n31_golpe = new NoMapa(new EventoMapa("Caminho bonito", 
-        "\"Narrador: O Burro não para de falar, mas você acha um pergaminho antigo no chão.", TipoEvento.RECOMPENSA_CARTA, null));
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "O Burro não para de falar, mas você acha um pergaminho antigo no chão.",
+            TipoEvento.RECOMPENSA_CARTA, null));
         n31_golpe.getEvento().setCartaRecompensa(new CartaDano("Voadora Deslizante", "[Dano: 25]", 2, 25, 0));
         
-        NoMapa n32_batalha = new NoMapa(new EventoMapa("Caminho tortuoso", "Lobo Mau: Cuidado por onde anda, ogro...", TipoEvento.BATALHA, empacotarOponente(Dados.criarLobo(gm))));
+
+        NoMapa n32_batalha = new NoMapa(new EventoMapa("Caminho tortuoso", 
+            Prints.VERMELHO + Prints.NEGRITO + "Lobo Mau: " + Prints.RESET + "Cuidado por onde anda, ogro...", 
+            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));
         
-        NoMapa n41_batalha = new NoMapa(new EventoMapa("Floresta densa", "Narrador: Uma emboscada na floresta densa!", TipoEvento.BATALHA, empacotarOponente(Dados.criarLobo(gm))));
-        NoMapa n42_bar = new NoMapa(new EventoMapa("Seguir pelo rio", "Bartender: Bem-vindo ao bar Maçã Envenenada. Beba essa lama e descanse.", TipoEvento.DESCANSO_BAR, null));
-        NoMapa n43_batalha = new NoMapa(new EventoMapa("Passar pela ponte", "Guarda da Ponte: Pedágio cobrado em sangue!", TipoEvento.BATALHA, empacotarOponente(Dados.criarLobo(gm))));
+        NoMapa n41_batalha = new NoMapa(new EventoMapa("Floresta densa",
+            Prints.NEGRITO + "Narrador:" + Prints.RESET + "Uma emboscada na floresta densa!",
+            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));
+        
+        NoMapa n42_bar = new NoMapa(new EventoMapa("Seguir pelo rio",
+            Prints.NEGRITO + "Bartender: " + Prints.RESET + "Bem-vindo ao bar Maçã",
+            TipoEvento.DESCANSO_BAR, null));
+        
+        NoMapa n43_batalha = new NoMapa(new EventoMapa("Passar pela ponte", 
+            Prints.VERMELHO + Prints.NEGRITO + "Guarda da Ponte: " + Prints.RESET + "Pedágio cobrado em sangue!",
+            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));
 
         n10_flores.adicionarCaminho(n21_burro);
 
@@ -120,23 +132,39 @@ public class Campanha {
         n32_batalha.adicionarCaminho(n43_batalha);
 
 
-        // --- CAMINHO DIREITO (GATO) ---
+        // --- CAMINHO DIREITO (GATO) -----------------------------------------------------------
         NoMapa n22_gato = new NoMapa(new EventoMapa(
             "Flor vermelha com espinhos azuis\n", 
             Prints.DIALOGO_N22,
-            TipoEvento.BATALHA, empacotarOponente(Dados.criarAldeao(gm))
+            TipoEvento.BATALHA, carregarOponente(Dados.criarAldeao(gm))
         ));
 
-        NoMapa n33_golpe = new NoMapa(new EventoMapa("Tempo na fogueira", "Narrador: O Gato de Botas te ensina uma técnica de evasão.", TipoEvento.RECOMPENSA_CARTA, null));
+
+        NoMapa n33_golpe = new NoMapa(new EventoMapa("Tempo na fogueira",
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "O Gato de Botas te ensina uma técnica de evasão.", 
+            TipoEvento.RECOMPENSA_CARTA, null));
         n33_golpe.getEvento().setCartaRecompensa(new CartaEscudo("Esquiva Furtiva", "[Escudo: 15]", 1, 15, 1));
         
-        NoMapa n34_buraco = new NoMapa(new EventoMapa("Floresta à noite", "Ahh! Quem colocou esse buraco aqui?", TipoEvento.ARMADILHA, null));
+
+        NoMapa n34_buraco = new NoMapa(new EventoMapa("Floresta à noite",
+            Prints.AZUL + Prints.NEGRITO + "Você: " + Prints.RESET + "Ahh! Quem colocou esse buraco aqui?",
+            TipoEvento.ARMADILHA, null));
         
-        NoMapa n44_batalha = new NoMapa(new EventoMapa("Cabana do caçador", "Caçador: O Lord já está sabendo de suas aventuras! O prêmio pela sua cabeça é alto!", TipoEvento.BATALHA, empacotarOponente(Dados.criarLobo(gm))));
-        NoMapa n45_golpe = new NoMapa(new EventoMapa("Cabana do caçador", "Narrador: Você saqueia o acampamento do caçador.", TipoEvento.RECOMPENSA_CARTA, null));
+
+        NoMapa n44_batalha = new NoMapa(new EventoMapa("Cabana do caçador",
+            Prints.VERMELHO + Prints.NEGRITO + "Caçador: " + Prints.RESET + "O Lord já está sabendo de suas aventuras! O prêmio pela sua cabeça é alto!", 
+            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));
+        
+
+        NoMapa n45_golpe = new NoMapa(new EventoMapa("Cabana do caçador", 
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "Você saqueia o acampamento do caçador.", 
+            TipoEvento.RECOMPENSA_CARTA, null));
         n45_golpe.getEvento().setCartaRecompensa(new CartaDano("Corte Duplo", "[Dano: 25]", 2, 25, 0));
         
-        NoMapa n46_bar = new NoMapa(new EventoMapa("Seguindo pela floresta", "Narrador: Você encontra uma panela de ferro. Excelente para proteger a cabeça.", TipoEvento.RECOMPENSA_CARTA, null));
+
+        NoMapa n46_bar = new NoMapa(new EventoMapa("Seguindo pela floresta", 
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "Você encontra uma panela de ferro. Excelente para proteger a cabeça.", 
+            TipoEvento.RECOMPENSA_CARTA, null));
 
         n10_flores.adicionarCaminho(n22_gato);
 
@@ -150,13 +178,13 @@ public class Campanha {
 
 
    
-        // 5 FARQUAAD
+        // 5 FARQUAAD-------------------------------------------------------------------------------
 
         NoMapa n5_farquaad  = new NoMapa(new EventoMapa(
             "5-Farquaad", 
             Prints.DIALOGO_N5,
-            TipoEvento.BOSS, 
-            empacotarOponente(Dados.criarFarquaad(gm)) ));
+            TipoEvento.BOSS, carregarOponente(Dados.criarFarquaad(gm)) ));
+
 
         NoMapa n5_masmorra = new NoMapa(new EventoMapa("Proposta",
             Prints.DIALOGO_N50, 
@@ -173,28 +201,30 @@ public class Campanha {
         n5_farquaad.adicionarCaminho(n5_masmorra);
 
 
-        // Até encantado
+        // Até encantado-----------------------------------------------------------------------------------
 
         NoMapa n51_batalha = new NoMapa(new EventoMapa("Vamos lá",
-        "Narrador: No caminho para a masmorra, Shrek encontra inimigos..", 
-        TipoEvento.BATALHA, empacotarOponente(Dados.criarLobo(gm))));
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "No caminho para a masmorra, Shrek encontra inimigos...", 
+            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));
 
         NoMapa n52_batalha = new NoMapa(new EventoMapa("52-Nahh. Passar bem",
-        "Voltando para o pântano, Shrek encontra inimigos..",
-        TipoEvento.BATALHA, empacotarOponente(Dados.criarLobo(gm))));
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "Voltando para o pântano, Shrek encontra inimigos...",
+            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));
         
         NoMapa n61_dragao_fiona = new NoMapa(new EventoMapa("Entrando na masmorra", 
-        Prints.DIALOGO_N61,
-        TipoEvento.BOSS, empacotarOponente(Dados.criarDragao(gm))));
-        
+            Prints.DIALOGO_N61,
+            TipoEvento.BOSS, carregarOponente(Dados.criarDragao(gm))));
+            
         NoMapa n62_golpe = new NoMapa(new EventoMapa("Volta para o pântano", 
-        "Narrador: Shrek acha a espada do príncipe encantado", 
-        TipoEvento.RECOMPENSA_CARTA, null));
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "Shrek acha a espada do príncipe encantado.", 
+            TipoEvento.RECOMPENSA_CARTA, null));
         n62_golpe.getEvento().setCartaRecompensa(new CartaDano("Lâmina da Masmorra", "[Dano: 35]", 2, 35, 0));
 
+
         NoMapa n7_encantado = new NoMapa(new EventoMapa("Na floresta",
-        Prints.DIALOGO_N7, 
-        TipoEvento.BOSS, empacotarOponente(Dados.criarEncantado(gm))));
+            Prints.DIALOGO_N7, 
+            TipoEvento.BOSS, carregarOponente(Dados.criarEncantado(gm))));
+
 
         n5_masmorra.adicionarCaminho(n51_batalha);
         n5_masmorra.adicionarCaminho(n52_batalha);
@@ -206,30 +236,31 @@ public class Campanha {
         n62_golpe.adicionarCaminho(n7_encantado);
 
 
-        //fada e rumpel
-        NoMapa n81_batalha = new NoMapa(new EventoMapa("Voltar agora",
-         "Narrador: Após derrotar o principe, a fada madrinha descobre e envia capangas. No meio do caminho eles te alcançam\n"+
-         "Elfos: Lá está ele. Atacar\n", 
-         TipoEvento.BATALHA, empacotarOponente(Dados.criarLobo(gm))));
+        //fada e rumpel------------------------------------------------------------------------------------------------------
         
+        NoMapa n81_batalha = new NoMapa(new EventoMapa("Voltar agora",
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "Após derrotar o príncipe, a fada madrinha descobre e envia capangas. No meio do caminho eles te alcançam...\n" +
+            Prints.VERMELHO + Prints.NEGRITO + "Elfos: " + Prints.RESET + "Lá está ele. Atacar!\n", 
+            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));
+            
         
         NoMapa n82_golpe = new NoMapa(new EventoMapa("Descansar um pouco e voltar depois", 
-        "Narrador: Após derrotar o principe, você pega sua poção", 
-        TipoEvento.RECOMPENSA_CARTA, null));
+            Prints.NEGRITO + "Narrador: " + Prints.RESET + "Após derrotar o príncipe, você pega sua poção.",
+            TipoEvento.RECOMPENSA_CARTA, null));
         n82_golpe.getEvento().setCartaRecompensa(new CartaEscudo("Poção de Defesa", "[Escudo: 40]", 2, 40, 1));
 
         NoMapa n9_fada = new NoMapa(new EventoMapa("Seguir jornada", 
-        Prints.DIALOGO_N9, 
-        TipoEvento.BOSS, empacotarOponente(Dados.criarFada(gm))));
+            Prints.DIALOGO_N9, 
+            TipoEvento.BOSS, carregarOponente(Dados.criarFada(gm))));
         
         NoMapa n90_golpe = new NoMapa(new EventoMapa("Continuar",
-        Prints.DIALOGO_N90,
-        TipoEvento.RECOMPENSA_CARTA, null));
+            Prints.DIALOGO_N90,
+            TipoEvento.RECOMPENSA_CARTA, null));
         n90_golpe.getEvento().setCartaRecompensa(new CartaDano("Varinha Quebrada", "[Dano: 50]", 3, 50, 0));
 
         NoMapa n100_rumpel = new NoMapa(new EventoMapa("I need a hero", 
-        Prints.DIALOGO_N100,
-        TipoEvento.BOSS, empacotarOponente(Dados.criarRumpel(gm))));
+            Prints.DIALOGO_N100,
+            TipoEvento.BOSS, carregarOponente(Dados.criarRumpel(gm))));
 
         n7_encantado.adicionarCaminho(n81_batalha);
         n7_encantado.adicionarCaminho(n82_golpe);

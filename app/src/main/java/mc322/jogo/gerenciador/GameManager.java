@@ -89,9 +89,9 @@ public class GameManager implements Publisher {
 
     public void viajarPeloGrafo(NoMapa nodoAtual, Jogador jogador, Scanner sc, Prints tela) {
         
-        
+        Prints.limparTela();
         EventoMapa evento = nodoAtual.getEvento();
-        Prints.limparTela();  //talvez tenha q mudar de lugar
+        //Prints.limparTela();  //talvez tenha q mudar de lugar
         System.out.println(evento.getNomeFase());
         System.out.println(evento.getDialogo());
         
