@@ -6,6 +6,7 @@ import mc322.jogo.entidades.Entidade;
 
 public class CartaDano extends Carta {
     private int danoCarta;
+   
 
     public CartaDano(String nome, String descricao, int custo, int dano) {
         this.nome = nome;

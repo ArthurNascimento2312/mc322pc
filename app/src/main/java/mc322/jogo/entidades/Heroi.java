@@ -215,10 +215,7 @@ public class Heroi extends Entidade {
 
             if (efeito.getTipo() == TiposEfeitos.FORCA) {
                 double fator = (100.0 + ((EfeitoForca) efeito).getValorForca()) / 100;
-                System.out.println("###############################################################################################");
                 valorDano = (int)(valorDano * fator); // aqui fiz o truncamento para baixo
-                System.out.println(valorDano);
-                System.out.println("###############################################################################################");
             }
         }
         /*publico que o heroi vai atacar */
@@ -269,5 +266,17 @@ public class Heroi extends Entidade {
 
     public void limpaMao() {
         this.maoJogador.limpaMaoJogador(this.baralhoPessoal);
+    }
+
+    public String jogarCarta(int indiceCartaMao, RequisitoJogo requisitos) {
+        /*validar se o heroi pode de fato usar a carta*/
+        Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao); //posso criar um método que engloba os dois passos (perguntar pro ped)
+        int custo = cartaEscolhida.getCusto();
+
+        if (this.analisaEnergia(custo)) {
+            String resposta = cartaEscolhida.usar(this, this);
+            return resposta; //significa que a carta foi usada com sucesso
+        }
+        return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem o jogador conseguir usar.
     }
 }

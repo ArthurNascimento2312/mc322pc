@@ -1,5 +1,35 @@
 package mc322.jogo.cartas;
 
-public class CartaDanoArea {
+import java.util.ArrayList;
+
+import mc322.jogo.Cores;
+import mc322.jogo.RequisitoJogo;
+import mc322.jogo.entidades.Entidade;
+import mc322.jogo.entidades.Inimigo;
+
+public class CartaDanoArea extends CartaDano{
+
+    public CartaDanoArea(String nome, String descricao, int custo, int dano) {
+        super(nome, descricao, custo, dano);
+    }
+
+    // Método exclusivo para bater em todos os inimigos vivos de uma vez
+    public void usarEmArea(ArrayList<Inimigo> inimigos) {
+        for (Inimigo alvo : inimigos) {
+            if (alvo.estaVivo()) {
+                alvo.recebeDano(this.acessoCartaDanoDano());
+            }
+        }
+    }
+
+    @Override
+    public String usar(Entidade dono, Entidade alvo) {
+        this.usarEmArea();
+        return Cores.VERMELHO + "\n⚔️ Você usou " + this.getNome() + " no " + " em todos os inimigos " + " e causou dano! " + Cores.RESET;
+    }
+
+    public RequisitoJogo cartaRequisito() {
+        return RequisitoJogo.TODOS_INIMIGOS;
+    }
     
 }
