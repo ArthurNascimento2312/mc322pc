@@ -55,4 +55,6 @@ public abstract class Entidade {
 
     public abstract void ataque(Entidade alvo, int valorDano); //preciso colocar isso em inimigo
 
+    public abstract void imprimeEfeitos();
+
 }

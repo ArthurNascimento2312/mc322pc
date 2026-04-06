@@ -1,8 +1,11 @@
 package mc322.jogo.cartas;
 
+import java.util.ArrayList;
+
 import mc322.jogo.Cores;
 import mc322.jogo.RequisitoJogo;
 import mc322.jogo.entidades.Entidade;
+import mc322.jogo.entidades.Inimigo;
 
 public class CartaDano extends Carta {
     private int danoCarta;
@@ -17,7 +20,7 @@ public class CartaDano extends Carta {
     }
 
     @Override
-    public String usar(Entidade dono, Entidade alvo) {
+    public String usar(Entidade dono, Entidade alvo, ArrayList<Inimigo> inimigos) {
         dono.ataque(alvo, this.acessoCartaDanoDano());
         return Cores.VERMELHO + "\n⚔️ Você usou " + this.getNome() + " no " + alvo.getNome() + " e causou dano! " + Cores.RESET;
     }

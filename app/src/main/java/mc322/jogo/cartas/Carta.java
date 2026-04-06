@@ -1,7 +1,10 @@
 package mc322.jogo.cartas;
 
+import java.util.ArrayList;
+
 import mc322.jogo.RequisitoJogo;
 import mc322.jogo.entidades.Entidade;
+import mc322.jogo.entidades.Inimigo;
 
 public abstract class Carta {
     protected String nome;
@@ -13,7 +16,7 @@ public abstract class Carta {
 
     public abstract int getCusto();
 
-    public abstract String usar(Entidade dono, Entidade alvo);
+    public abstract String usar(Entidade dono, Entidade alvo, ArrayList<Inimigo> inimigos);
 
     public abstract String getDescricao();
 

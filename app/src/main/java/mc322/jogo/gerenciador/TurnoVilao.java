@@ -50,6 +50,7 @@ public class TurnoVilao {
 
             String resposta = acao.executar(enemy, alvo);
             System.out.println(resposta);
+            enemy.imprimeEfeitos();
 
 
         }

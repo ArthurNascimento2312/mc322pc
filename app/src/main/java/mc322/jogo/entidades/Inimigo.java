@@ -83,10 +83,8 @@ public class Inimigo extends Entidade {
 
             if (efeito.getTipo() == TiposEfeitos.FORCA) {
                 double fator = (100.0 + ((EfeitoForca) efeito).getValorForca()) / 100;
-                System.out.println("###############################################################################################");
                 valorDano = (int)(valorDano * fator); // aqui fiz o truncamento para baixo
-                System.out.println(valorDano);
-                System.out.println("###############################################################################################");
+
 
             }
         }
@@ -193,5 +191,14 @@ public class Inimigo extends Entidade {
     public void terminaEfeito(TiposEfeitos tipo) {
         int indice = this.buscaEfeito(tipo);
         this.listaEfeitos.remove(indice);
+    }
+
+    public void imprimeEfeitos() {
+        System.out.println("=================================================================");
+        System.out.println("EFEITOS QUE ESTÃO EM AÇÃO EM: " + this.getNome());
+        for (Efeito efeito : this.listaEfeitos) {
+            System.out.println(this.getNome() + "está sob "+ efeito.getString());
+        }
+        System.out.println("=================================================================");
     }
 }

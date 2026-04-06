@@ -23,8 +23,14 @@ public class CartaDanoArea extends CartaDano{
     }
 
     @Override
-    public String usar(Entidade dono, Entidade alvo) {
-        this.usarEmArea();
+    public String usar(Entidade dono, Entidade alvo, ArrayList<Inimigo> inimigos) {
+        /*vamos atacar inimigo por inimigo usando a lógica pronta de ataque que já tem os efeitos de força e fraqueza*/
+        for (Inimigo inimigo: inimigos) {
+            if (inimigo.estaVivo()) { // seria melhor ter um método em oponentes que entrega um vetor filtrado
+                dono.ataque(inimigo, super.acessoCartaDanoDano());
+            }
+
+        }
         return Cores.VERMELHO + "\n⚔️ Você usou " + this.getNome() + " no " + " em todos os inimigos " + " e causou dano! " + Cores.RESET;
     }
 

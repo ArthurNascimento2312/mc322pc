@@ -239,7 +239,7 @@ public class Heroi extends Entidade {
         int custo = cartaEscolhida.getCusto();
 
         if (this.analisaEnergia(custo)) {
-            String resposta = cartaEscolhida.usar(this, this);
+            String resposta = cartaEscolhida.usar(this, this, null); // perguntar sobre a questão do null
             return resposta; //significa que a carta foi usada com sucesso
         }
         return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem o jogador conseguir usar.
@@ -252,7 +252,7 @@ public class Heroi extends Entidade {
         int custo = cartaEscolhida.getCusto();
 
         if (this.analisaEnergia(custo)) {
-            String resposta = cartaEscolhida.usar(this, alvo);
+            String resposta = cartaEscolhida.usar(this, alvo, null); //perguntar sobre a questão do null
             return resposta; //significa que a carta foi usada com sucesso
         }
         return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem o jogador conseguir usar.
@@ -268,15 +268,24 @@ public class Heroi extends Entidade {
         this.maoJogador.limpaMaoJogador(this.baralhoPessoal);
     }
 
-    public String jogarCarta(int indiceCartaMao, RequisitoJogo requisitos) {
+    public String jogarCarta(int indiceCartaMao, ArrayList<Inimigo> inimigos) {
         /*validar se o heroi pode de fato usar a carta*/
         Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao); //posso criar um método que engloba os dois passos (perguntar pro ped)
         int custo = cartaEscolhida.getCusto();
 
         if (this.analisaEnergia(custo)) {
-            String resposta = cartaEscolhida.usar(this, this);
+            String resposta = cartaEscolhida.usar(this, this, inimigos);
             return resposta; //significa que a carta foi usada com sucesso
         }
         return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem o jogador conseguir usar.
+    }
+
+    public void imprimeEfeitos() {
+        System.out.println("=================================================================");
+        System.out.println("EFEITOS QUE ESTÃO EM AÇÃO EM: " + this.getNome());
+        for (Efeito efeito : this.listaEfeitos) {
+            System.out.println(this.getNome() + "está sob "+ efeito.getString());
+        }
+        System.out.println("=================================================================");
     }
 }

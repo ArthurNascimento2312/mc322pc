@@ -4,6 +4,7 @@ import mc322.jogo.entidades.Heroi;
 import mc322.jogo.entidades.Inimigo;
 import mc322.jogo.cartas.Baralho;
 import mc322.jogo.cartas.CartaDano;
+import mc322.jogo.cartas.CartaDanoArea;
 import mc322.jogo.cartas.CartaEfeito;
 import mc322.jogo.cartas.CartaEscudo;
 import mc322.jogo.efeitos.EfeitoForca;
@@ -61,6 +62,11 @@ public class Dados {
                 deck.adicionaBaralho(
                                 new CartaDano("Invocação do Dragão Aliado", "Custa 5 de energia e causa 50 de dano", 5,
                                                 50));
+
+                /*Cartas de dano em áera*/
+                deck.adicionaBaralho(new CartaDanoArea("TESTE AREA", "TÁ BALA ARTHUR ?", 4, 50));
+                deck.adicionaBaralho(new CartaDanoArea("TESTE AREA", "TÁ BALA ARTHUR ?", 4, 50));
+                deck.adicionaBaralho(new CartaDanoArea("TESTE AREA", "TÁ BALA ARTHUR ?", 4, 50));
 
                 /* todas as cartas de escudo */
                 deck.adicionaBaralho(new CartaEscudo("Proteção", "Custa 3 de energia e recebe 20 de escudo", 3, 20));

@@ -1,8 +1,11 @@
 package mc322.jogo.cartas;
 
+import java.util.ArrayList;
+
 import mc322.jogo.Cores;
 import mc322.jogo.RequisitoJogo;
 import mc322.jogo.entidades.Entidade;
+import mc322.jogo.entidades.Inimigo;
 
 public class CartaEscudo extends Carta {
     private int escudoGanho;
@@ -16,7 +19,7 @@ public class CartaEscudo extends Carta {
     }
 
     @Override /*podemos modificar isso aqui para o heroi poder usar a sua carta de escudo em um aliado */
-    public String usar(Entidade dono, Entidade alvo) {
+    public String usar(Entidade dono, Entidade alvo, ArrayList<Inimigo> inimigos) {
         /*ainda não usamos o alvo, porque a nossa carta de escudo o alvo é o mesmo que o dono, mas podemos generalizar */
         dono.ganhaEscudo(this.getEscudoGanho());
         // podemos personalizar no caso do escudo for para outro heroi e não em si.
