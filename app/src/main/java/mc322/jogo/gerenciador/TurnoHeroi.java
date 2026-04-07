@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import mc322.jogo.Cores;
 import mc322.jogo.RequisitoJogo;
-import mc322.jogo.cartas.Baralho;
 import mc322.jogo.entidades.Heroi;
 import mc322.jogo.observer.Estados;
 
@@ -29,7 +28,6 @@ public class TurnoHeroi {
         this.gm = gm;
     }
 
-    
     /**
      * Método responsável por gerenciar um Turno do Heroi com respeito a interação com o terminal.
      * Responsável por gerenciar as entradas do usuário durante o turno do heroi, ou seja, as cartas
@@ -39,16 +37,15 @@ public class TurnoHeroi {
      * @param herois lista com todos os heróis escolhidos nessa batalha
      * @param oponente lista com todos os inimigos escolhidos nessa batalha
      * @param tela Classe com todos os prints de telas do jogo {@link Prints}
-     * @param deck
      * @param sc Scanner do teclado.
      */
-    public void jogar(Heroi player, ArrayList<Heroi> herois, Oponente oponente, Prints tela, Baralho deck, Scanner sc) {
+    public void jogar(Heroi player, ArrayList<Heroi> herois, Oponente oponente, Prints tela, Scanner sc) {
 
         player.zeraEscudo();
         int opcaoCompra = 0;
         int cartasCompradas = 0;
         int limiteCompra = 3;
-        deck.criarPilhaCompra(6);
+        player.getBaralhoPessoal().criarPilhaCompra(4);
 
         /* vamos notificar que iniciou o turno para a entidade */
         gm.notificar(player, Estados.INICIO_DE_TURNO);
@@ -69,14 +66,14 @@ public class TurnoHeroi {
             opcaoCompra = sc.nextInt();
 
             if (opcaoCompra == COMPRA_CARTA) {
-                deck.imprimePilhaCompra();
+                player.getBaralhoPessoal().imprimePilhaCompra();
                 int i = sc.nextInt();
 
-                if (i < 0 || deck.tamanhoPilha() <= i) {
+                if (i < 0 || player.getBaralhoPessoal().tamanhoPilha() <= i) {
                     System.out.println(Cores.VERMELHO + "Opção inválida!" + Cores.RESET);
 
                 } else {
-                    deck.compraCarta(player, i);
+                    player.getBaralhoPessoal().compraCarta(player, i);
                     System.out.println(Cores.VERDE + "Você comprou uma carta!" + Cores.RESET);
                     cartasCompradas++;
                 }
@@ -86,7 +83,7 @@ public class TurnoHeroi {
             }
         }
 
-        deck.devolverCartasNaoCompradas();
+        player.getBaralhoPessoal().devolverCartasNaoCompradas();
 
         // ---------------------------FASE DE AÇÃO  -----------------------------------------
 

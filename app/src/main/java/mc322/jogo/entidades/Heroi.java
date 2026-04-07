@@ -3,7 +3,6 @@ package mc322.jogo.entidades;
 import java.util.ArrayList;
 
 import mc322.jogo.Cores;
-import mc322.jogo.Dados;
 import mc322.jogo.RequisitoJogo;
 import mc322.jogo.cartas.Baralho;
 import mc322.jogo.cartas.Carta;
@@ -26,7 +25,8 @@ public class Heroi extends Entidade {
     private MaoJogador maoJogador;
     private Baralho baralhoPessoal;
 
-    public Heroi(String nome, int vida, int escudo, int energia, int vidaInicial, int velocidade, boolean turno,GameManager gm) {
+    public Heroi(String nome, int vida, int escudo, int energia, int vidaInicial, int velocidade, boolean turno,
+            GameManager gm, Baralho deck) {
         this.nome = nome;
         this.vida = vida;
         this.escudo = escudo;
@@ -36,7 +36,7 @@ public class Heroi extends Entidade {
         this.velocidade = velocidade;
         this.turno = turno;
         this.gm = gm;
-        this.baralhoPessoal = new Baralho(Dados.carregarBaralhoGeral()); // tenho que mudar isso aqui para um baralho específico de cada jogador.
+        this.baralhoPessoal = deck; 
         this.maoJogador = new MaoJogador(baralhoPessoal);
         this.listaEfeitos = new ArrayList<>();
     }
@@ -74,8 +74,6 @@ public class Heroi extends Entidade {
     }
 
 
-
-
     public int getEnergiaAtual() {
         return this.energiaAtual;
     }
@@ -83,7 +81,6 @@ public class Heroi extends Entidade {
     public void diminuiEnergia(int custo) {
         this.energiaAtual = this.energiaAtual - custo;
     }
-
 
     public void imprimeMaoJogador() {
         this.maoJogador.imprimeCartas();
@@ -101,36 +98,42 @@ public class Heroi extends Entidade {
         return !this.getMaoJogador().maoVazia();
     }
 
-
     public void resetaEnergia() {
         this.energiaAtual = this.energiaInicial;
     }
 
+    public Baralho getBaralhoPessoal() {
+        return this.baralhoPessoal;
+    }
+
     public RequisitoJogo temRequisito(int indice) {
-        Carta carta = this.getMaoJogador().devolveCarta(indice); // tenho que ver se devo criar outro método em heroi para acessar de uma vez.
+        Carta carta = this.getMaoJogador().devolveCarta(indice); // tenho que ver se devo criar outro método em heroi
+                                                                 // para acessar de uma vez.
         return carta.cartaRequisito();
     }
 
-
     public void ataque(Entidade alvo, int valorDano) {
-        /*vamos ver quais são os efeitos na lista de efeitos que alterar o valor do dano */
-        for (Efeito efeito: this.getListaEfeitos()) {
+        /*
+         * vamos ver quais são os efeitos na lista de efeitos que alterar o valor do
+         * dano
+         */
+        for (Efeito efeito : this.getListaEfeitos()) {
             if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
                 double fator = (100.0 - ((EfeitoFraqueza) efeito).getValorFraqueza()) / 100;
-                valorDano = (int)(valorDano * fator); // aqui fiz o truncamento para baixo.
+                valorDano = (int) (valorDano * fator); // aqui fiz o truncamento para baixo.
             }
 
             if (efeito.getTipo() == TiposEfeitos.FORCA) {
                 double fator = (100.0 + ((EfeitoForca) efeito).getValorForca()) / 100;
-                valorDano = (int)(valorDano * fator); // aqui fiz o truncamento para baixo
+                valorDano = (int) (valorDano * fator); // aqui fiz o truncamento para baixo
             }
         }
-        /*publico que o heroi vai atacar */
+        /* publico que o heroi vai atacar */
         gm.notificar(this, Estados.ATAQUE);
         alvo.recebeDano(valorDano);
     }
 
-    /*método para validar a energia da entidade*/
+    /* método para validar a energia da entidade */
     public boolean analisaEnergia(int custo) {
         if (this.getEnergiaAtual() >= custo) {
             this.diminuiEnergia(custo);
@@ -139,30 +142,38 @@ public class Heroi extends Entidade {
         return false;
     }
 
-    /*versão de jogarCarta que atua no Heroi */
+    /* versão de jogarCarta que atua no Heroi */
     public String jogarCarta(int indiceCartaMao) {
-        /*validar se o heroi pode de fato usar a carta*/
-        Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao); //posso criar um método que engloba os dois passos (perguntar pro ped)
+        /* validar se o heroi pode de fato usar a carta */
+        Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao); // posso criar um método que
+                                                                                           // engloba os dois passos
+                                                                                           // (perguntar pro ped)
         int custo = cartaEscolhida.getCusto();
 
         if (this.analisaEnergia(custo)) {
             String resposta = cartaEscolhida.usar(this, this, null); // perguntar sobre a questão do null
-            return resposta; //significa que a carta foi usada com sucesso
+            return resposta; // significa que a carta foi usada com sucesso
         }
-        return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem o jogador conseguir usar.
+        return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem
+                                                                                                 // o jogador conseguir
+                                                                                                 // usar.
     }
 
-    /*versão de jogarCarta para quando a ação depende de um inimigo alvo */
+    /* versão de jogarCarta para quando a ação depende de um inimigo alvo */
     public String jogarCarta(int indiceCartaMao, Inimigo alvo) {
-        /*validar se o heroi pode de fato usar a carta*/
-        Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao); //posso criar um método que engloba os dois passos (perguntar pro ped)
+        /* validar se o heroi pode de fato usar a carta */
+        Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao); // posso criar um método que
+                                                                                           // engloba os dois passos
+                                                                                           // (perguntar pro ped)
         int custo = cartaEscolhida.getCusto();
 
         if (this.analisaEnergia(custo)) {
-            String resposta = cartaEscolhida.usar(this, alvo, null); //perguntar sobre a questão do null
-            return resposta; //significa que a carta foi usada com sucesso
+            String resposta = cartaEscolhida.usar(this, alvo, null); // perguntar sobre a questão do null
+            return resposta; // significa que a carta foi usada com sucesso
         }
-        return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem o jogador conseguir usar.
+        return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem
+                                                                                                 // o jogador conseguir
+                                                                                                 // usar.
     }
 
     public boolean temOpcaoCartaMao(int i) {
@@ -176,15 +187,19 @@ public class Heroi extends Entidade {
     }
 
     public String jogarCarta(int indiceCartaMao, ArrayList<Inimigo> inimigos) {
-        /*validar se o heroi pode de fato usar a carta*/
-        Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao); //posso criar um método que engloba os dois passos (perguntar pro ped)
+        /* validar se o heroi pode de fato usar a carta */
+        Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao); // posso criar um método que
+                                                                                           // engloba os dois passos
+                                                                                           // (perguntar pro ped)
         int custo = cartaEscolhida.getCusto();
 
         if (this.analisaEnergia(custo)) {
             String resposta = cartaEscolhida.usar(this, this, inimigos);
-            return resposta; //significa que a carta foi usada com sucesso
+            return resposta; // significa que a carta foi usada com sucesso
         }
-        return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem o jogador conseguir usar.
+        return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET; // carta descartada sem
+                                                                                                 // o jogador conseguir
+                                                                                                 // usar.
     }
 
 }
