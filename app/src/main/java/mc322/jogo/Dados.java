@@ -22,7 +22,7 @@ public class Dados {
         ArrayList<Heroi> herois = new ArrayList<>();
         herois.add(new Heroi("Shrek", 1000, 20, 6, 100, 20, true, gm));
         herois.add(new Heroi("Burro", 80, 10, 7, 80, 50, true, gm));
-        herois.add(new Heroi("Gato de Botas", 70, 15, 5, 70, 80, true, gm));
+        herois.add(new Heroi("Pinoquio", 70, 15, 5, 70, 80, true, gm));
         herois.add(new Heroi("Fiona", 90, 25, 5, 90, 40, true, gm));
         return herois;
     }
@@ -76,7 +76,7 @@ public class Dados {
 
 //----------------------INIMIGOS GENERICOS --------------------------------------------
 
-    public static Inimigo criarAldeao(GameManager gm) {
+    public static Inimigo criarAldeao(GameManager gm) { //ogre hunter
         Inimigo aldeao = new Inimigo("Aldeão Furioso", 40, 0, 40, 15, true, gm);
         ArrayList<Carta> deckAldeao = new ArrayList<>();
         deckAldeao.add(new CartaDano("Tochada", "[Dano: 12] - Uma tocha quente no seu rosto.", 0, 12, 0));
@@ -87,7 +87,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarSoldadoFarquad(GameManager gm) {
+    public static Inimigo criarSoldadoFarquad(GameManager gm) {  //guards
         Inimigo soldadoLord = new Inimigo("Soldados do Lord", 60, 0, 60, 25, true, gm);
         ArrayList<Carta> decksoldado = new ArrayList<>();
         decksoldado.add(new CartaDano("Lave bem o seu .. pé", "[Dano: 20] - Na cabeça o shampoo.", 0, 20, 0));
@@ -98,7 +98,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarLobo(GameManager gm) {
+    public static Inimigo criarLobo(GameManager gm) {  //wolf
         Inimigo lobo = new Inimigo("Lobo", 50, 10, 50, 95, true, gm);
         ArrayList<Carta> decklobo = new ArrayList<>();
         decklobo.add(new CartaDano("Mordida", "[Dano: 20] - Raawwh.", 0, 20, 0));
@@ -109,7 +109,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarCapanga(GameManager gm) {
+    public static Inimigo criarCapanga(GameManager gm) {  //merry men
         Inimigo capanga = new Inimigo("Capanga do Encantado", 80, 20, 80, 65, true, gm);
         ArrayList<Carta> deckcapanga = new ArrayList<>();
         deckcapanga.add(new CartaDano("Jab de esquerda", "[Dano: 20] - Ele é canhoto.", 0, 20, 0));
@@ -120,7 +120,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarBruxa(GameManager gm) {
+    public static Inimigo criarBruxa(GameManager gm) {  //witch
         Inimigo bruxa = new Inimigo("Bruxa", 90, 20, 90, 85, true, gm);
         ArrayList<Carta> deckBruxa = new ArrayList<>();
         deckBruxa.add(new CartaDano("Risada fantasmagórica", "[Dano: 20] - Não é engraçado.", 0, 20, 0));
@@ -132,9 +132,13 @@ public class Dados {
 
 
 
+
+
+
+
 // -------------------------------CHEFOES--------------------------------------------------
 
-    public static Inimigo criarFarquaad(GameManager gm) {
+    public static Inimigo criarFarquaad(GameManager gm) { //lord farquaad
         Inimigo farquaad = new Inimigo("Lord Farquaad", 60, 30, 60, 30, true, gm);
         ArrayList<Carta> deckFarquaad = new ArrayList<>();
         deckFarquaad.add(new CartaDano("Ordem de Execução", "[Dano: 20] - Os guardas atacam sem piedade.", 0, 20, 0));
@@ -148,7 +152,7 @@ public class Dados {
     }
 
     
-    public static Inimigo criarDragao(GameManager gm) {
+    public static Inimigo criarDragao(GameManager gm) {  //dragon
         Inimigo dragao = new Inimigo("Dragão", 100, 40, 100, 10, true, gm);
         ArrayList<Carta> deckDragao = new ArrayList<>();
         deckDragao.add(new CartaDano("Baforada de Fogo", "[Dano: 45] - Um sopro ardente e mortal.", 0, 45, 0));
@@ -163,7 +167,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarEncantado(GameManager gm) {
+    public static Inimigo criarEncantado(GameManager gm) {  //thelonius
         Inimigo encantado = new Inimigo("Príncipe Encantado", 80, 40, 80, 55, true, gm);
         ArrayList<Carta> deckEncantado = new ArrayList<>();
         deckEncantado.add(new CartaDano("O Herói destinado", "[Dano: 25] - Um golpe com pose heroica.", 0, 25, 0));
@@ -174,7 +178,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarFada(GameManager gm) {
+    public static Inimigo criarFada(GameManager gm) {  //hammer soldier
         Inimigo fada = new Inimigo("Fada Madrinha", 90, 20, 90, 60, true, gm);
         ArrayList<Carta> deckFada = new ArrayList<>();
         deckFada.add(new CartaDano("Raio Mágico", "[Dano: 30] - Um feitiço direto da varinha.", 0, 30, 0));
@@ -188,7 +192,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarRumpelFraco(GameManager gm) {
+    public static Inimigo criarRumpelFraco(GameManager gm) {  //big bad wolf
         Inimigo rumpel = new Inimigo("Rumpelstiltskin", 60, 0, 60, 25, true, gm);
         ArrayList<Carta> deckRumpel = new ArrayList<>();
         deckRumpel.add(new CartaDano("Pena em chamas", "[Dano: 15] - Escreve no ar um ataque mágico.", 0, 15, 0));
@@ -199,7 +203,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarRumpel(GameManager gm) {
+    public static Inimigo criarRumpel(GameManager gm) { //big bad wolf
         Inimigo rumpel = new Inimigo("Rumpelstiltskin", 100, 70, 100, 55, true, gm);
         ArrayList<Carta> deckRumpel = new ArrayList<>();
         deckRumpel.add(new CartaDano("Pena em chamas", "[Dano: 55] - Escreve no ar um ataque mágico.", 0, 55, 0));
