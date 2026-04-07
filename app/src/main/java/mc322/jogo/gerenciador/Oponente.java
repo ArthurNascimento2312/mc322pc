@@ -1,8 +1,9 @@
 package mc322.jogo.gerenciador;
 
-import mc322.jogo.entidades.Inimigo;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import mc322.jogo.entidades.Inimigo;
 
 /**
  * Classe responsável por gerenciar a equipe de Inimigos.
@@ -32,6 +33,7 @@ public class Oponente {
         }
     }
 
+    
     public ArrayList<Inimigo> getInimigosEscolhidos() {
         return this.inimigosEscolhidos;
     }

@@ -40,6 +40,35 @@ import mc322.jogo.gerenciador.Prints;
 
 
 
+/*   Novo  Esquemaático do mapa
+
+                                1-inicio
+                                1-batalha (ogre hunter)
+                                10- (merry men)
+                                10-flores
+
+                  21-burro(guards)                                                                      22-gato(guards)
+                      31-golpe             32-batalha(lobo)                                        33-golpe           34-buraco
+41-batalha(farquad mascote)   42-bar      43-batalha(farquad mascote)     44-batalha(farquad mascote)  45-golpe       46-bar
+
+                                5-farquaad
+                                5-masmorra da velha
+
+                     51-batalha(witch)           52-batalha(hammer soldiesr)
+                       61 -old-lady/fiona             62-golpe
+                                  7-encantado (hammer soldier)
+
+                      81-batalha(big bad wolf)    82-golpe
+
+                                    9-fada (thelonius)
+
+                                    90-golpe
+
+                                    100-rumpel (dragao)
+
+*/
+
+
 
 public class Campanha {
 

@@ -132,6 +132,8 @@ public class Dados {
 
 
 
+    //farquad mascote
+    //big bad wolf
 
 
 
@@ -192,7 +194,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarRumpelFraco(GameManager gm) {  //big bad wolf
+    public static Inimigo criarRumpelFraco(GameManager gm) {  
         Inimigo rumpel = new Inimigo("Rumpelstiltskin", 60, 0, 60, 25, true, gm);
         ArrayList<Carta> deckRumpel = new ArrayList<>();
         deckRumpel.add(new CartaDano("Pena em chamas", "[Dano: 15] - Escreve no ar um ataque mágico.", 0, 15, 0));
@@ -203,7 +205,7 @@ public class Dados {
     }
 
 
-    public static Inimigo criarRumpel(GameManager gm) { //big bad wolf
+    public static Inimigo criarRumpel(GameManager gm) { 
         Inimigo rumpel = new Inimigo("Rumpelstiltskin", 100, 70, 100, 55, true, gm);
         ArrayList<Carta> deckRumpel = new ArrayList<>();
         deckRumpel.add(new CartaDano("Pena em chamas", "[Dano: 55] - Escreve no ar um ataque mágico.", 0, 55, 0));
