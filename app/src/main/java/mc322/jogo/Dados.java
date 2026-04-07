@@ -23,7 +23,8 @@ import mc322.jogo.gerenciador.SistemaAcoes.AcaoInimigo;
  */
 public class Dados {
         private static GameManager gm;
-public static ArrayList<Heroi> carregarHerois() {
+
+        public static ArrayList<Heroi> carregarHerois() {
             ArrayList<Heroi> herois = new ArrayList<>();
 
 
@@ -112,9 +113,6 @@ public static ArrayList<Heroi> carregarHerois() {
 
 
 
-
-
-        
         public static ArrayList<Inimigo> carregarInimigos() {
                 ArrayList<Inimigo> inimigos = new ArrayList<>();
 
