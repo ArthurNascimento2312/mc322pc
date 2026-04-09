@@ -8,6 +8,11 @@ import mc322.jogo.efeitos.Efeito;
 import mc322.jogo.entidades.Entidade;
 import mc322.jogo.entidades.Inimigo;
 
+/**
+ * Classe concreta que constrói Cartas do tipo efeito. Essas Cartas são responsáveis,
+ * por aplicar diversos efeitos no jogo, os quais podem ser vistos todos implementados ate
+ * aqui em {@link TiposEfeitos}
+ */
 public class CartaEfeito extends Carta {
     protected Efeito efeito;
 

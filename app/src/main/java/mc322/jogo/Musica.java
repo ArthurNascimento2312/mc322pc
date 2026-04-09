@@ -28,12 +28,12 @@ public class Musica {
                 clipBackground.start();
                 clipBackground.loop(Clip.LOOP_CONTINUOUSLY);
             } else {
-                System.out.println(Cores.VERMELHO + "🎵 [Aviso] Arquivo não encontrado na pasta resources: /sons/"
+                System.out.println(Cores.VERMELHO + "🎵 Arquivo não encontrado na pasta resources: /sons/"
                         + nomeArquivo + Cores.RESET);
             }
 
         } catch (Exception e) {
-            System.out.println(Cores.VERMELHO + "🎵 [Erro] Falha ao tocar o áudio." + Cores.RESET);
+            System.out.println(Cores.VERMELHO + "🎵 Falha ao tocar o áudio." + Cores.RESET);
             e.printStackTrace(); 
         }
     }

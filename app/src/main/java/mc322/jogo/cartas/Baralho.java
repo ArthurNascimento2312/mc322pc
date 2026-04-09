@@ -32,8 +32,11 @@ public class Baralho {
         Collections.shuffle(this.baralho);
     }
 
-    // Prepara a 'lista de compra', caso o baralho esteja vazio, reseta e faz de
-    // novo.
+    /**
+     *  Método para gerenciar as cartas que o Herói pode escolher para usar.
+     * 
+     * @param tamanho inteiro com o tamanho de cartas que podem ser compradas
+     */
     public void criarPilhaCompra(int tamanho) {
         embaralhaBaralho();
         for (int i = 0; i < tamanho; i++) {
@@ -47,16 +50,29 @@ public class Baralho {
 
     }
 
+    /**
+     * Método para acessar o tamanho da pilha de compra disponível para o usuário comprar
+     * de cartas.
+     * 
+     * @return tamanho da pilha.
+     */
     public int tamanhoPilha() {
         return this.pilhaCompra.size();
     }
 
-    // Insere uma nova carta no baralho
+    /**
+     * Método para inserir novas Cartas no Baralho pessoal do personagem.
+     * 
+     * @param carta objeto da Classe {@link Carta}
+     */
     public void adicionaBaralho(Carta carta) {
         this.baralho.add(carta);
     }
 
-    // Pega as cartas do descarte e devolve ao baralho principal
+    /**
+     * Método responsável por pegar todas as cartas usadas ou apenas compradas ao final do turno e colocar
+     * de volta ao baralho inicial.
+     */
     public void resetaBaralho() {
         int tamanho = this.pilhaCompra.size();
 
@@ -78,6 +94,9 @@ public class Baralho {
         personagem.recebeCarta(carta);;
     }
 
+    /**
+     * Método responsável por imprimir a pilha de compra de Cartas para o usuário montar a sua mão de Cartas.
+     */
     public void imprimePilhaCompra() {
         for (int i = 0; i < this.pilhaCompra.size(); i++) {
             System.out.println(Cores.NEGRITO + i + Cores.RESET + "-" + Cores.AZUL + this.pilhaCompra.get(i).getNome() + Cores.RESET + " -  "
@@ -93,7 +112,10 @@ public class Baralho {
         this.pilhaCompra.add(carta);
     }
 
-    // Pega as as cartas não compradas e volta ao baralho geral
+    /**
+     * Método responsável por pegar todas as cartas que não foram usadas mas foram
+     * compradas para voltar  para o baralho.
+     */
     public void devolverCartasNaoCompradas() {
 
         this.baralho.addAll(this.pilhaCompra);

@@ -2,6 +2,7 @@ package mc322.jogo.entidades;
 
 import java.util.ArrayList;
 
+import mc322.jogo.Cores;
 import mc322.jogo.efeitos.Efeito;
 import mc322.jogo.efeitos.EfeitoForca;
 import mc322.jogo.efeitos.EfeitoFraqueza;
@@ -13,15 +14,16 @@ import mc322.jogo.observer.Estados;
 /**
  * Classe responsável por representar os adversários do jogo.
  * Herda de Entidade e possui uma mecânica de combate automática baseada
- * em um sistema de ações pré-definido. 
+ * em um sistema de ações pré-definido.
  * 
  * @author Arthur Nascimento
+ * @author Felipe Garcia
  */
 
 public class Inimigo extends Entidade {
 
-    /** Vetor com todas as ações possíveis para cada Inimigo.*/
-    private ArrayList<AcaoInimigo> sistemaAcoes; 
+    /** Vetor com todas as ações possíveis para cada Inimigo. */
+    private ArrayList<AcaoInimigo> sistemaAcoes;
 
     public Inimigo(String nome, int vida, int escudo, int vidaInicial, int velocidade, boolean turno, GameManager gm,
             ArrayList<AcaoInimigo> sistemaAcoes) {
@@ -39,7 +41,8 @@ public class Inimigo extends Entidade {
     /**
      * Método para adicionar uma nova ação ao atributo sistemadeAcoes.
      * 
-     * @param acao uma nova ação entre as implementadas na interface {@link AcaoInimigo}
+     * @param acao uma nova ação entre as implementadas na interface
+     *             {@link AcaoInimigo}
      */
     public void adicionaAcao(AcaoInimigo acao) {
         this.sistemaAcoes.add(acao);
@@ -47,6 +50,7 @@ public class Inimigo extends Entidade {
 
     /**
      * Método para disponibilizar o tamanho do vetor de ações de cada inimigo
+     * 
      * @return tamanho do vetor
      */
     public int getTamanhoSistemaAcoes() {
@@ -86,7 +90,10 @@ public class Inimigo extends Entidade {
     }
 
     public void ataque(Entidade alvo, int valorDano) {
-    /* vamos ver quais são os efeitos na lista de efeitos que alterar o valor do dano*/
+        /*
+         * vamos ver quais são os efeitos na lista de efeitos que alterar o valor do
+         * dano
+         */
         for (Efeito efeito : this.listaEfeitos) {
             if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
                 double fator = (100.0 - ((EfeitoFraqueza) efeito).getValorFraqueza()) / 100;
@@ -103,5 +110,6 @@ public class Inimigo extends Entidade {
         gm.notificar(this, Estados.ATAQUE);
         alvo.recebeDano(valorDano);
     }
-
 }
+
+

@@ -2,6 +2,7 @@ package mc322.jogo.entidades;
 
 import mc322.jogo.gerenciador.GameManager;
 import mc322.jogo.observer.Estados;
+import mc322.jogo.Cores;
 import mc322.jogo.efeitos.Efeito;
 import mc322.jogo.efeitos.EfeitoForca;
 import mc322.jogo.efeitos.EfeitoFraqueza;
@@ -178,10 +179,42 @@ public abstract class Entidade {
             System.out.println("=================================================================");
             System.out.println("EFEITOS QUE ESTÃO EM AÇÃO EM: " + this.getNome());
             for (Efeito efeito : this.getListaEfeitos()) {
-                System.out.println(this.getNome() + "está sob " + efeito.getString());
+                System.out.println(efeito.getString());
             }
             System.out.println("=================================================================");
         }
+    }
+    /**
+     * Método para pegar os dados sobre o Efeito Força que estiver em ação na lista de efeitos da
+     * entidade.
+     * 
+     * @return Uma string com as informações sobre os acúmulos e a força do efeito.
+     */
+    public String statusEfeitoForca() {
+        for (Efeito efeito : this.getListaEfeitos()) {
+            if (efeito.getTipo() == TiposEfeitos.FORCA) {
+                EfeitoForca efeitoForca = (EfeitoForca) efeito;
+                return Cores.AMARELO + "[Força: " + efeitoForca.getValorForca() + "% - " + efeitoForca.getAcumulos()
+                        + " acúmulos]" + Cores.RESET;
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Método para pegr os dados sobre o Efeito Fraqueza presente na lista de efeitos da entidade
+     * 
+     * @return Uma string com as informações sobre os acúmulos e a força do efeito.
+     */
+    public String statusEfeitoFraqueza() {
+        for (Efeito efeito : this.getListaEfeitos()) {
+            if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
+                EfeitoFraqueza efeitoFraqueza = (EfeitoFraqueza) efeito;
+                return Cores.AMARELO + "[Fraqueza: " + efeitoFraqueza.getValorFraqueza() + "% - " + efeitoFraqueza.getAcumulos()
+                        + " acúmulos]" + Cores.RESET;
+            }
+        }
+        return "";
     }
 
 }

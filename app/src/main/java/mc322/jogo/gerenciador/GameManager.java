@@ -7,7 +7,6 @@ import mc322.jogo.entidades.Entidade;
 import mc322.jogo.entidades.Heroi;
 import mc322.jogo.entidades.Inimigo;
 import mc322.jogo.observer.Estados;
-import mc322.jogo.cartas.Baralho;
 import mc322.jogo.observer.Publisher;
 import mc322.jogo.observer.Subscriber;
 import java.util.ArrayList;

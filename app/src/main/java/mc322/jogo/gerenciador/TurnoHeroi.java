@@ -29,15 +29,17 @@ public class TurnoHeroi {
     }
 
     /**
-     * Método responsável por gerenciar um Turno do Heroi com respeito a interação com o terminal.
-     * Responsável por gerenciar as entradas do usuário durante o turno do heroi, ou seja, as cartas
+     * Método responsável por gerenciar um Turno do Heroi com respeito a interação
+     * com o terminal.
+     * Responsável por gerenciar as entradas do usuário durante o turno do heroi, ou
+     * seja, as cartas
      * escolhidas e as ações de ataacar, aplicar escudo ou aplicar efeito.
      * 
-     * @param player Heroi que vai atacar nesse turno
-     * @param herois lista com todos os heróis escolhidos nessa batalha
+     * @param player   Heroi que vai atacar nesse turno
+     * @param herois   lista com todos os heróis escolhidos nessa batalha
      * @param oponente lista com todos os inimigos escolhidos nessa batalha
-     * @param tela Classe com todos os prints de telas do jogo {@link Prints}
-     * @param sc Scanner do teclado.
+     * @param tela     Classe com todos os prints de telas do jogo {@link Prints}
+     * @param sc       Scanner do teclado.
      */
     public void jogar(Heroi player, ArrayList<Heroi> herois, Oponente oponente, Prints tela, Scanner sc) {
 
@@ -49,15 +51,14 @@ public class TurnoHeroi {
 
         /* vamos notificar que iniciou o turno para a entidade */
         gm.notificar(player, Estados.INICIO_DE_TURNO);
-        /*é necessário resetar a energia do player para ele jogar no turno (posso trocar por inicia turno no futuro*/
+
+/* é necessário resetar a energia do player para ele jogar no turno (posso trocar por inicia turno no futuro) */
         player.resetaEnergia();
-
-        
-
 
         // ----------------------------FASE DE COMPRA ----------------------------------
 
-        while (opcaoCompra != ENCERRAR_FASE_COMPRA && oponente.temInimigosVivos() && cartasCompradas < limiteCompra && player.estaVivo()) {
+        while (opcaoCompra != ENCERRAR_FASE_COMPRA && oponente.temInimigosVivos() && cartasCompradas < limiteCompra
+                && player.estaVivo()) {
             player.imprimeEfeitos();
             tela.status_batalha(player, herois, oponente.getInimigosEscolhidos());
             tela.energia(player.getEnergiaAtual());
@@ -85,7 +86,7 @@ public class TurnoHeroi {
 
         player.getBaralhoPessoal().devolverCartasNaoCompradas();
 
-        // ---------------------------FASE DE AÇÃO  -----------------------------------------
+        //---------------------------FASE DE AÇÃO-----------------------------------------
 
         int opcao = 0;
         while (opcao != OPCAO_ENCERRA_TURNO && oponente.temInimigosVivos() && player.estaVivo()) {
@@ -116,16 +117,16 @@ public class TurnoHeroi {
                         i = sc.nextInt();
                     }
 
-                    /* A ideia desse switch é pedir a carta o que ela precisa para ser executada, assim não perco o encapsulamento*/
+         // A ideia desse switch é pedir a carta o que ela precisa para ser executada,assim não perco o encapsulamento
                     RequisitoJogo requisito = player.temRequisito(i); // pergunto o que preciso para a carta escolhida
                     String resposta;
 
                     /* para gerenciar as telas */
                     switch (requisito) {
-                        /* por enquanto aqui vão entrar carta de dano e carta de efeito direto no inimigo */
+                    //por enquanto aqui vão entrar carta de dano e carta de efeito direto no  inimigo
                         case RequisitoJogo.INIMIGO:
-                            
-                            /* vamos gerenciar a tela para ele escolher um inimigo necessário para a carta que ele escolheu */
+
+                /* vamos gerenciar a tela para ele escolher um inimigo necessário para a carta que ele escolheu */
                             System.out.println(Cores.VERMELHO + "\nEscolha o seu alvo: " + Cores.RESET);
                             oponente.imprimeInimigosVivos();
 
@@ -153,8 +154,8 @@ public class TurnoHeroi {
                             resposta = player.jogarCarta(i, oponente.getInimigosEscolhidos());
                             System.out.println(resposta);
                             break;
-                        
-                            /*Aqui é quando o usuário pode escolher um novo companheiro Herói */
+
+                        /* Aqui é quando o usuário pode escolher um novo companheiro Herói */
                         case RequisitoJogo.TODOS_HEROIS:
 
                             break;
