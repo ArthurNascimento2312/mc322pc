@@ -46,6 +46,12 @@ public class Jogador {
 
         System.out.print("\nQuantos heróis farão parte da sua equipe? (Máximo " + todosHerois.size() + "): ");
         int quant = sc.nextInt();
+        /*validar a quantidade de herois */
+        while(quant <=0) {
+            System.out.println("OPÇÃO INVALIDA !!!");
+            System.out.print("Escolha novamente: ");
+            quant = sc.nextInt();
+        }
         quant = Math.min(quant, todosHerois.size());
 
         for (int i = 0; i < quant; i++) {

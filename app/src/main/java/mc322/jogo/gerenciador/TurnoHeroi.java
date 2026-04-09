@@ -1,6 +1,5 @@
 package mc322.jogo.gerenciador;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import mc322.jogo.Cores;
@@ -36,7 +35,8 @@ public class TurnoHeroi {
      * escolhidas e as ações de ataacar, aplicar escudo ou aplicar efeito.
      * 
      * @param player   Heroi que vai atacar nesse turno
-     * @param herois   Objeto Jogador que serve para gerenciar a lista com todos os herois da batalha.
+     * @param herois   Objeto Jogador que serve para gerenciar a lista com todos os
+     *                 herois da batalha.
      * @param oponente lista com todos os inimigos escolhidos nessa batalha
      * @param tela     Classe com todos os prints de telas do jogo {@link Prints}
      * @param sc       Scanner do teclado.
@@ -52,7 +52,10 @@ public class TurnoHeroi {
         /* vamos notificar que iniciou o turno para a entidade */
         gm.notificar(player, Estados.INICIO_DE_TURNO);
 
-/* é necessário resetar a energia do player para ele jogar no turno (posso trocar por inicia turno no futuro) */
+        /*
+         * é necessário resetar a energia do player para ele jogar no turno (posso
+         * trocar por inicia turno no futuro)
+         */
         player.resetaEnergia();
 
         // ----------------------------FASE DE COMPRA ----------------------------------
@@ -86,7 +89,8 @@ public class TurnoHeroi {
 
         player.getBaralhoPessoal().devolverCartasNaoCompradas();
 
-        //---------------------------FASE DE AÇÃO-----------------------------------------
+        // ---------------------------FASE DE
+        // AÇÃO-----------------------------------------
 
         int opcao = 0;
         while (opcao != OPCAO_ENCERRA_TURNO && oponente.temInimigosVivos() && player.estaVivo()) {
@@ -117,16 +121,21 @@ public class TurnoHeroi {
                         i = sc.nextInt();
                     }
 
-         // A ideia desse switch é pedir a carta o que ela precisa para ser executada,assim não perco o encapsulamento
+                    // A ideia desse switch é pedir a carta o que ela precisa para ser
+                    // executada,assim não perco o encapsulamento
                     RequisitoJogo requisito = player.temRequisito(i); // pergunto o que preciso para a carta escolhida
                     String resposta;
 
                     /* para gerenciar as telas */
                     switch (requisito) {
-                    //por enquanto aqui vão entrar carta de dano e carta de efeito direto no  inimigo
+                        // por enquanto aqui vão entrar carta de dano e carta de efeito direto no
+                        // inimigo
                         case RequisitoJogo.INIMIGO:
 
-                /* vamos gerenciar a tela para ele escolher um inimigo necessário para a carta que ele escolheu */
+                            /*
+                             * vamos gerenciar a tela para ele escolher um inimigo necessário para a carta
+                             * que ele escolheu
+                             */
                             System.out.println(Cores.VERMELHO + "\nEscolha o seu alvo: " + Cores.RESET);
                             oponente.imprimeInimigosVivos();
 
@@ -157,21 +166,21 @@ public class TurnoHeroi {
 
                         /* Aqui é quando o usuário pode escolher um novo companheiro Herói */
                         case RequisitoJogo.TODOS_HEROIS:
-                             System.out.println(Cores.VERDE + "\nEscolha o seu Herói: " + Cores.RESET);
-                             herois.imprimeHeroisVivos();
+                            System.out.println(Cores.VERDE + "\nEscolha o seu Herói: " + Cores.RESET);
+                            herois.imprimeHeroisVivos();
 
-                             System.out.print(Cores.NEGRITO + "Herói: " + Cores.RESET);
-                             int heroiEscolhido = sc.nextInt();
+                            System.out.print(Cores.NEGRITO + "Herói: " + Cores.RESET);
+                            int heroiEscolhido = sc.nextInt();
 
-                             /*valida entrada do usuário */
-                             while(!herois.validaEscolhaHeroi(heroiEscolhido)) {
+                            /* valida entrada do usuário */
+                            while (!herois.validaEscolhaHeroi(heroiEscolhido)) {
                                 System.out.println(Cores.VERMELHO + "Heroi inválido!" + Cores.RESET);
                                 System.out.print(Cores.NEGRITO + "Heroi: " + Cores.RESET);
                                 heroiEscolhido = sc.nextInt();
-                             }
+                            }
 
-                             resposta = player.jogarCarta(i, herois.getHeroisEscolhidos().get(heroiEscolhido));
-                             System.out.println(resposta);
+                            resposta = player.jogarCarta(i, herois.getHeroisEscolhidos().get(heroiEscolhido));
+                            System.out.println(resposta);
                             break;
                         default:
                             break;

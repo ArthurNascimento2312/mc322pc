@@ -92,6 +92,12 @@ public class GameManager implements Publisher {
         // ---------------------------Dificuldade-----------------
         tela.dificuldade();
         int dificuldade = sc.nextInt();
+
+        while(dificuldade <= 0) {
+            System.out.println("OPÇÃO INVALIDA !!!");
+            System.out.print("Escolha novamente: ");
+            dificuldade = sc.nextInt();
+        }
         oponente.gerarInimigos(dificuldade);
 
         // ------------------------------Equipe--------------------------
