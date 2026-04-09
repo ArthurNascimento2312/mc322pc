@@ -15,12 +15,21 @@ import java.util.ArrayList;
  * devem ter.
  */
 public abstract class Entidade {
+    /** nome da Entidade */
     protected String nome;
+    /** valor da vida durante um turno */
     protected int vida;
+    /** Valor de escudo que a Entidade tem naquele turno. */
     protected int escudo;
+    /** valor inicial da vida que serve como molde para resetar o atributo vida */
     protected int vidaInicial;
+    /** atributo para definir se essa Entidade já jogou naquele turno */
     protected boolean turno;
     protected GameManager gm;
+    /**
+     * Atritbuto quem vai jogar primeiro naquele turno. Maior velocidade, joga
+     * antes.
+     */
     protected int velocidade;
 
     /** atributo para gerenciar os efeitos que estão agindo na entidade */
@@ -66,6 +75,12 @@ public abstract class Entidade {
         return this.velocidade;
     }
 
+    /**
+     * Método importante para que possa ser verificado se a Entidade
+     * ja jogou naquele turno.
+     * 
+     * @return true se ja jogou e false se ainda não jogou.
+     */
     public boolean getTurno() {
         return this.turno;
     }
@@ -74,6 +89,11 @@ public abstract class Entidade {
         this.turno = status;
     }
 
+    /**
+     * Método para verificar se a entidade ainda estpa viva.
+     * 
+     * @return true se estpa viva e false caso contrário.
+     */
     public boolean estaVivo() {
         if (this.vida > 0)
             return true;
@@ -161,20 +181,23 @@ public abstract class Entidade {
     }
 
     /**
-     * Método abstrato que será implementado em cada entidade com a forma personalizada de ataque.
-     * Recebe o valor de dano base de uma carta ou de uma ação do Inimigo e caso a entidade esteja sob ação de
-     * algum efeito que modfique o dano, Ataque será o método que faz essa verificação. 
+     * Método abstrato que será implementado em cada entidade com a forma
+     * personalizada de ataque.
+     * Recebe o valor de dano base de uma carta ou de uma ação do Inimigo e caso a
+     * entidade esteja sob ação de
+     * algum efeito que modfique o dano, Ataque será o método que faz essa
+     * verificação.
      * 
-     * @param alvo Heroi ou vilão que será atacado
+     * @param alvo      Heroi ou vilão que será atacado
      * @param valorDano valor de dano da carta para ser usada.
-     *   
+     * 
      */
-    public abstract void ataque(Entidade alvo, int valorDano); 
+    public abstract void ataque(Entidade alvo, int valorDano);
 
     /** Método para impressão de todos os efeitos ativos naquela Entidade */
     public void imprimeEfeitos() {
 
-        /*Somente será impresso alguma coisa se existirem efeitos ativos */
+        /* Somente será impresso alguma coisa se existirem efeitos ativos */
         if (this.getListaEfeitos().size() > 0) {
             System.out.println("=================================================================");
             System.out.println("EFEITOS QUE ESTÃO EM AÇÃO EM: " + this.getNome());
@@ -184,8 +207,10 @@ public abstract class Entidade {
             System.out.println("=================================================================");
         }
     }
+
     /**
-     * Método para pegar os dados sobre o Efeito Força que estiver em ação na lista de efeitos da
+     * Método para pegar os dados sobre o Efeito Força que estiver em ação na lista
+     * de efeitos da
      * entidade.
      * 
      * @return Uma string com as informações sobre os acúmulos e a força do efeito.
@@ -202,7 +227,8 @@ public abstract class Entidade {
     }
 
     /**
-     * Método para pegr os dados sobre o Efeito Fraqueza presente na lista de efeitos da entidade
+     * Método para pegr os dados sobre o Efeito Fraqueza presente na lista de
+     * efeitos da entidade
      * 
      * @return Uma string com as informações sobre os acúmulos e a força do efeito.
      */
@@ -210,7 +236,8 @@ public abstract class Entidade {
         for (Efeito efeito : this.getListaEfeitos()) {
             if (efeito.getTipo() == TiposEfeitos.FRAQUEZA) {
                 EfeitoFraqueza efeitoFraqueza = (EfeitoFraqueza) efeito;
-                return Cores.AMARELO + "[Fraqueza: " + efeitoFraqueza.getValorFraqueza() + "% - " + efeitoFraqueza.getAcumulos()
+                return Cores.AMARELO + "[Fraqueza: " + efeitoFraqueza.getValorFraqueza() + "% - "
+                        + efeitoFraqueza.getAcumulos()
                         + " acúmulos]" + Cores.RESET;
             }
         }

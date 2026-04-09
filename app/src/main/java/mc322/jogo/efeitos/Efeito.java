@@ -13,8 +13,11 @@ import mc322.jogo.gerenciador.GameManager;
  */
 public abstract class Efeito implements Subscriber {
     protected String nome;
+    /**atributo que é uma referência para o objeto dono do efeito */
     protected Entidade dono;
+    /** quantidade de acumulos daquele efeito */
     protected int acumulos;
+    /**atributo que serve como molde para sabermos a quantidade de acumulos inicial */
     protected int acumulosInicial;
     protected GameManager gm;
     protected TiposEfeitos tipo;

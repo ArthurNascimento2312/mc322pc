@@ -18,12 +18,11 @@ public class CartaEscudo extends Carta {
         this.tipo = TiposCartas.ESCUDO;
     }
 
-    @Override /*podemos modificar isso aqui para o heroi poder usar a sua carta de escudo em um aliado */
+    @Override 
     public String usar(Entidade dono, Entidade alvo, ArrayList<Inimigo> inimigos) {
-        /*ainda não usamos o alvo, porque a nossa carta de escudo o alvo é o mesmo que o dono, mas podemos generalizar */
-        dono.ganhaEscudo(this.getEscudoGanho());
+        alvo.ganhaEscudo(this.getEscudoGanho());
         // podemos personalizar no caso do escudo for para outro heroi e não em si.
-        return Cores.AZUL + "\n🛡️ Você ativou " + this.getNome() + " e ganhou escudo!" + Cores.RESET; 
+        return Cores.AZUL + "\n🛡️ Você ativou " + this.getNome() + " e ativou o escudo em " + alvo.getNome()+ Cores.RESET; 
     }
 
     @Override
@@ -52,7 +51,7 @@ public class CartaEscudo extends Carta {
 
     @Override
     public RequisitoJogo cartaRequisito() {
-        return RequisitoJogo.HEROI;
+        return RequisitoJogo.TODOS_HEROIS;
     }
 
 }

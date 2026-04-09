@@ -12,13 +12,15 @@ import mc322.jogo.cartas.Carta;
  * jogar as cartas não usadas para a pilha de descarte e de comprar cartas.
  */
 public class MaoJogador {
+    /** atributo que representa o vetor da mão do jogador */
     private ArrayList<Carta> mao;
+    /** atrobuto que serve como referência para o atributo Baralho do Heroi */
     private Baralho baralhoMaoJogador;
 
 
 
     public MaoJogador(Baralho baralho) {
-        this.baralhoMaoJogador = baralho; // passo a referencia do baralho do jogador para ser manipulado.
+        this.baralhoMaoJogador = baralho;
         this.mao = new ArrayList<>();
     }
 

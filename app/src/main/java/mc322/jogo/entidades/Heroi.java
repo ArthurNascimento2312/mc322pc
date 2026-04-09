@@ -20,9 +20,13 @@ import mc322.jogo.observer.Estados;
  */
 
 public class Heroi extends Entidade {
+    /** atributo que serve como um molde para saber qual a energia padrão do Heroi no inicio do turno */
     private int energiaInicial;
+    /** atributo com a energia em qualquer instante do turno para esse heroi */
     private int energiaAtual;
+    /** atributo que faz a composição com um objeto {@link MaoJogador}*/
     private MaoJogador maoJogador;
+    /** Atributo com o Objeto {@link Baralho} para o heroi poder manipular*/
     private Baralho baralhoPessoal;
 
     public Heroi(String nome, int vida, int escudo, int energia, int vidaInicial, int velocidade, boolean turno,
@@ -156,22 +160,35 @@ public class Heroi extends Entidade {
         return false;
     }
 
-    /* versão de jogarCarta que atua no Heroi */
-    public String jogarCarta(int indiceCartaMao) {
+    /**
+     * jogar carta quando precisamos usar cartas que tem um efeito em qualquer
+     * aliado heroi escolhido pelo usuário.
+     * 
+     * @param indiceCartaMao indice validado que representa a carta na mão do jogador
+     * @param heroi heroi que será o alvo da ação.
+     * @return string com a informação da ação daquela carta em específico.
+     */
+    public String jogarCarta(int indiceCartaMao, Heroi heroi) {
         /* validar se o heroi pode de fato usar a carta */
         Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao);
 
         int custo = cartaEscolhida.getCusto();
 
         if (this.analisaEnergia(custo)) {
-            String resposta = cartaEscolhida.usar(this, this, null);
+            String resposta = cartaEscolhida.usar(this, heroi, null);
             return resposta; // significa que a carta foi usada com sucesso
         }
         return Cores.NEGRITO + Cores.VERMELHO + "\n⚠️ VOCÊ NÃO TEM MAIS ENERGIA!" + Cores.RESET;
 
     }
 
-    /* versão de jogarCarta para quando a ação depende de um inimigo alvo */
+    /**
+     * Versão de jogar carta quando precisamos atingir apenas um inimigo em específico.
+     * 
+     * @param indiceCartaMao indice validado que representa a carta na mão do jogador
+     * @param alvo inimigo alvo do ataque
+     * @return string com a informação da ação daquela carta em específico.
+     */
     public String jogarCarta(int indiceCartaMao, Inimigo alvo) {
         /* validar se o heroi pode de fato usar a carta */
         Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao);
@@ -190,10 +207,21 @@ public class Heroi extends Entidade {
         return this.getMaoJogador().isIndiceValido(i);
     }
 
+    /**
+     * Método para chamar o limpa mão do Objeto MaoHeroi
+     */
     public void limpaMao() {
         this.maoJogador.limpaMaoJogador(this.baralhoPessoal);
     }
 
+    /**
+     * Versão jogar carta quando estamos falando de cartas que 
+     * tem a sua função em área e precisam atingir todos os inimigos
+     * 
+     * @param indiceCartaMao indice validado que representa a posição da carta na mão do heroi
+     * @param inimigos vetor com todos os inimigos da batalha
+     * @return informa o resultado da carta (muda a depender da carta)
+     */
     public String jogarCarta(int indiceCartaMao, ArrayList<Inimigo> inimigos) {
         /* validar se o heroi pode de fato usar a carta */
         Carta cartaEscolhida = this.getMaoJogador().removeCartaMaoJogador(indiceCartaMao);

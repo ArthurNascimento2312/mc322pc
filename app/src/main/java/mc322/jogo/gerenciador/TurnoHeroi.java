@@ -36,12 +36,12 @@ public class TurnoHeroi {
      * escolhidas e as ações de ataacar, aplicar escudo ou aplicar efeito.
      * 
      * @param player   Heroi que vai atacar nesse turno
-     * @param herois   lista com todos os heróis escolhidos nessa batalha
+     * @param herois   Objeto Jogador que serve para gerenciar a lista com todos os herois da batalha.
      * @param oponente lista com todos os inimigos escolhidos nessa batalha
      * @param tela     Classe com todos os prints de telas do jogo {@link Prints}
      * @param sc       Scanner do teclado.
      */
-    public void jogar(Heroi player, ArrayList<Heroi> herois, Oponente oponente, Prints tela, Scanner sc) {
+    public void jogar(Heroi player, Jogador herois, Oponente oponente, Prints tela, Scanner sc) {
 
         player.zeraEscudo();
         int opcaoCompra = 0;
@@ -60,7 +60,7 @@ public class TurnoHeroi {
         while (opcaoCompra != ENCERRAR_FASE_COMPRA && oponente.temInimigosVivos() && cartasCompradas < limiteCompra
                 && player.estaVivo()) {
             player.imprimeEfeitos();
-            tela.status_batalha(player, herois, oponente.getInimigosEscolhidos());
+            tela.status_batalha(player, herois.getHeroisEscolhidos(), oponente.getInimigosEscolhidos());
             tela.energia(player.getEnergiaAtual());
             tela.faseCompra(limiteCompra, cartasCompradas);
 
@@ -91,7 +91,7 @@ public class TurnoHeroi {
         int opcao = 0;
         while (opcao != OPCAO_ENCERRA_TURNO && oponente.temInimigosVivos() && player.estaVivo()) {
 
-            tela.status_batalha(player, herois, oponente.getInimigosEscolhidos());
+            tela.status_batalha(player, herois.getHeroisEscolhidos(), oponente.getInimigosEscolhidos());
             tela.energia(player.getEnergiaAtual());
 
             tela.faseBatalha();
@@ -145,7 +145,7 @@ public class TurnoHeroi {
 
                         /* cartas de escudo e cartas de regeneração */
                         case RequisitoJogo.HEROI:
-                            resposta = player.jogarCarta(i);
+                            resposta = player.jogarCarta(i, player);
                             System.out.println(resposta);
                             break;
 
@@ -157,7 +157,21 @@ public class TurnoHeroi {
 
                         /* Aqui é quando o usuário pode escolher um novo companheiro Herói */
                         case RequisitoJogo.TODOS_HEROIS:
+                             System.out.println(Cores.VERDE + "\nEscolha o seu Herói: " + Cores.RESET);
+                             herois.imprimeHeroisVivos();
 
+                             System.out.print(Cores.NEGRITO + "Herói: " + Cores.RESET);
+                             int heroiEscolhido = sc.nextInt();
+
+                             /*valida entrada do usuário */
+                             while(!herois.validaEscolhaHeroi(heroiEscolhido)) {
+                                System.out.println(Cores.VERMELHO + "Heroi inválido!" + Cores.RESET);
+                                System.out.print(Cores.NEGRITO + "Heroi: " + Cores.RESET);
+                                heroiEscolhido = sc.nextInt();
+                             }
+
+                             resposta = player.jogarCarta(i, herois.getHeroisEscolhidos().get(heroiEscolhido));
+                             System.out.println(resposta);
                             break;
                         default:
                             break;

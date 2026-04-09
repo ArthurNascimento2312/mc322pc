@@ -159,7 +159,7 @@ public class GameManager implements Publisher {
                                 Cores.CIANO + "\n>>> Turno de " + heroiAtual.getNome() + " <<<" + Cores.RESET);
 
                         // O herói recebe o deckGeral e a lista de inimigos disponíveis
-                        turnoHeroi.jogar(heroiAtual, jogador.getHeroisEscolhidos(), oponente,
+                        turnoHeroi.jogar(heroiAtual, jogador, oponente,
                                 tela, sc);
 
                         /* após um turno do heroi, podemos ter a morte de todos os inimigos */

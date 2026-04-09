@@ -70,6 +70,6 @@ public class EfeitoForca extends Efeito {
 
     @Override
     public RequisitoJogo requisitoEfeito() {
-        return RequisitoJogo.HEROI;
+        return RequisitoJogo.TODOS_HEROIS;
     }
 }

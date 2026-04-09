@@ -34,3 +34,14 @@ tasks.named<Test>("test") {
 tasks.named<JavaExec>("run") {
     standardInput = System.`in`
 }
+
+tasks.withType<Javadoc> {
+    options {
+        this as StandardJavadocDocletOptions
+        encoding = "UTF-8"
+        charSet = "UTF-8"
+        isAuthor = true
+        isVersion = true
+        addStringOption("Xdoclint:none", "-quiet")
+    }
+}
