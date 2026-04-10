@@ -123,6 +123,7 @@ public class GameManager implements Publisher {
      */
     private void iniciarBatalha(Jogador jogador, Oponente oponente, Scanner sc, Prints tela) {
 
+        Prints.limparTela(); 
         // Junta os escolhidos dos heróis e vilões para decidir a ordem do turno
         ArrayList<Entidade> ordemTurno = new ArrayList<>();
         ordemTurno.addAll(jogador.getHeroisEscolhidos());

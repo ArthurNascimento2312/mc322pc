@@ -62,6 +62,7 @@ public class TurnoHeroi {
 
         while (opcaoCompra != ENCERRAR_FASE_COMPRA && oponente.temInimigosVivos() && cartasCompradas < limiteCompra
                 && player.estaVivo()) {
+            
             player.imprimeEfeitos();
             tela.status_batalha(player, herois.getHeroisEscolhidos(), oponente.getInimigosEscolhidos());
             tela.energia(player.getEnergiaAtual());
@@ -78,6 +79,8 @@ public class TurnoHeroi {
 
                 } else {
                     player.getBaralhoPessoal().compraCarta(player, i);
+                    Prints.limparTela();  
+                    System.out.println("\n");
                     System.out.println(Cores.VERDE + "Você comprou uma carta!" + Cores.RESET);
                     cartasCompradas++;
                 }
@@ -86,7 +89,7 @@ public class TurnoHeroi {
                 System.out.println(Cores.VERMELHO + "Opção inválida!" + Cores.RESET);
             }
         }
-
+        Prints.limparTela();  
         player.getBaralhoPessoal().devolverCartasNaoCompradas();
 
         // ---------------------------FASE DE
@@ -94,7 +97,7 @@ public class TurnoHeroi {
 
         int opcao = 0;
         while (opcao != OPCAO_ENCERRA_TURNO && oponente.temInimigosVivos() && player.estaVivo()) {
-
+           
             tela.status_batalha(player, herois.getHeroisEscolhidos(), oponente.getInimigosEscolhidos());
             tela.energia(player.getEnergiaAtual());
 
@@ -102,11 +105,13 @@ public class TurnoHeroi {
             opcao = sc.nextInt();
 
             if (opcao == OPCAO_VER_CARTAS) {
+                Prints.limparTela();  
                 System.out.println("\nSuas Cartas na Mão:");
                 player.imprimeMaoJogador();
             }
 
             else if (opcao == OPCAO_USAR_CARTAS) {
+                
                 System.out.println(Cores.CIANO + "\nSuas Cartas na Mão:" + Cores.RESET);
                 player.imprimeMaoJogador(); // imprimi que a mão está vazia também
 
@@ -148,6 +153,7 @@ public class TurnoHeroi {
                                 System.out.print(Cores.NEGRITO + "Alvo: " + Cores.RESET);
                                 alvoEscolhido = sc.nextInt();
                             }
+                            Prints.limparTela(); 
                             resposta = player.jogarCarta(i, oponente.getInimigo(alvoEscolhido));
                             System.out.println(resposta);
                             break;
@@ -160,6 +166,7 @@ public class TurnoHeroi {
 
                         /* cartas como efeito em área vão entrar aqui */
                         case RequisitoJogo.TODOS_INIMIGOS:
+                            Prints.limparTela(); 
                             resposta = player.jogarCarta(i, oponente.getInimigosEscolhidos());
                             System.out.println(resposta);
                             break;
@@ -179,6 +186,8 @@ public class TurnoHeroi {
                                 heroiEscolhido = sc.nextInt();
                             }
 
+                            Prints.limparTela(); 
+
                             resposta = player.jogarCarta(i, herois.getHeroisEscolhidos().get(heroiEscolhido));
                             System.out.println(resposta);
                             break;
@@ -191,6 +200,7 @@ public class TurnoHeroi {
             }
 
         }
+        Prints.limparTela();  
         player.limpaMao();
         gm.notificar(player, Estados.FIM_DE_TURNO);
     }

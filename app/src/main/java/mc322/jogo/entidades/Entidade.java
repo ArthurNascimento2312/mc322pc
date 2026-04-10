@@ -1,14 +1,14 @@
 package mc322.jogo.entidades;
 
-import mc322.jogo.gerenciador.GameManager;
-import mc322.jogo.observer.Estados;
+import java.util.ArrayList;
+
 import mc322.jogo.Cores;
 import mc322.jogo.efeitos.Efeito;
 import mc322.jogo.efeitos.EfeitoForca;
 import mc322.jogo.efeitos.EfeitoFraqueza;
 import mc322.jogo.efeitos.TiposEfeitos;
-
-import java.util.ArrayList;
+import mc322.jogo.gerenciador.GameManager;
+import mc322.jogo.observer.Estados;
 
 /**
  * Classe abstrata com o contrato mínimo que uma Entidade (Herois e inimigos)
@@ -219,7 +219,7 @@ public abstract class Entidade {
         for (Efeito efeito : this.getListaEfeitos()) {
             if (efeito.getTipo() == TiposEfeitos.FORCA) {
                 EfeitoForca efeitoForca = (EfeitoForca) efeito;
-                return Cores.AMARELO + "[Força: " + efeitoForca.getValorForca() + "% - " + efeitoForca.getAcumulos()
+                return Cores.AMARELO + " [Força: " + efeitoForca.getValorForca() + "% - " + efeitoForca.getAcumulos()
                         + " acúmulos]" + Cores.RESET;
             }
         }
