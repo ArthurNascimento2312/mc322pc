@@ -1,6 +1,6 @@
 package mc322.jogo.gerenciador;
 
-import java.util.Scanner;
+    import java.util.Scanner;
 
 import mc322.jogo.Cores;
 import mc322.jogo.RequisitoJogo;
