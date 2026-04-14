@@ -1,4 +1,6 @@
 package mc322.jogo.mapa;
+import java.util.Random;
+import java.util.function.Supplier;    
 
 import mc322.jogo.Dados;
 import mc322.jogo.cartas.CartaDano;
@@ -8,35 +10,6 @@ import mc322.jogo.gerenciador.GameManager;
 import mc322.jogo.gerenciador.Oponente;
 import mc322.jogo.gerenciador.Prints;
 
-
-
-/*  Esquemaático do mapa
-
-                                1-inicio
-                                1-batalha 
-                                10-rumpel
-                                10-flores
-
-                  21-burro                                    22-gato
-           31-golpe        32-batalha              33-golpe          34-buraco
-    41-batalha    42-bar     43-batalha      44-batalha  45-golpe      46-bar
-
-                                5-farquaad
-                                5-masmorra
-
-                           51-batalha     52-batalha
-                       61 -dragao/fiona     62-golpe
-                                  7-encantado
-
-                            81-batalha    82-golpe
-
-                                    9-fada
-
-                                    90-golpe
-
-                                    100-rumpel
-
-*/
 
 
 
@@ -73,16 +46,47 @@ import mc322.jogo.gerenciador.Prints;
 public class Campanha {
 
     
-    private static Oponente carregarOponente(Inimigo ini) {
+    
+    private static Oponente gerarGrupoComHistoria(GameManager gm, Supplier<Inimigo> inimigoGarantido, int dificuldade) {
         Oponente op = new Oponente();
-        op.adicionarInimigoTodos(ini);
+        
+        op.adicionarInimigoTodos(inimigoGarantido.get());
+
+        Random gerador = new Random();   //Basicamente faz um sorteio para escolher os inimigos restantes da batalha
+        for (int i = 0; i < (dificuldade - 1); i++) {
+            
+            int sorteio = gerador.nextInt(2); 
+            if (sorteio == 0) {
+                op.adicionarInimigoTodos(Dados.criarAldeao(gm));
+            } else if (sorteio == 1) {
+                op.adicionarInimigoTodos(Dados.criarLobo(gm));
+            }
+        }
+
+        op.gerarInimigos(dificuldade); 
+        return op;
+    }
+
+
+
+
+    private static Oponente carregarBoss(Inimigo boss) {
+        if (boss == null) return null;
+        Oponente op = new Oponente();
+        op.adicionarInimigoTodos(boss);
         op.gerarInimigos(1); 
         return op;
     }
 
-   
 
-    public static NoMapa criarMapa(GameManager gm) {
+
+
+
+
+
+
+
+    public static NoMapa criarMapa(GameManager gm, int dificuldade) {
         
         
         // 1 - 10  Inicio a flores---------------------------------------------------
@@ -97,14 +101,14 @@ public class Campanha {
             "Batalha", 
             Prints.VERMELHO + Prints.NEGRITO + "Aldeão: " + Prints.RESET + "Renda-se, monstro! Em nome de Lord Farquaad!\n" +
             Prints.AZUL + Prints.NEGRITO + "Shrek: " + Prints.RESET + "Toma essa!\n", 
-            TipoEvento.BATALHA, carregarOponente(Dados.criarAldeao(gm))
+            TipoEvento.BATALHA, gerarGrupoComHistoria(gm, () -> Dados.criarAldeao(gm), dificuldade)
         ));
 
 
         NoMapa n10_caçador = new NoMapa(new EventoMapa(
             "Acampamento do Caçador", 
             Prints.DIALOGO_N10, 
-            TipoEvento.BOSS, carregarOponente(Dados.criarRumpelFraco(gm)) //caçador
+            TipoEvento.BOSS, carregarBoss(Dados.criarRumpelFraco(gm)) //caçador
         ));
 
 
@@ -125,7 +129,7 @@ public class Campanha {
             "Flor azul com espinhos vermelhos\n", 
             Prints.DIALOGO_N21,
             TipoEvento.BATALHA, 
-            carregarOponente(Dados.criarAldeao(gm)) 
+            gerarGrupoComHistoria(gm, () -> Dados.criarAldeao(gm), dificuldade)
         ));
         
         NoMapa n31_golpe = new NoMapa(new EventoMapa("Caminho bonito", 
@@ -136,11 +140,13 @@ public class Campanha {
 
         NoMapa n32_batalha = new NoMapa(new EventoMapa("Caminho tortuoso", 
             Prints.VERMELHO + Prints.NEGRITO + "Lobo Mau: " + Prints.RESET + "Cuidado por onde anda, ogro...", 
-            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm)))); //lobo
+            TipoEvento.BATALHA, gerarGrupoComHistoria(gm, () -> Dados.criarLobo(gm), dificuldade)
+        )); //lobo
         
         NoMapa n41_batalha = new NoMapa(new EventoMapa("Floresta densa",
             Prints.NEGRITO + "Narrador:" + Prints.RESET + "Uma emboscada na floresta densa!",
-            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));  //mascote
+            TipoEvento.BATALHA, gerarGrupoComHistoria(gm, () -> Dados.criarAldeao(gm), dificuldade)
+        ));  //mascote
         
         NoMapa n42_bar = new NoMapa(new EventoMapa("Seguir pelo rio",
             Prints.NEGRITO + "Bartender: " + Prints.RESET + "Bem-vindo ao bar Maçã",
@@ -148,7 +154,7 @@ public class Campanha {
         
         NoMapa n43_batalha = new NoMapa(new EventoMapa("Passar pela ponte", 
             Prints.VERMELHO + Prints.NEGRITO + "Guarda da Ponte: " + Prints.RESET + "Pedágio cobrado em sangue!",
-            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm)))); //mascote
+            TipoEvento.BATALHA, gerarGrupoComHistoria(gm, () -> Dados.criarAldeao(gm), dificuldade))); //mascote
 
         n10_flores.adicionarCaminho(n21_burro);
 
@@ -165,7 +171,7 @@ public class Campanha {
         NoMapa n22_gato = new NoMapa(new EventoMapa(
             "Flor vermelha com espinhos azuis\n", 
             Prints.DIALOGO_N22,
-            TipoEvento.BATALHA, carregarOponente(Dados.criarAldeao(gm))
+            TipoEvento.BATALHA, gerarGrupoComHistoria(gm, () -> Dados.criarAldeao(gm), dificuldade)
         ));
 
 
@@ -182,7 +188,7 @@ public class Campanha {
 
         NoMapa n44_batalha = new NoMapa(new EventoMapa("Cabana do caçador",
             Prints.VERMELHO + Prints.NEGRITO + "Caçador: " + Prints.RESET + "O Lord já está sabendo de suas aventuras! O prêmio pela sua cabeça é alto!", 
-            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));  //mascote
+            TipoEvento.BATALHA, gerarGrupoComHistoria(gm, () -> Dados.criarAldeao(gm), dificuldade)));  //mascote
         
 
         NoMapa n45_golpe = new NoMapa(new EventoMapa("Cabana do caçador", 
@@ -212,7 +218,7 @@ public class Campanha {
         NoMapa n5_farquaad  = new NoMapa(new EventoMapa(
             "5-Farquaad", 
             Prints.DIALOGO_N5,
-            TipoEvento.BOSS, carregarOponente(Dados.criarFarquaad(gm)) ));
+            TipoEvento.BOSS, carregarBoss(Dados.criarFarquaad(gm)) ));
 
 
         NoMapa n5_masmorra = new NoMapa(new EventoMapa("Proposta",
@@ -234,15 +240,15 @@ public class Campanha {
 
         NoMapa n51_batalha = new NoMapa(new EventoMapa("Vamos lá",
             Prints.NEGRITO + "Narrador: " + Prints.RESET + "No caminho para a masmorra, Shrek encontra inimigos...", 
-            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm)))); //witch
+            TipoEvento.BATALHA, gerarGrupoComHistoria(gm, () -> Dados.criarAldeao(gm), dificuldade))); //witch
 
         NoMapa n52_batalha = new NoMapa(new EventoMapa("52-Nahh. Passar bem",
             Prints.NEGRITO + "Narrador: " + Prints.RESET + "Voltando para o pântano, Shrek encontra inimigos...",
-            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm))));  //witch
+            TipoEvento.BATALHA, gerarGrupoComHistoria(gm, () -> Dados.criarAldeao(gm), dificuldade)));  //witch
         
         NoMapa n61_torre_bruxa = new NoMapa(new EventoMapa("Torre da Bruxa Velha", 
             Prints.DIALOGO_N61,
-            TipoEvento.BOSS, carregarOponente(Dados.criarDragao(gm)))); //bruxa velha
+            TipoEvento.BOSS, carregarBoss(Dados.criarDragao(gm)))); //bruxa velha
             
         NoMapa n62_golpe = new NoMapa(new EventoMapa("Volta para o pântano", 
             Prints.NEGRITO + "Narrador: " + Prints.RESET + "Shrek acha a espada do príncipe encantado.", 
@@ -252,7 +258,7 @@ public class Campanha {
 
         NoMapa n7_cavaleiroMarreta = new NoMapa(new EventoMapa("Na floresta",
             Prints.DIALOGO_N7, 
-            TipoEvento.BOSS, carregarOponente(Dados.criarEncantado(gm)))); //marreta
+            TipoEvento.BOSS, carregarBoss(Dados.criarEncantado(gm)))); //marreta
 
 
         n5_masmorra.adicionarCaminho(n51_batalha);
@@ -269,7 +275,7 @@ public class Campanha {
         
         NoMapa n81_batalha = new NoMapa(new EventoMapa("Voltar agora",
             Prints.NEGRITO + "Narrador: " + Prints.RESET + "Após derrotar o cavaleiro, Thelonius descobre e envia capangas...\n" + Prints.VERMELHO + Prints.NEGRITO + "Capangas: " + Prints.RESET + "Lá está ele. Atacar!\n",
-            TipoEvento.BATALHA, carregarOponente(Dados.criarLobo(gm)))); //big bad wolf
+            TipoEvento.BATALHA, gerarGrupoComHistoria(gm, () -> Dados.criarAldeao(gm), dificuldade))); //big bad wolf
             
         
         NoMapa n82_golpe = new NoMapa(new EventoMapa("Descansar um pouco e voltar depois", 
@@ -279,7 +285,7 @@ public class Campanha {
 
         NoMapa n9_thelonius = new NoMapa(new EventoMapa("Seguir jornada", 
             Prints.DIALOGO_N9, 
-            TipoEvento.BOSS, carregarOponente(Dados.criarFada(gm)))); //thelonius
+            TipoEvento.BOSS, carregarBoss(Dados.criarFada(gm)))); //thelonius
         
         NoMapa n90_golpe = new NoMapa(new EventoMapa("Continuar",
             Prints.DIALOGO_N90,
@@ -288,7 +294,7 @@ public class Campanha {
 
         NoMapa n100_rumpel = new NoMapa(new EventoMapa("I need a hero", 
             Prints.DIALOGO_N100,
-            TipoEvento.BOSS, carregarOponente(Dados.criarRumpel(gm))));//dragao
+            TipoEvento.BOSS, carregarBoss(Dados.criarRumpel(gm))));//dragao
 
         n7_cavaleiroMarreta.adicionarCaminho(n81_batalha);
         n7_cavaleiroMarreta.adicionarCaminho(n82_golpe);

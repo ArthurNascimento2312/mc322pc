@@ -200,11 +200,53 @@ public class Prints {
         NEGRITO + "Narrador: " + RESET + "E a batalha final se inicia...\n";
     
 
+    public static void limparTela() {
+        System.out.print("\033[H\033[2J");  
+        System.out.flush(); }
 
 
 
-        public static void limparTela() {
-            System.out.print("\033[H\033[2J");  
-            System.out.flush(); 
+    public static void PrintaMapa(String faseAtual) {
+        String mapa = 
+        "                               [Inicio]\n" +
+        "                                  |\n" +
+        "                              [Batalha]\n" +
+        "                                  |\n" +
+        "                       [Acampamento do Caçador]\n" +
+        "                                  |\n" +
+        "                            [Encruzilhada]\n" +
+        "                           /              \\\n" +
+        "      [Flor azul com espinhos vermelhos]  [Flor vermelha com espinhos azuis]\n" +
+        "               /             \\                      /             \\\n" +
+        " [Caminho bonito]      [Caminho tortuoso]  [Tempo na fogueira] [Floresta à noite]\n" +
+        "         |               /         \\                |               |\n" +
+        " [Floresta densa] [Seguir pelo rio] [Passar pela ponte] [Cabana do caçador] [Seguindo pela floresta]\n" +
+        "         \\               |         /                |               /\n" +
+        "          \\______________\\________/_________________/______________/\n" +
+        "                                  |\n" +
+        "                          [Castelo de Duloc]\n" +
+        "                                  |\n" +
+        "                              [Proposta]\n" +
+        "                             /          \\\n" +
+        "                     [Vamos lá]   [52-Nahh. Passar bem]\n" +
+        "                         |                |\n" +
+        "              [Entrando na masmorra] [Volta para o pântano]\n" +
+        "                         \\                /\n" +
+        "                          \\              /\n" +
+        "                            [O Cavaleiro]\n" +
+        "                           /             \\\n" +
+        "                 [Voltar agora]   [Descansar um pouco e voltar depois]\n" +
+        "                           \\             /\n" +
+        "                           [Seguir jornada]\n" +
+        "                                  |\n" +
+        "                              [Continuar]\n" +
+        "                                  |\n" +
+        "                          [O Grande Dragão]\n";
+
+        mapa = mapa.replace("[" + faseAtual + "]", VERDE + NEGRITO + "[" + faseAtual + " 📍]" + RESET);
+
+        System.out.println(mapa);
     }
+
 }
+

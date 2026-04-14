@@ -73,13 +73,18 @@ public class GameManager implements Publisher {
 
         tela.comeco();
         dj.tocarMusica("../sons/Funkytown.wav");
+
+        tela.dificuldade();
+        int dificuldade = sc.nextInt();
+        sc.nextLine();
+
         Jogador jogador = new Jogador();
         Heroi shrek = new Heroi("Shrek", 100, 20, 6, 100, 20, true, this);
         jogador.adicionarHeroiTodos(shrek);
         jogador.getHeroisEscolhidos().add(shrek);
 
         // criar um mapa aqui eu acho
-        NoMapa inicioDoMapa = Campanha.criarMapa(this);
+        NoMapa inicioDoMapa = Campanha.criarMapa(this, dificuldade);
         System.out.println("\nA JORNADA VAI COMEÇAR!\n\n");
         viajarPeloGrafo(inicioDoMapa, jogador, sc, tela);
 
@@ -164,6 +169,8 @@ public class GameManager implements Publisher {
             System.out.println(Prints.VERDE + Prints.NEGRITO + "🏆 FIM DE JOGO! VOCÊ ZEROU A CAMPANHA!" + Prints.RESET);
             return;
         }
+
+        Prints.PrintaMapa(evento.getNomeFase());
 
         System.out.println("\nPara onde você quer ir agora?");
         for (int i = 0; i < proximos.size(); i++) {
