@@ -56,12 +56,18 @@ public class Campanha {
         Random gerador = new Random();   //Basicamente faz um sorteio para escolher os inimigos restantes da batalha
         for (int i = 0; i < (dificuldade - 1); i++) {
             
-            int sorteio = gerador.nextInt(2); 
+            int sorteio = gerador.nextInt(4); 
             if (sorteio == 0) {
-                op.adicionarInimigoTodos(Dados.criarAldeao(gm));
+                op.adicionarInimigoTodos(Dados.criarOgreHunter(gm));
             } else if (sorteio == 1) {
-                op.adicionarInimigoTodos(Dados.criarLobo(gm));
+                op.adicionarInimigoTodos(Dados.criarWolf(gm));
+            } else if (sorteio == 2){
+                op.adicionarInimigoTodos(Dados.criarCrow(gm));
+            } else if ( sorteio == 3){
+                op.adicionarInimigoTodos(Dados.criarPig(gm));
+
             }
+            
         }
 
         op.gerarInimigos(dificuldade); 
@@ -102,20 +108,20 @@ public class Campanha {
             "Batalha", 
             Cores.VERMELHO + Cores.NEGRITO + "Aldeão: " + Cores.RESET + "Renda-se, monstro! Em nome de Lord Farquaad!\n" +
             Cores.AZUL + Cores.NEGRITO + "Shrek: " + Cores.RESET + "Toma essa!\n", 
-            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarAldeao(gm), dificuldade)
+            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarOgreHunter(gm), dificuldade)
         ));
 
 
         NoMapa n10_caçador = new NoMapa(new EventoMapa(
             "Acampamento do Caçador", 
             Prints.DIALOGO_N10, 
-            TipoEvento.BOSS, carregarBoss(Dados.criarFarquaad(gm)) //caçador
+            TipoEvento.BOSS, carregarBoss(Dados.criarMerryMen(gm)) //caçador
         ));
 
 
         NoMapa n10_flores = new NoMapa(new EventoMapa(
             "Encruzilhada",
-            Cores.NEGRITO + "Narrador: " + Cores.RESET + "Rumpel foge machucado, jurando vingança. Shrek avança pela floresta e chega a uma encruzilhada.\n" +
+            Cores.NEGRITO + "Narrador: " + Cores.RESET + "Shrek continua sua jornada pela floresta e encontra uma encruzilhada.\n" +
             Cores.AZUL + Cores.NEGRITO + "Shrek: " + Cores.RESET + "Flor azul com espinhos vermelhos... ou flor vermelha com espinhos azuis? Qual caminho eu pego?\n", 
               TipoEvento.ESCOLHA_HISTORIA, null
         ));
@@ -130,23 +136,23 @@ public class Campanha {
             "Flor azul com espinhos vermelhos\n", 
             Prints.DIALOGO_N21,
             TipoEvento.BATALHA, 
-            carregaInimigoGenerico(gm, () -> Dados.criarAldeao(gm), dificuldade)
+            carregaInimigoGenerico(gm, () -> Dados.criarMonsieurHood(gm), dificuldade)
         ));
         
         NoMapa n31_golpe = new NoMapa(new EventoMapa("Caminho bonito", 
             Cores.NEGRITO + "Narrador: " + Cores.RESET + "O Burro não para de falar, mas você acha um pergaminho antigo no chão.",
             TipoEvento.RECOMPENSA_CARTA, null));
-        n31_golpe.getEvento().setCartaRecompensa(new CartaDano("Voadora Deslizante", "[Dano: 25]", 2, 25));
+        n31_golpe.getEvento().setCartaRecompensa(new CartaDano("Voadora Deslizante", "[Custo: 2 | Dano: 45]", 2, 45));
         
 
         NoMapa n32_batalha = new NoMapa(new EventoMapa("Caminho tortuoso", 
             Cores.VERMELHO + Cores.NEGRITO + "Lobo Mau: " + Cores.RESET + "Cuidado por onde anda, ogro...", 
-            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarLobo(gm), dificuldade)
+            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarWolf(gm), dificuldade)
         )); //lobo
         
         NoMapa n41_batalha = new NoMapa(new EventoMapa("Floresta densa",
             Cores.NEGRITO + "Narrador:" + Cores.RESET + "Uma emboscada na floresta densa!",
-            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarAldeao(gm), dificuldade)
+            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarCrow(gm), dificuldade)
         ));  //mascote
         
         NoMapa n42_bar = new NoMapa(new EventoMapa("Seguir pelo rio",
@@ -155,7 +161,7 @@ public class Campanha {
         
         NoMapa n43_batalha = new NoMapa(new EventoMapa("Passar pela ponte", 
             Cores.VERMELHO + Cores.NEGRITO + "Guarda da Ponte: " + Cores.RESET + "Pedágio cobrado em sangue!",
-            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarAldeao(gm), dificuldade))); //mascote
+            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarFarquadMascot(gm), dificuldade))); //mascote
 
         n10_flores.adicionarCaminho(n21_burro);
 
@@ -172,14 +178,14 @@ public class Campanha {
         NoMapa n22_gato = new NoMapa(new EventoMapa(
             "Flor vermelha com espinhos azuis\n", 
             Prints.DIALOGO_N22,
-            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarAldeao(gm), dificuldade)
+            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarMonsieurHood(gm), dificuldade)
         ));
 
 
         NoMapa n33_golpe = new NoMapa(new EventoMapa("Tempo na fogueira",
             Cores.NEGRITO + "Narrador: " + Cores.RESET + "O Gato de Botas te ensina uma técnica de evasão.", 
             TipoEvento.RECOMPENSA_CARTA, null));
-        n33_golpe.getEvento().setCartaRecompensa(new CartaEscudo("Esquiva Furtiva", "[Escudo: 15]", 1, 15));
+        n33_golpe.getEvento().setCartaRecompensa(new CartaEscudo("Esquiva Furtiva", "[Custo:1 | Escudo: 35]", 1, 35));
         
 
         NoMapa n34_buraco = new NoMapa(new EventoMapa("Floresta à noite",
@@ -189,13 +195,13 @@ public class Campanha {
 
         NoMapa n44_batalha = new NoMapa(new EventoMapa("Cabana do caçador",
             Cores.VERMELHO + Cores.NEGRITO + "Caçador: " + Cores.RESET + "O Lord já está sabendo de suas aventuras! O prêmio pela sua cabeça é alto!", 
-            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarAldeao(gm), dificuldade)));  //mascote
+            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarFarquadMascot(gm), dificuldade)));  //mascote
         
 
         NoMapa n45_golpe = new NoMapa(new EventoMapa("Cabana do caçador", 
             Cores.NEGRITO + "Narrador: " + Cores.RESET + "Você saqueia o acampamento do caçador.", 
             TipoEvento.RECOMPENSA_CARTA, null));
-        n45_golpe.getEvento().setCartaRecompensa(new CartaDano("Corte Duplo", "[Dano: 25]", 2, 25));
+        n45_golpe.getEvento().setCartaRecompensa(new CartaDano("Corte Duplo", "[Custo: 3 | Dano: 65]", 3, 65));
         
 
         NoMapa n46_bar = new NoMapa(new EventoMapa("Seguindo pela floresta", 
@@ -241,25 +247,25 @@ public class Campanha {
 
         NoMapa n51_batalha = new NoMapa(new EventoMapa("Vamos lá",
             Cores.NEGRITO + "Narrador: " + Cores.RESET + "No caminho para a masmorra, Shrek encontra inimigos...", 
-            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarAldeao(gm), dificuldade))); //witch
+            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarWitch(gm), dificuldade))); //witch
 
         NoMapa n52_batalha = new NoMapa(new EventoMapa("Quero não!",
             Cores.NEGRITO + "Narrador: " + Cores.RESET + "Voltando para o pântano, Shrek encontra inimigos...",
-            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarAldeao(gm), dificuldade)));  //witch
+            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarOgreHunter(gm), dificuldade)));  //witch
         
         NoMapa n61_torre_bruxa = new NoMapa(new EventoMapa("Torre da Bruxa Velha", 
             Prints.DIALOGO_N61,
-            TipoEvento.BOSS, carregarBoss(Dados.criarDragao(gm)))); //bruxa velha
+            TipoEvento.BOSS, carregarBoss(Dados.CriarOldLady(gm)))); //bruxa velha
             
         NoMapa n62_golpe = new NoMapa(new EventoMapa("Volta para o pântano", 
             Cores.NEGRITO + "Narrador: " + Cores.RESET + "Shrek acha a espada do príncipe encantado.", 
             TipoEvento.RECOMPENSA_CARTA, null));
-        n62_golpe.getEvento().setCartaRecompensa(new CartaDano("Lâmina da Masmorra", "[Dano: 35]", 2, 35));
+        n62_golpe.getEvento().setCartaRecompensa(new CartaDano("Lâmina da Masmorra", "[Custo:1 | Dano: 45]", 1, 45));
 
 
         NoMapa n7_cavaleiroMarreta = new NoMapa(new EventoMapa("Na floresta",
             Prints.DIALOGO_N7, 
-            TipoEvento.BOSS, carregarBoss(Dados.criarEncantado(gm)))); //marreta
+            TipoEvento.BOSS, carregarBoss(Dados.criarHammerSoldier(gm)))); //marreta
 
 
         n5_masmorra.adicionarCaminho(n51_batalha);
@@ -276,26 +282,26 @@ public class Campanha {
         
         NoMapa n81_batalha = new NoMapa(new EventoMapa("Voltar agora",
             Cores.NEGRITO + "Narrador: " + Cores.RESET + "Após derrotar o cavaleiro, Thelonius descobre e envia capangas...\n" + Cores.VERMELHO + Cores.NEGRITO + "Capangas: " + Cores.RESET + "Lá está ele. Atacar!\n",
-            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarAldeao(gm), dificuldade))); //big bad wolf
+            TipoEvento.BATALHA, carregaInimigoGenerico(gm, () -> Dados.criarGuards(gm), dificuldade))); 
             
         
         NoMapa n82_golpe = new NoMapa(new EventoMapa("Descansar um pouco e voltar depois", 
             Cores.NEGRITO + "Narrador: " + Cores.RESET + "Após derrotar o cavaleiro, você pega uma poção.",
             TipoEvento.RECOMPENSA_CARTA, null));
-        n82_golpe.getEvento().setCartaRecompensa(new CartaEscudo("Poção de Defesa", "[Escudo: 40]", 2, 40));
+        n82_golpe.getEvento().setCartaRecompensa(new CartaEscudo("Poção de Defesa", "[Custo:2 | Escudo: 40]", 2, 40));
 
         NoMapa n9_thelonius = new NoMapa(new EventoMapa("Seguir jornada", 
             Prints.DIALOGO_N9, 
-            TipoEvento.BOSS, carregarBoss(Dados.criarFada(gm)))); //thelonius
+            TipoEvento.BOSS, carregarBoss(Dados.criarThelonius(gm)))); //thelonius
         
         NoMapa n90_golpe = new NoMapa(new EventoMapa("Continuar",
             Prints.DIALOGO_N90,
             TipoEvento.RECOMPENSA_CARTA, null));
-           n90_golpe.getEvento().setCartaRecompensa(new CartaDano("Poder da Capa", "[Custo:2 | Dano: 50]", 3, 50));
+           n90_golpe.getEvento().setCartaRecompensa(new CartaDano("Poder da Capa. Hit kill", "[Custo:5 | Dano: 100]", 5, 100));
 
         NoMapa n100_rumpel = new NoMapa(new EventoMapa("I need a hero", 
             Prints.DIALOGO_N100,
-            TipoEvento.BOSS, carregarBoss(Dados.criarRumpel(gm))));//dragao
+            TipoEvento.BOSS, carregarBoss(Dados.criarDragao(gm))));//dragao
 
         n7_cavaleiroMarreta.adicionarCaminho(n81_batalha);
         n7_cavaleiroMarreta.adicionarCaminho(n82_golpe);
